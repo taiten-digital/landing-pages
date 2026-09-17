@@ -1,0 +1,361 @@
+---
+import { Image } from 'astro:assets';
+import Icon from '../../../shared/components/Icon.astro';
+import testimonial1 from '../assets/images/testimonial-1.webp';
+import testimonial2 from '../assets/images/testimonial-2.webp';
+import testimonial3 from '../assets/images/testimonial-3.webp';
+
+const testimonials = [
+  {
+    image: testimonial1,
+    alt: 'Aluna que treina com a Talita Lopes após tentar outros profissionais sem resultado',
+    quote:
+      'Passei mais de dois anos com outros profissionais sem o resultado que queria. Com a Talita, em 6 meses vi diferença real.',
+  },
+  {
+    image: testimonial2,
+    alt: 'Aluna que sentiu melhora da dor ciática treinando com a Talita Lopes',
+    quote:
+      'Tinha dor relacionada ao nervo ciático e senti melhora real depois que comecei a treinar com orientação.',
+  },
+  {
+    image: testimonial3,
+    alt: 'Aluna que se sentiu ouvida e cuidada nos treinos com a Talita Lopes',
+    quote: 'Ela entende as necessidades de quem já não é tão jovem, ouve e adapta o treino. Me senti cuidada.',
+  },
+];
+---
+<section class="testi-section" id="depoimentos">
+  <div class="testi-grid">
+    <div class="testi-rail">
+      <h2>O que dizem os alunos</h2>
+      <p class="testi-context">
+        Já treinou com outros profissionais antes. Não viu diferença. Veja o que dizem
+        alunos que passaram por isso.
+      </p>
+      <div class="testi-stat">
+        <span class="testi-stat-number" data-count-to="10">0</span>
+        <span class="testi-stat-label">anos de experiência em Londrina/PR</span>
+      </div>
+      <div class="testi-google">
+        <span class="testi-star-icon"><Icon name="star" size={22} /></span>
+        <span class="testi-google-text">Avaliação verificada no Google</span>
+      </div>
+    </div>
+    <div class="testi-media">
+      <div class="testi-strip">
+        {testimonials.map((t) => (
+          <figure class="testi-card" data-hover-lift>
+            <span class="testi-quote-icon"><Icon name="quote" size={22} /></span>
+            <Image src={t.image} alt={t.alt} width={64} height={64} loading="lazy" class="testi-avatar" />
+            <blockquote>“{t.quote}”</blockquote>
+            <figcaption>Avaliação verificada no Google</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="testi-nav" role="group" aria-label="Navegar depoimentos">
+        <button type="button" class="testi-arrow" data-dir="-1" aria-label="Depoimento anterior">
+          <Icon name="chevron-left" size={18} />
+        </button>
+        <div class="testi-dots" data-testi-dots></div>
+        <button type="button" class="testi-arrow" data-dir="1" aria-label="Próximo depoimento">
+          <Icon name="chevron-right" size={18} />
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+<script>
+  // Count-up stat: the number itself is what animates, the block around it
+  // is already fully rendered/visible — not a repeat of the removed
+  // content-reveal pattern. One-shot, rAF-driven (same trusted pattern as
+  // the rest of this project's motion), skipped under reduced-motion.
+  document.querySelectorAll<HTMLElement>('[data-count-to]').forEach((el) => {
+    const target = Number(el.dataset.countTo);
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.textContent = `+${target}`;
+      return;
+    }
+    let started = false;
+    const run = () => {
+      if (started) return;
+      const rect = el.getBoundingClientRect();
+      if (rect.top > window.innerHeight - 60) return;
+      started = true;
+      const duration = 900;
+      const start = performance.now();
+      const tick = (now: number) => {
+        const p = Math.min((now - start) / duration, 1);
+        el.textContent = `+${Math.round(target * (1 - Math.pow(1 - p, 3)))}`;
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+      window.removeEventListener('scroll', onScroll);
+    };
+    const onScroll = () => run();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    run();
+  });
+
+  document.querySelectorAll<HTMLElement>('.testi-section').forEach((section) => {
+    const strip = section.querySelector<HTMLElement>('.testi-strip');
+    const dotsBox = section.querySelector<HTMLElement>('[data-testi-dots]');
+    if (!strip || !dotsBox) return;
+
+    // Page-based pagination, not one-dot-per-card. At wider breakpoints
+    // more than one card fits in view at once (flex-basis 46-60%), so the
+    // real number of distinct scroll stops is smaller than the testimonial
+    // count — 3 testimonials can mean only 2 actual "pages" once 2 cards
+    // fit side by side. Dots per-card mismatched that (a dot nothing could
+    // land on, and a drag that only ever needed one step). Deriving page
+    // count from the actual scrollable distance keeps dots honest at every
+    // breakpoint without hardcoding per-breakpoint numbers.
+    let pageCount = 1;
+    let dots: HTMLElement[] = [];
+
+    const buildDots = () => {
+      pageCount = Math.max(1, Math.ceil((strip.scrollWidth - 1) / strip.clientWidth));
+      dotsBox.innerHTML = '';
+      dots = Array.from({ length: pageCount }, (_, i) => {
+        const dot = document.createElement('span');
+        dot.className = 'testi-dot';
+        dot.dataset.index = String(i);
+        dot.setAttribute('aria-hidden', 'true');
+        dot.addEventListener('click', () => {
+          const maxScroll = strip.scrollWidth - strip.clientWidth;
+          const target = i === pageCount - 1 ? maxScroll : i * strip.clientWidth;
+          strip.scrollTo({ left: target, behavior: 'smooth' });
+        });
+        dotsBox.appendChild(dot);
+        return dot;
+      });
+      updateActive();
+    };
+
+    const updateActive = () => {
+      const maxScroll = strip.scrollWidth - strip.clientWidth;
+      const atEnd = strip.scrollLeft >= maxScroll - 2;
+      const page = atEnd ? pageCount - 1 : Math.round(strip.scrollLeft / strip.clientWidth);
+      dots.forEach((d, i) => d.classList.toggle('is-active', i === page));
+    };
+
+    section.querySelectorAll<HTMLButtonElement>('.testi-arrow').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const dir = Number(btn.dataset.dir);
+        strip.scrollBy({ left: dir * strip.clientWidth, behavior: 'smooth' });
+      });
+    });
+
+    buildDots();
+    let ticking = false;
+    strip.addEventListener('scroll', () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => { updateActive(); ticking = false; });
+    }, { passive: true });
+
+    let resizeTimer = 0;
+    window.addEventListener('resize', () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(buildDots, 150);
+    });
+  });
+</script>
+<style>
+  .testi-section {
+    background: var(--color-forest);
+    color: var(--color-bg);
+    padding-block: var(--space-6);
+    overflow: hidden;
+  }
+  .testi-grid {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--space-4);
+    display: grid;
+    gap: var(--space-5);
+  }
+  @media (min-width: 768px) {
+    .testi-grid {
+      grid-template-columns: 1fr 2fr;
+      align-items: start;
+    }
+    .testi-rail {
+      position: sticky;
+      top: calc(var(--nav-height, 64px) + var(--space-4));
+    }
+  }
+  .testi-context {
+    color: var(--color-muted-dark);
+    margin-top: var(--space-3);
+    max-width: 32ch;
+  }
+  .testi-stat {
+    margin-top: var(--space-5);
+    display: block;
+  }
+  .testi-stat-number {
+    display: block;
+    font-family: var(--font-display, inherit);
+    font-weight: 800;
+    background: linear-gradient(100deg, var(--color-accent), color-mix(in srgb, var(--color-accent) 55%, white));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    font-size: clamp(2rem, 1.5rem + 2vw, 3rem);
+    line-height: 1;
+  }
+  .testi-stat-label {
+    color: var(--color-muted-dark);
+    font-size: 0.9rem;
+  }
+  .testi-google {
+    display: flex;
+    align-items: center;
+    gap: 0.6em;
+    margin-top: var(--space-4);
+  }
+  .testi-star-icon {
+    display: inline-flex;
+    color: var(--color-accent);
+    filter: drop-shadow(0 0 6px color-mix(in srgb, var(--color-accent) 70%, transparent));
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .testi-star-icon {
+      animation: testi-star-bob 2.6s ease-in-out infinite;
+    }
+  }
+  @keyframes testi-star-bob {
+    0%, 100% {
+      transform: translateY(0);
+      filter: drop-shadow(0 0 6px color-mix(in srgb, var(--color-accent) 70%, transparent));
+    }
+    50% {
+      transform: translateY(-4px);
+      filter: drop-shadow(0 0 12px color-mix(in srgb, var(--color-accent) 90%, transparent));
+    }
+  }
+  .testi-google-text {
+    color: var(--color-muted-dark);
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+  .testi-media {
+    /* Real bug: a grid item's default min-width is `auto` (sized to fit
+       its content), not 0. .testi-strip inside it is a horizontally
+       scrolling row of 3 cards ~1409px wide — without min-width: 0 here,
+       that intrinsic width leaked into the grid track itself, making
+       .testi-media (and everything centered inside it, like the nav
+       arrows) render wider than the actual viewport. The section's own
+       `overflow: hidden` silently clipped the overflow instead of showing
+       a scrollbar, which is exactly why it looked mis-cropped/off-center
+       rather than obviously broken. */
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .testi-nav {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-4);
+  }
+  .testi-arrow {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    border: 1px solid color-mix(in srgb, var(--color-bg) 30%, transparent);
+    background: transparent;
+    color: var(--color-bg);
+    cursor: pointer;
+    transition: background-color 160ms var(--ease-out, ease-out), transform 160ms var(--ease-out, ease-out);
+  }
+  .testi-arrow:active { transform: scale(0.92); }
+  @media (hover: hover) and (pointer: fine) {
+    .testi-arrow:hover { background: color-mix(in srgb, var(--color-bg) 12%, transparent); }
+  }
+  .testi-dots {
+    display: flex;
+    align-items: center;
+    gap: 0.4em;
+  }
+  .testi-dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: color-mix(in srgb, var(--color-bg) 30%, transparent);
+    cursor: pointer;
+    transition: background-color 160ms var(--ease-out, ease-out), transform 160ms var(--ease-out, ease-out);
+  }
+  .testi-dot.is-active {
+    background: var(--color-accent);
+    transform: scale(1.3);
+  }
+  .testi-quote-icon {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    display: inline-flex;
+    color: color-mix(in srgb, var(--color-accent) 45%, white);
+    opacity: 0.5;
+  }
+  .testi-strip {
+    display: flex;
+    gap: var(--space-4);
+    overflow-x: auto;
+    /* Native scroll + snap, not a JS gesture, so touch-action doesn't need
+       overriding here — just stop the horizontal drag from chaining into
+       the browser's edge-swipe back/forward gesture. */
+    overscroll-behavior-x: contain;
+    scroll-snap-type: x mandatory;
+    scroll-padding-left: var(--space-4);
+    margin: 0 calc(var(--space-4) * -1);
+    padding-inline: var(--space-4);
+    /* Visible controls (arrows + dots) already exist below the strip — the
+       native scrollbar was redundant chrome the client explicitly flagged
+       as ugly. Touch swipe and the buttons both still work with it hidden. */
+    scrollbar-width: none;
+  }
+  .testi-strip::-webkit-scrollbar {
+    display: none;
+  }
+  .testi-card {
+    position: relative;
+    flex: 0 0 82%;
+    scroll-snap-align: start;
+    background: var(--color-bg);
+    color: var(--color-forest);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+  }
+  @media (min-width: 640px) {
+    .testi-card { flex-basis: 60%; }
+  }
+  @media (min-width: 1024px) {
+    .testi-card { flex-basis: 46%; }
+  }
+  .testi-card:last-child {
+    /* A `start`-aligned last item in a snap container can be unreachable
+       if there isn't enough trailing scroll room for it to reach the
+       container's start edge — exactly the bug found here (dots/arrows
+       stopped one card short). Snapping the last item to its own `end`
+       needs no extra trailing space: the browser's natural scroll-end is
+       already that alignment. */
+    scroll-snap-align: end;
+  }
+  .testi-avatar {
+    border-radius: 999px;
+  }
+  .testi-card blockquote {
+    margin: var(--space-3) 0 0;
+  }
+  .testi-card figcaption {
+    color: var(--color-muted);
+    margin-top: var(--space-2);
+    font-size: 0.9em;
+  }
+</style>

@@ -1,0 +1,16 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const clientModules = import.meta.glob('/clients/*/src/index.astro');
+const slugs = Object.keys(clientModules).map((p) => p.split('/')[2]).sort();
+---
+<BaseLayout title="Landing Page OS">
+  <main class="container" style="padding-block: var(--space-6);">
+    <h1>Landing Page OS</h1>
+    <p style="color: var(--color-muted);">Client pages:</p>
+    <ul>
+      {slugs.map((slug) => <li><a href={`/${slug}`}>/{slug}</a></li>)}
+      {slugs.length === 0 && <li>No clients yet — run <code>npm run create-client -- "Client Name"</code>.</li>}
+    </ul>
+  </main>
+</BaseLayout>

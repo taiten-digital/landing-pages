@@ -1,0 +1,34 @@
+/*
+ * Base design tokens. Every client falls back to these unless its own
+ * clients/<slug>/src/tokens.css overrides them under [data-client="<slug>"].
+ * Shared components must only reference these var names, never literals,
+ * so client identity never leaks into shared/.
+ */
+:root {
+  --color-bg: #ffffff;
+  --color-fg: #0a0a0a;
+  --color-muted: #6b7280;
+  --color-accent: #2563eb;
+  --color-accent-fg: #ffffff;
+  --color-border: #e5e7eb;
+
+  --font-sans: system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 1rem;
+  --space-4: 1.5rem;
+  --space-5: 2.5rem;
+  --space-6: 4rem;
+
+  --radius-sm: 0.25rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+
+  --max-width: 72rem;
+
+  /* Actual rendered height of shared/components/Nav.astro's bar, kept as a
+     real token (not just a per-usage fallback) so sticky-offset/scroll-
+     padding math stays correct if the nav's own padding ever changes. */
+  --nav-height: 72px;
+}

@@ -1,0 +1,198 @@
+---
+import Icon from '../../../shared/components/Icon.astro';
+
+export const faqs = [
+  {
+    q: 'A avaliação física é realmente gratuita?',
+    a: 'Sim. Gratuita e sem compromisso. É o primeiro passo para a Talita entender seu histórico, suas limitações e seus objetivos antes de montar qualquer plano.',
+  },
+  {
+    q: 'Preciso ter experiência prévia com treino?',
+    a: 'Não. O treino parte do seu ponto de partida. Orientação para quem está começando ou retomando a atividade física, inclusive depois de um período parado.',
+  },
+  {
+    q: 'Tenho dor nas costas / dor ciática. O treino é seguro para mim?',
+    a: 'O acompanhamento é individualizado para respeitar suas dores e limitações. A avaliação inicial existe justamente para identificar isso antes de qualquer exercício ser prescrito. Se você tem uma condição diagnosticada, leve informações do seu médico ou fisioterapeuta para a conversa.',
+  },
+  {
+    q: 'A consultoria online funciona tão bem quanto o presencial para quem tem 50+ anos?',
+    a: 'Depende do caso. No presencial, a Talita acompanha a execução dos exercícios ao vivo. Na consultoria online, o acompanhamento é à distância, por vídeo e mensagens. Para muitos alunos, as duas modalidades funcionam bem. Se você está começando agora ou tem uma condição de coluna mais delicada, o mais seguro é conversar direto com a Talita e decidir juntos qual formato faz mais sentido para o seu caso.',
+  },
+  {
+    q: 'Onde acontecem os treinos presenciais?',
+    a: 'Em domicílio, em condomínio ou em estúdio parceiro, conforme sua conveniência. Não há endereço fixo de estúdio.',
+  },
+  {
+    q: 'Quanto custa?',
+    a: 'O valor não é divulgado publicamente. É combinado direto com a Talita depois da avaliação, de acordo com o serviço escolhido.',
+  },
+];
+---
+<section class="faq-section" id="faq">
+  <div class="faq-inner">
+    <div class="faq-header">
+      <h2>Perguntas frequentes</h2>
+      <p class="faq-intro">
+        O que os alunos mais perguntam antes de marcar a primeira avaliação — as respostas
+        dela, direto.
+      </p>
+    </div>
+
+    <!--
+      Rebuilt from zero as a chat thread instead of a 2-column accordion
+      grid: every FAQ IS a question and her answer, so the UI now says that
+      literally rather than through a generic card shape. Question bubbles
+      lean right (the visitor asking); her replies lean left with a mark
+      identifying her as the responder. Kept native <details>/<summary> for
+      free keyboard/screen-reader support — only the visual skin changed,
+      not the accessible interaction model.
+      No real photo was repurposed as "her" avatar here: treino-alongamento
+      shows a student mid-stretch, not confirmed to be Talita herself, and
+      turning an unconfirmed photo into a stand-in for "this is Talita
+      replying" risks misrepresenting who's pictured. A plain initial badge
+      says the same thing without that risk.
+    -->
+    <div class="chat-thread">
+      {faqs.map((item, i) => (
+        <details open={i === 0} class="chat-item">
+          <summary class="chat-question">
+            <span class="bubble bubble-question">
+              {item.q}
+              <span class="chat-chevron" aria-hidden="true"><Icon name="chevron-down" size={16} /></span>
+            </span>
+          </summary>
+          <div class="chat-answer">
+            <span class="chat-avatar" aria-hidden="true">T</span>
+            <p class="bubble bubble-answer">{item.a}</p>
+          </div>
+        </details>
+      ))}
+    </div>
+  </div>
+</section>
+<style>
+  .faq-section {
+    background: var(--color-sage-alt);
+    padding-block: var(--space-6);
+    position: relative;
+    overflow: hidden;
+  }
+  .faq-inner {
+    position: relative;
+    max-width: 40rem;
+    margin-inline: auto;
+    padding-inline: var(--space-4);
+  }
+  .faq-header {
+    text-align: center;
+  }
+  .faq-intro {
+    color: var(--color-muted);
+    margin-top: var(--space-2);
+  }
+
+  .chat-thread {
+    /* Tighter rhythm than a first pass that felt too long: smaller inter-
+       message gap and slimmer bubble padding (below) shorten the section
+       without cutting any actual answer content. */
+    margin-top: var(--space-5);
+    display: grid;
+    gap: var(--space-3);
+  }
+  .chat-item {
+    display: grid;
+    gap: 0.4rem;
+  }
+  .chat-question {
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+    list-style: none;
+  }
+  .chat-question::-webkit-details-marker {
+    display: none;
+  }
+  .bubble {
+    position: relative;
+    max-width: 85%;
+    padding: 0.65rem var(--space-4);
+    border-radius: 1.1rem;
+    font-size: 0.95rem;
+    line-height: 1.45;
+  }
+  .bubble-question {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    background: var(--color-accent);
+    color: var(--color-accent-fg);
+    font-weight: 700;
+    border-bottom-right-radius: 0.3rem;
+  }
+  .chat-chevron {
+    flex-shrink: 0;
+    display: inline-flex;
+    transition: transform 200ms var(--ease-out, ease-out);
+  }
+  .chat-item[open] .chat-chevron {
+    transform: rotate(180deg);
+  }
+  .chat-answer {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-2);
+  }
+  .chat-avatar {
+    /* Compensates for the removed photo's idle motion: a slow pulsing
+       ring, the same "someone's here" language used elsewhere on the page
+       (the contrast arrow, the CTA pulse) rather than a literal "online
+       now" claim, which isn't something to state as fact. */
+    flex-shrink: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 999px;
+    background: var(--color-forest);
+    color: var(--color-bg);
+    font-family: var(--font-display, inherit);
+    font-weight: 800;
+    font-size: 0.85rem;
+    box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 18%, transparent);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .chat-avatar {
+      animation: chat-avatar-pulse 2.8s ease-in-out infinite;
+    }
+  }
+  @keyframes chat-avatar-pulse {
+    0%, 100% { box-shadow: 0 0 0 4px color-mix(in srgb, var(--color-accent) 18%, transparent); }
+    50% { box-shadow: 0 0 0 8px color-mix(in srgb, var(--color-accent) 6%, transparent); }
+  }
+  .bubble-answer {
+    background: var(--color-bg);
+    color: var(--color-muted);
+    border: 1px solid var(--color-border);
+    border-bottom-left-radius: 0.3rem;
+    margin: 0;
+    /* Native <details> content has no transition-friendly middle state —
+       @starting-style is the CSS-only way to animate its entrance.
+       Degrades silently to an instant appearance on older browsers. */
+    transition: opacity 200ms var(--ease-out, ease-out), transform 200ms var(--ease-out, ease-out);
+  }
+  @starting-style {
+    .chat-item[open] .bubble-answer {
+      opacity: 0;
+      transform: translateY(-6px) scale(0.97);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .bubble-answer {
+      transition: none;
+    }
+    .chat-avatar {
+      animation: none;
+    }
+  }
+</style>

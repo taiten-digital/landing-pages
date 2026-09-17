@@ -1,0 +1,55 @@
+---
+import '../../shared/styles/base.css';
+import '../../shared/design-system/tokens.css';
+
+export interface Props {
+  title: string;
+  description?: string;
+  lang?: string;
+  canonicalPath?: string;
+  themeColor?: string;
+}
+const { title, description = '', lang = 'en', canonicalPath, themeColor } = Astro.props;
+---
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    {description && <meta name="description" content={description} />}
+    {canonicalPath && <link rel="canonical" href={canonicalPath} />}
+    {themeColor && <meta name="theme-color" content={themeColor} />}
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+    <slot />
+    <script>
+      // Content-hiding scroll-reveal was tried twice on this project (an
+      // IntersectionObserver version that silently broke, then a
+      // rAF/getBoundingClientRect version that worked correctly) and
+      // rejected both times as feeling broken/unfinished. Removed
+      // entirely — content is just visible. This script now only powers
+      // .enter (Hero mount animation, load-triggered not scroll-triggered)
+      // and an opt-in sticky-header scroll state.
+      document.documentElement.classList.add('js');
+
+      const stickyNav = document.querySelector<HTMLElement>('[data-sticky-nav]');
+      if (stickyNav) {
+        let ticking = false;
+        const onScroll = () => {
+          if (ticking) return;
+          ticking = true;
+          requestAnimationFrame(() => {
+            stickyNav.classList.toggle('is-scrolled', window.scrollY > 8);
+            ticking = false;
+          });
+        };
+        onScroll();
+        window.addEventListener('scroll', onScroll, { passive: true });
+      }
+    </script>
+  </body>
+</html>

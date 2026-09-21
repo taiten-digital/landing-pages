@@ -186,6 +186,18 @@ design decision.
   "not clickable" until a client caught it. Grep `<button` across
   `src/sections` before calling a page done and confirm every hit has
   `cursor-pointer` in its className.
+- **A Nav's scroll-driven chrome (transparent at `scrollY=0`, opaque after
+  scrolling) and its mobile menu toggle are two independent pieces of
+  state that both drive the same header background** — if the header's
+  background className only checks the scroll flag, opening the mobile
+  menu while still at the top leaves the header bar itself transparent
+  while the dropdown panel underneath renders its own opaque background,
+  producing a visible seam/mismatch between the two (caught by the client
+  on `fabiana-teixeira`, not by the build or the breakpoint sweep). Fix:
+  the header's opaque-background condition must be `scrolled || menuOpen`
+  (or equivalent), not `scrolled` alone, so the whole header reads as one
+  consistent panel the instant the menu opens, regardless of scroll
+  position.
 
 ## QA approach
 No permanent test framework. `claude-in-chrome` has not successfully
@@ -211,7 +223,14 @@ width in that 800-950px band to every breakpoint sweep. Also test
 with scroll-driven chrome (transparent at the top, opaque after scrolling)
 combined with a togglable mobile menu has a state — menu open while still
 at `scrollY=0` — that a sweep opening the menu only after scrolling (or
-never opening it at all) will never catch; screenshot it explicitly.
+never opening it at all) will never catch; screenshot it explicitly. A
+screenshot alone isn't self-checking, though: on `fabiana-teixeira`, this
+exact screenshot was taken during Final Assembly and still read as "looks
+fine" on inspection, and the client caught the transparent-header/opaque-
+dropdown seam that the screenshot had already captured. When reviewing
+that specific screenshot, explicitly compare the header bar's background
+against the dropdown panel's background (same color/opacity, no visible
+seam between them) instead of just confirming the menu opened.
 
 **Before calling Final Assembly done, grep for cross-section consistency,
 not just build success.** Parallel `section-builder` agents each only see
@@ -225,6 +244,19 @@ src/sections` and confirm every section's main heading has it (not just
 some); grep the color token used for headings/body text and flag any
 section using a different one without a stated reason; grep `<button` and
 confirm every hit has `cursor-pointer` (see General CSS gotchas above).
+
+**`index.html`'s `<title>`, `<meta name="description">`, and `lang`
+attribute are not filled by the scaffold script and are easy to forget
+since nothing in the build fails without them.** Both `jonatas-hotts` and
+an early pass of `fabiana-teixeira` shipped with the literal scaffold
+placeholder (`<title>{slug}</title>`, `lang="en"`, no description) all the
+way through a full build and QA pass, while `talita-lopes` and
+`don-leon-barbearia-londrina` had real ones — an inconsistency that's
+invisible unless someone specifically checks the browser tab or view-source,
+not something a build or a screenshot sweep will ever surface. Before
+reporting Final Assembly done, set a real `<title>` (client name + what
+they do + city, matching the sibling clients' pattern), a one-sentence
+`<meta name="description">`, and `lang="pt-BR"` in `react-clients/<slug>/index.html`.
 
 React clients type-check as part of their own `npm run build` (`tsc -b &&
 vite build`) inside `react-clients/<slug>/`.

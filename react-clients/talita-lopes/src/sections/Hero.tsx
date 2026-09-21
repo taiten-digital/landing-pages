@@ -150,7 +150,7 @@ export default function Hero() {
         aria-label="Ver mais"
         animate={{ opacity: scrolledPast ? 0 : 1 }}
         transition={{ duration: 0.2 }}
-        className={`absolute left-1/2 z-[3] bottom-[160px] flex h-11 w-7 -translate-x-1/2 items-start justify-center rounded-pill border-2 border-bg/70 pt-1.5 min-[860px]:bottom-[220px] ${
+        className={`absolute left-1/2 z-[3] bottom-[160px] flex h-11 w-7 -translate-x-1/2 cursor-pointer items-start justify-center rounded-pill border-2 border-bg/70 pt-1.5 min-[860px]:bottom-[220px] ${
           scrolledPast ? 'pointer-events-none' : ''
         }`}
       >

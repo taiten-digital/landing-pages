@@ -42,6 +42,24 @@ anything else (Services, Pricing, Testimonials, FAQ, Gallery, About) only
 belongs on the page if the business genuinely needs it; justify each one,
 don't default to a generic template.
 
+Before locking the Hero direction, check an existing sibling client's
+`src/sections/Hero.tsx` (e.g. `talita-lopes`, `don-leon-barbearia-londrina`)
+— the house style is a full-bleed background photo, and deviating from it
+(e.g. because no landscape photo exists yet) needs to be surfaced to the
+client explicitly, not decided silently. Also check the asset inventory
+against the planned section list: if a section would clearly benefit from
+a real photo (Hero, About, a services card) and `client-brief.md` doesn't
+have one, ask the client for it now rather than discovering the gap after
+the page ships as icon-only. See CLAUDE.md's "Full-bleed hero sections"
+and "Content integrity" for the full reasoning.
+
+Pick a real Google Font pairing for `--font-display`/`--font-sans` (never
+leave it at plain `system-ui`/`'Inter'` with no import — see CLAUDE.md's
+`--font-sans` gotcha under "General CSS gotchas" for the exact token name
+Tailwind v4 requires), and keep the accent color reserved for true
+emphasis rather than repeated on every label/icon/heading (see CLAUDE.md's
+"Color palette & contrast").
+
 Invoke the `motion-playbook` skill and use it to assign each section a
 **distinct** animation mechanism — no two sections should read as the same
 decoration with different content. Write `react-clients/<slug>/design-brief.md`:
@@ -71,12 +89,25 @@ don't guess" discipline as any other asset crop in this repo), or
 if there's no logo yet. Run `npm run build` inside
 `react-clients/<slug>/` (this also type-checks — the Vite react-ts template's
 build script is `tsc -b && vite build`). Write a throwaway Playwright script
-(not committed) to check the built preview at mobile/tablet/desktop widths —
-`claude-in-chrome` has not connected once in this environment, don't rely on
-it. Per CLAUDE.md's QA approach, check
+(not committed) to check the built preview at mobile/tablet/desktop widths,
+**plus one width in the 800-950px band** (a Nav with several links + a
+text CTA button most often first breaks there, not at the standard three
+widths) — `claude-in-chrome` has not connected once in this environment,
+don't rely on it. Per CLAUDE.md's QA approach, check
 `document.body.scrollWidth - window.innerWidth === 0` at each breakpoint as
-a cheap tripwire for layout blowout. Report `dist/` as ready — it's a
-deployable static artifact; send the client a link once hosted.
+a cheap tripwire for layout blowout, and if the Nav has both scroll-driven
+chrome and a mobile-menu toggle, screenshot "menu open while still at
+scrollY=0" as its own case — that state combination is invisible to a
+sweep that only opens the menu after scrolling.
+
+Before reporting the page done, run the cross-section consistency checks
+from CLAUDE.md's "QA approach" (grep `font-display` usage across every
+section's main heading, grep the heading/body color token for outliers,
+grep `<button` and confirm every hit has `cursor-pointer`) — a clean build
+and a zero-overflow sweep do not catch inter-section drift between
+parallel `section-builder` agents, since each agent only sees the shared
+briefs, never sibling agents' actual output. Report `dist/` as ready — it's
+a deployable static artifact; send the client a link once hosted.
 
 ## If something doesn't fit this flow
 If a client genuinely needs something outside this lean pipeline (deep

@@ -21,7 +21,15 @@ color/font that already has a token.
 Never fabricate testimonials, stats, counts, certifications, or photos.
 Anything `client-brief.md` marks `UNKNOWN` or `PROOF NEEDED` stays that way
 in your output — leave an inline `{/* TODO: <what's missing> */}` comment
-instead of inventing a value.
+instead of inventing a value. If your section would clearly read better
+with a real photo and `client-brief.md`'s asset list doesn't have one that
+fits, don't just ship icon-only — leave `{/* ASSET NEEDED: <what kind of
+photo> */}` so the orchestrator can ask the client, the same way a missing
+stat gets flagged instead of invented. Before writing, also check whether
+any listed asset that fits your section is going unused elsewhere — an
+available, relevant photo (e.g. a client coaching a student, for a
+services section) sitting unused while your section ships icon-only is the
+same gap as no photo existing at all.
 
 Your section must be individually striking on its own, not just consistent
 with the page — this is a sales-closing visual demo, the goal is a genuine
@@ -123,3 +131,38 @@ copies (not a fixed 2), and animate `x` by exactly `-trackWidth` in pixels
 (not a `%` of the whole multi-copy track) so the loop point is exact
 regardless of how many copies ended up rendered. See `Footer.tsx` on that
 project for the full pattern.
+
+**Every real click target needs `cursor-pointer` explicitly.** Only
+`<a href>` gets a pointer cursor for free from the browser — a native
+`<button>` or any `onClick`-bearing element does not, and reads as "not
+clickable" without it. On `jonatas-hotts`, a mobile menu toggle and a
+stepper's step-selector button both shipped without it. Add `cursor-pointer`
+to the className of every `<button>`/onClick element you write; you don't
+need it on `<a href>` elements.
+
+**Use your section's main heading's color/font tokens consistently with
+every other section, not whatever looks fine in isolation.** Always put
+`font-display` on your section's primary `<h2>` (or `<h1>` for Hero), and
+use the same body-text color token (`text-text`, or whatever `design-
+brief.md` names it) for headings unless there's a specific reason for a
+different one. On `jonatas-hotts`, two sections' headings shipped without
+`font-display` (silently falling back to the body font) and one used a
+different color token than every sibling section — each agent only sees
+the shared briefs, not sibling agents' actual output, so this kind of
+drift is easy to introduce without noticing.
+
+**Reserve the accent color for real emphasis — don't paint every icon,
+label, and heading in it.** A page where every section's eyebrow label,
+several icons, and most headings share the same bright accent color reads
+as monotonous even when no single choice is wrong (a `jonatas-hotts` client
+round: "ficou mt azul", too blue, from exactly this accumulation). Use the
+accent for the one or two things per section that should actually draw the
+eye (a CTA, an active state, a genuinely important stat) and let secondary/
+decorative icons and labels use a plain neutral (`text-text-muted`) instead.
+
+**If you're building the Hero section, default to a full-bleed background
+photo** (Ken Burns zoom + gradient scrim + text overlay — check an existing
+sibling client's `Hero.tsx` for the exact pattern) unless `design-brief.md`
+explicitly says otherwise. Don't silently default to a different
+composition just because the available photo is portrait-oriented; that
+decision belongs to the Design Planning Interview, not to you.

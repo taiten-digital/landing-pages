@@ -42,6 +42,20 @@ present something as true that isn't verified.** It shows up in two forms:
     comment next to its import (which service, that it's free for
     commercial use, whether attribution is required) — this is the only
     record of where an asset came from once it's in the repo.
+  - **If a section would clearly read better with a real photo and none
+    exists yet in `client-brief.md`'s asset list, ask the client for one
+    instead of silently shipping an icon-only version.** On
+    `jonatas-hotts`, the Serviços section shipped with zero photos (icons
+    only) even though a real, relevant photo (the client coaching a
+    student) existed in the asset folder the whole time but was never
+    used by any section — the client's "achei que faltou imagem" ("felt
+    like it was short on images") feedback was really two separate gaps:
+    an unused asset that should've been placed, and no request made for
+    more photos where none existed. Check the full asset inventory before
+    building, and if a genuinely useful photo is still missing for a
+    section that would benefit from one (Hero, About, a services card),
+    say so explicitly and ask — don't quietly default to icon-only and
+    call it "clean."
   - Don't swap a client's real, already-approved photo for a stock
     substitute just to make a technical complaint (blurry, oversized, bad
     crop) go away — diagnose the actual CSS/sizing bug first. Only replace
@@ -83,6 +97,21 @@ hero box's approximate rendered aspect ratio; prefer a **landscape-
 oriented photo close to the container's own aspect ratio** so
 `object-fit: cover` only trims a modest amount off one axis. This applies
 whether the photo is the client's own or freshly-sourced stock.
+
+**Default to matching an existing sibling client's Hero pattern** (full-
+bleed background photo, Ken Burns zoom, gradient scrim, text overlay — see
+`react-clients/talita-lopes/src/sections/Hero.tsx` or
+`react-clients/don-leon-barbearia-londrina/src/sections/Hero.tsx`) unless
+there's a documented reason to deviate. On `jonatas-hotts`, the first build
+used a two-column Hero with a portrait-framed photo — a *reasonable*
+workaround given only portrait/square photos were on hand, but it was
+never surfaced to the client as a deviation from the house look before
+shipping, and the client rejected the page partly for looking different
+from the agency's other builds. If the available assets don't support a
+full-bleed Hero, say so explicitly during the Design Planning Interview and
+ask the client to source a landscape photo or confirm the alternate
+composition — don't let an asset constraint silently become an unreviewed
+design decision.
 
 ## General CSS gotchas
 - **A CSS Grid item's default `min-width` is `auto`** (sized to fit its
@@ -139,6 +168,24 @@ whether the photo is the client's own or freshly-sourced stock.
   new sections to tighter padding (`py-16 sm:py-20`), and when a section's
   background repeats the one directly before it, add a thin
   `border-t border-white/5` divider so the transition reads as deliberate.
+- **Tailwind v4's Preflight only reads the body font from a token literally
+  named `--font-sans`** (`--default-font-family: --theme(--font-sans,
+  initial)` in `node_modules/tailwindcss/theme.css`). Naming it anything
+  else in a client's `@theme` block (e.g. `--font-body`) compiles fine,
+  produces no error, and simply never applies anywhere — body text silently
+  falls back to the browser default font. This went unnoticed on
+  `jonatas-hotts` through a full build and review round; always name it
+  `--font-sans` (matches every other client in this repo) and visually
+  confirm body paragraphs actually render in the imported font during QA,
+  not just trust that the token exists.
+- **A native `<button>` (or any `onClick`-bearing `<div>`/`<li>`) does not
+  get a pointer cursor by default** — only `<a href>` does, via the
+  browser's own UA styles. Every real click target needs an explicit
+  `cursor-pointer` class; two native buttons on `jonatas-hotts` (a mobile
+  menu toggle, a stepper's step selector) shipped without it and read as
+  "not clickable" until a client caught it. Grep `<button` across
+  `src/sections` before calling a page done and confirm every hit has
+  `cursor-pointer` in its className.
 
 ## QA approach
 No permanent test framework. `claude-in-chrome` has not successfully
@@ -154,6 +201,30 @@ window.innerWidth === 0` at every tested breakpoint as a cheap, general
 tripwire for grid/flex blowout bugs before they're reported back by the
 client. Add a permanent automated visual-regression or Lighthouse CI
 *pipeline* only when a specific client need justifies it.
+
+**A 375/768/1440 breakpoint sweep is not enough.** On `jonatas-hotts`, a
+Nav with 5 links (including a two-word label) plus a full-text CTA button
+crowded and overlapped specifically in the ~800-950px range — a gap the
+standard three widths straddle without ever landing in. Add at least one
+width in that 800-950px band to every breakpoint sweep. Also test
+*interactive states*, not just static scroll positions: a fixed header
+with scroll-driven chrome (transparent at the top, opaque after scrolling)
+combined with a togglable mobile menu has a state — menu open while still
+at `scrollY=0` — that a sweep opening the menu only after scrolling (or
+never opening it at all) will never catch; screenshot it explicitly.
+
+**Before calling Final Assembly done, grep for cross-section consistency,
+not just build success.** Parallel `section-builder` agents each only see
+the shared briefs, not each other's actual output, so small inconsistencies
+slip through even when every individual section looks fine in isolation —
+on `jonatas-hotts`, two section headings shipped without the `font-display`
+class (silently falling back to the body font) and one used the wrong color
+token for its heading, all invisible to `npm run build` and a scroll-width
+check. Before reporting a page done: `grep -rn "font-display"
+src/sections` and confirm every section's main heading has it (not just
+some); grep the color token used for headings/body text and flag any
+section using a different one without a stated reason; grep `<button` and
+confirm every hit has `cursor-pointer` (see General CSS gotchas above).
 
 React clients type-check as part of their own `npm run build` (`tsc -b &&
 vite build`) inside `react-clients/<slug>/`.
@@ -257,6 +328,23 @@ sem intenção" raised twice, for grid-stretch and again for section
 padding); see `.claude/agents/section-builder.md` for the full rule text
 and method every section-builder invocation follows, and `motion-playbook`
 for the carousel/marquee measurement recipes these same rounds surfaced.
+
+### Color palette & contrast
+Reserve `--color-accent` for true emphasis (CTAs, active/hover states, the
+one or two things per section that should actually draw the eye) — don't
+paint every eyebrow label, icon, and heading in it just because it's the
+brand color. A `jonatas-hotts` round shipped every section's eyebrow label,
+several icons, and most headings in the same bright accent blue; the client
+came back with "ficou mt azul" (too blue) even though no single choice was
+wrong in isolation, it was the accumulated repetition across the whole
+page. Fix by auditing where the accent actually appears
+(`grep -rn "text-accent\|bg-accent" src/sections`) and downgrading
+secondary/decorative uses to `--color-text-muted` or a plain neutral,
+keeping the accent for real focal points. Where a section has genuine
+reason for a *different* contrast color (star ratings are conventionally
+gold, not the brand color, regardless of what the brand color is), adding
+one well-justified extra token beats stretching the single accent color
+to cover a moment it doesn't actually fit.
 
 ### Motion (Framer Motion)
 Full recipes live in `.claude/skills/motion-playbook/SKILL.md` — load it

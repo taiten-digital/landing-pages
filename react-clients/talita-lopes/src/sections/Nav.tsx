@@ -113,7 +113,7 @@ export default function Nav() {
             aria-label={menuOpen ? 'Fechar menu' : 'Abrir menu'}
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((open) => !open)}
-            className="flex h-10 w-10 items-center justify-center text-forest md:hidden"
+            className="flex h-10 w-10 cursor-pointer items-center justify-center text-forest md:hidden"
           >
             {menuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>

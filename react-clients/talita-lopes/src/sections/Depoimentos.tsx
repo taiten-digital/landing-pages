@@ -218,7 +218,7 @@ export default function Depoimentos() {
               onClick={() => goTo(index - 1)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.92 }}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-bg/30 text-bg transition-colors hover:bg-bg/10"
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-bg/30 text-bg transition-colors hover:bg-bg/10"
             >
               <ChevronLeft size={18} />
             </motion.button>
@@ -230,7 +230,7 @@ export default function Depoimentos() {
                   type="button"
                   aria-label={`Ver depoimento ${i + 1}`}
                   onClick={() => goTo(i)}
-                  className={`h-1.5 rounded-full transition-all ${
+                  className={`h-1.5 cursor-pointer rounded-full transition-all ${
                     i === index ? 'w-5 bg-accent' : 'w-1.5 bg-bg/30'
                   }`}
                 />
@@ -243,7 +243,7 @@ export default function Depoimentos() {
               onClick={() => goTo(index + 1)}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.92 }}
-              className="flex h-10 w-10 items-center justify-center rounded-full border border-bg/30 text-bg transition-colors hover:bg-bg/10"
+              className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-full border border-bg/30 text-bg transition-colors hover:bg-bg/10"
             >
               <ChevronRight size={18} />
             </motion.button>

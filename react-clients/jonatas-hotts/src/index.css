@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo+Black&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0B0F1A;
+  --color-bg-alt: #10162B;
+  --color-surface: #131A2B;
+  --color-border: rgba(255, 255, 255, 0.08);
+
+  --color-primary: #1F2F53;
+  --color-primary-fg: #FFFFFF;
+
+  --color-accent: #2F6FED;
+  --color-accent-2: #7DA6FF;
+  --color-accent-fg: #FFFFFF;
+
+  /* Warm contrast used only for star ratings (Hero + Depoimentos) — a
+     deliberate break from the blue brand palette so the two real-review
+     moments on the page don't read as just more blue. */
+  --color-gold: #F2B84B;
+
+  --color-text: #F2F3F5;
+  --color-text-muted: #9AA3B5;
+
+  --font-display: 'Archivo Black', system-ui, sans-serif;
+  --font-sans: 'Manrope', system-ui, sans-serif;
+
+  --radius-card: 1rem;
+  --radius-full: 999px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}

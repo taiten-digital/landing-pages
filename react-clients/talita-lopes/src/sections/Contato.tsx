@@ -95,7 +95,7 @@ export default function Contato() {
                 role="tab"
                 aria-selected={i === active}
                 onClick={() => setActive(i)}
-                className={`relative flex items-center gap-3 overflow-hidden rounded-md border p-3 text-left transition-colors ${
+                className={`relative flex cursor-pointer items-center gap-3 overflow-hidden rounded-md border p-3 text-left transition-colors ${
                   i === active
                     ? 'border-accent bg-accent/15'
                     : 'border-bg/15 bg-bg/5 hover:border-bg/30'

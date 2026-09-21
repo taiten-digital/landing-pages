@@ -146,7 +146,7 @@ export default function Galeria() {
           onClick={() => nudge(-1)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.92 }}
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-white/15 text-fg transition-colors hover:border-accent-2 hover:text-accent-2"
+          className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-white/15 text-fg transition-colors hover:border-accent-2 hover:text-accent-2"
         >
           ←
         </motion.button>
@@ -156,7 +156,7 @@ export default function Galeria() {
           onClick={() => nudge(1)}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.92 }}
-          className="flex h-12 w-12 items-center justify-center rounded-full border border-white/15 text-fg transition-colors hover:border-accent-2 hover:text-accent-2"
+          className="flex h-12 w-12 cursor-pointer items-center justify-center rounded-full border border-white/15 text-fg transition-colors hover:border-accent-2 hover:text-accent-2"
         >
           →
         </motion.button>

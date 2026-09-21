@@ -91,7 +91,7 @@ export default function Unidades() {
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                   aria-expanded={isOpen}
-                  className="block w-full text-left"
+                  className="block w-full cursor-pointer text-left"
                 >
                   <div className="relative h-48 w-full overflow-hidden sm:h-56">
                     <img

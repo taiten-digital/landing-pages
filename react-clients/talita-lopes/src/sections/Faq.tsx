@@ -65,7 +65,7 @@ export default function Faq() {
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? null : index)}
                   aria-expanded={isOpen}
-                  className="flex items-center gap-3 self-end rounded-2xl rounded-br-sm bg-accent px-5 py-3 text-left shadow-sm transition hover:brightness-105"
+                  className="flex cursor-pointer items-center gap-3 self-end rounded-2xl rounded-br-sm bg-accent px-5 py-3 text-left shadow-sm transition hover:brightness-105"
                 >
                   <span className="max-w-[85%] font-sans text-sm font-bold text-accent-fg sm:text-base">
                     {item.q}

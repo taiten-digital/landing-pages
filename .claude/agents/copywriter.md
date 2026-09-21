@@ -1,6 +1,6 @@
 ---
 name: copywriter
-description: Writes landing page copy from strategy and researched customer language for a Landing Page OS client project. Use for the copy phase of /create-client.
+description: Writes landing page copy from strategy and researched customer language for a Landing Page OS client project. Use for the copy phase of /create-client. (legacy Astro clients only — talita-lopes, jonatas-hotts; do not use for new clients, see CLAUDE.md)
 tools: Read, Write, Skill
 model: inherit
 ---

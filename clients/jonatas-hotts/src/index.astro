@@ -1,0 +1,67 @@
+---
+// Client page for "Jonatas Hotts" — this file's existence registers the route
+// at /jonatas-hotts (see src/pages/[slug].astro). Composed of small
+// client-local sections plus shared/components where they fit.
+import '@fontsource/archivo-black';
+import '@fontsource-variable/manrope';
+import Nav from '../../../shared/components/Nav.astro';
+import HeroSection from './HeroSection.astro';
+import OfferSection from './OfferSection.astro';
+import TrainingSection from './TrainingSection.astro';
+import StartSection from './StartSection.astro';
+import ContactSection from './ContactSection.astro';
+
+// src/pages/[slug].astro reads these named exports and forwards them to
+// BaseLayout (title, description, lang, canonical, theme-color).
+export const pageTitle = 'Jonatas Hotts | Personal Trainer em Londrina, Presencial ou Online';
+export const pageDescription =
+  'Treino presencial em Londrina/PR ou online, pensado pra quem quer emagrecer, ganhar condicionamento ou voltar a treinar. Agende sua avaliação pelo WhatsApp.';
+export const pageLang = 'pt-BR';
+export const pageThemeColor = '#fff1de';
+
+// Verified number from copy/05-contato-final.md (sourced from
+// linktr.ee/jhotts per company-intelligence.md): (43) 99981-3940.
+const WHATSAPP_URL =
+  'https://wa.me/5543999813940?text=' +
+  encodeURIComponent('Olá, Jonatas! Vi sua página e quero agendar uma avaliação.');
+
+// Format-specific variants for OfferSection's toggle - the CTA there
+// changes its actual href based on which format the visitor picks, not
+// just the copy, so the choice has a real consequence in the WhatsApp
+// conversation that follows.
+const WHATSAPP_URL_PRESENCIAL =
+  'https://wa.me/5543999813940?text=' +
+  encodeURIComponent('Olá, Jonatas! Vi sua página e quero treinar presencial em Londrina.');
+const WHATSAPP_URL_ONLINE =
+  'https://wa.me/5543999813940?text=' +
+  encodeURIComponent('Olá, Jonatas! Vi sua página e quero treinar online.');
+---
+<Nav
+  brand="Jonatas Hotts"
+  sticky
+  links={[
+    { label: 'Oferta', href: '#oferta' },
+    { label: 'Treino', href: '#treino' },
+    { label: 'Contato', href: '#contato' },
+  ]}
+  cta={{ href: WHATSAPP_URL, label: 'Agendar avaliação', external: true, icon: 'whatsapp' }}
+/>
+<main>
+  <HeroSection whatsappUrl={WHATSAPP_URL} />
+  <OfferSection whatsappPresencial={WHATSAPP_URL_PRESENCIAL} whatsappOnline={WHATSAPP_URL_ONLINE} />
+  <TrainingSection />
+  <StartSection whatsappUrl={WHATSAPP_URL} />
+  <ContactSection whatsappUrl={WHATSAPP_URL} />
+</main>
+<footer class="site-footer">
+  <p class="enter enter-6">&copy; {new Date().getFullYear()} Jonatas Hotts. Todos os direitos reservados.</p>
+</footer>
+<style>
+  .site-footer {
+    background: var(--color-charcoal);
+    color: color-mix(in srgb, var(--color-bg) 55%, transparent);
+    text-align: center;
+    padding-block: var(--space-3);
+    font-size: 0.8rem;
+  }
+</style>

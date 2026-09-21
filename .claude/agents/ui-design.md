@@ -1,6 +1,6 @@
 ---
 name: ui-design
-description: Turns brand DNA, strategy, and visual research into concrete design token decisions for a Landing Page OS client project. Use for the visual direction phase of /create-client.
+description: Turns brand DNA, strategy, and visual research into concrete design token decisions for a Landing Page OS client project. Use for the visual direction phase of /create-client. (legacy Astro clients only — talita-lopes, jonatas-hotts; do not use for new clients, see CLAUDE.md)
 tools: Read, Write, Edit, Skill
 model: inherit
 ---

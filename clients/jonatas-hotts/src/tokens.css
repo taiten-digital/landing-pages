@@ -1,0 +1,267 @@
+/*
+ * Client-level token overrides for "jonatas-hotts". Loaded after
+ * shared/design-system/tokens.css. Rationale for every value lives in
+ * clients/jonatas-hotts/design/design-direction.md, keep the two in sync.
+ *
+ * No existing brand palette/type system to extract (confirmed twice in
+ * brand-dna.md and visual-research.md, no browser access to the real
+ * Instagram feed) - every value below is a fresh, deliberate choice built
+ * from verbal tone (casual, direct, meme-adjacent, demonstration-led),
+ * not lifted from anywhere. Deliberately distinct from clients/talita-lopes
+ * (forest green, Bricolage Grotesque/Hanken Grotesk, sharp-container/
+ * pill-CTA contrast, soft blurred hover shadows) - see design-direction.md
+ * "Why this reads differently from Talita Lopes".
+ */
+[data-client="jonatas-hotts"] {
+  /* ---- Palette: two accents, two separate jobs, never swapped ---- */
+
+  /* CTA-only. Literal WhatsApp brand green, matching the category-wide
+     local convention (visual-research.md) and Jonatas's own existing
+     WhatsApp-first behavior. Used ONLY on the primary CTA fill (button,
+     nav CTA, CTA glow/pulse) - never as a section background, never as a
+     decorative highlight, never on icons. One color, one job. */
+  --color-accent: #25d366;
+  --color-accent-fg: #14110d; /* dark ink on the CTA green: ~10.6:1 contrast, clears AA with room to spare (white-on-this-green is ~2:1 and fails outright) */
+
+  /* Brand-personality accent (not the CTA). Warm amber, the color that
+     actually carries "energetic/casual" across the page: headline
+     emphasis (gradient-text, underline marks), icon strokes, card
+     hover glow, sticker-style borders/badges. Never used as the CTA fill
+     and never used as a large background block - see design-direction.md
+     Duolingo-style "one accent, one explicit job" rule. */
+  --color-energy: #ffb020;
+  --color-energy-deep: #c1440e; /* second gradient-text stop, darker so the average of the two clears contrast on light backgrounds */
+
+  /* Neutrals. Warm charcoal, not the cool near-black or green-black used
+     elsewhere in this repo - does double duty as ink color AND dark-section
+     background, same technique as talita-lopes's --color-forest but a
+     different, unrelated hue so it doesn't read as a reskin. */
+  --color-charcoal: #1c1815;
+  --color-fg: var(--color-charcoal);
+  --color-bg: #ffffff;
+  --color-sand: #fff1de; /* warm pale alternating light-section tint, spend like talita's sage but warm-hued instead of green-hued */
+
+  --color-muted: color-mix(in srgb, var(--color-charcoal) 60%, white);
+  --color-border: color-mix(in srgb, var(--color-charcoal) 14%, white);
+
+  /* ---- Typography: fresh pairing, not the previous client's pairing ---- */
+  /* Self-hosted via @fontsource/archivo-black (single static 900 weight,
+     display only) and @fontsource-variable/manrope - new devDependencies
+     for the developer phase (`npm install @fontsource/archivo-black
+     @fontsource-variable/manrope`), imported once in BaseLayout.astro or
+     this client's index.astro:
+       import '@fontsource/archivo-black';
+       import '@fontsource-variable/manrope';
+     Not installed here, token/family names below assume that import. */
+  --font-display: 'Archivo Black', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Manrope Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+
+  /* ---- Shape language: one rule, applied everywhere (Shape Consistency
+     Lock) - chunky rounded "sticker" containers, never sharp, never pill.
+     Contrast with talita-lopes's sharp-container/round-pill-CTA split:
+     here the CTA is the SAME chunky radius as everything else, and the
+     personality instead comes from a thick outline + hard offset shadow
+     (a flat "sticker/meme-caption" device, not a soft elevation shadow) -
+     a direct visual echo of the text-overlay callout boxes on his own
+     Instagram clips (visual-research.md). ---- */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 28px;
+  /* --radius-pill intentionally not defined for this client: no pill
+     shapes anywhere, unlike talita-lopes - see design-direction.md. */
+
+  /* Sticker outline + hard offset shadow (NOT a blurred elevation shadow -
+     zero blur radius is the point, this is a flat graphic device, not
+     ambient light). Grows slightly on hover for tactile feedback without
+     touching `transform`, so it never collides with a continuous
+     `animation` on the same element - see Motion notes below and
+     design-direction.md's explicit callout of this repo's documented
+     animation-conflict bug. */
+  --shadow-sticker: 5px 5px 0 0 var(--color-fg);
+  --shadow-sticker-hover: 8px 8px 0 0 var(--color-fg);
+  --border-sticker: 3px solid var(--color-fg);
+
+  /* Ambient glow blob (hero, behind CTA/photo) - large blur, fully
+     transparent well before its own edge, per root CLAUDE.md's motion
+     rule against smudge-looking small-blur glows. */
+  --glow-energy: radial-gradient(
+    circle,
+    color-mix(in srgb, var(--color-energy) 55%, transparent) 0%,
+    transparent 70%
+  );
+
+  /* Nav.astro's .nav-bar is transparent by default (only [data-sticky-nav]'s
+     scrolled state gets a shadow/blur) - this client opts into a solid white
+     bar at rest too, so the sticky nav never reads as floating text over the
+     hero's sand background. */
+  --nav-bg: var(--color-bg);
+
+  /* Real rendered height of this client's Nav (brand text + 3 links +
+     WhatsApp CTA pill, --space-3 padding-block top and bottom), measured via
+     a throwaway Playwright script against the actual built page per root
+     CLAUDE.md's full-bleed-hero rule (never assumed from another client's
+     nav or the shared 72px fallback token). Used by HeroSection.astro's
+     `min-height: calc(100svh - var(--nav-height-measured))`. */
+  --nav-height-measured: 76px;
+}
+
+/*
+ * base.css hardcodes h1/h2/h3 sizes/weights as literal values, so the
+ * type-scale and display-font overrides happen here, scoped to this
+ * client, instead of touching the shared file.
+ */
+[data-client="jonatas-hotts"] body {
+  font-size: 1.0625rem;
+  line-height: 1.6;
+}
+
+[data-client="jonatas-hotts"] h1,
+[data-client="jonatas-hotts"] h2,
+[data-client="jonatas-hotts"] h3 {
+  font-family: var(--font-display);
+  font-weight: 900; /* Archivo Black ships one weight (900); explicit here so the fallback stack's system fonts also go bold */
+}
+
+[data-client="jonatas-hotts"] h1 {
+  font-size: clamp(2.5rem, 1.9rem + 3.2vw, 4.25rem);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+}
+
+[data-client="jonatas-hotts"] h2 {
+  font-size: clamp(1.75rem, 1.4rem + 1.6vw, 2.5rem);
+  line-height: 1.08;
+}
+
+[data-client="jonatas-hotts"] h3 {
+  font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.4rem);
+  line-height: 1.15;
+}
+
+/*
+ * CtaButton (shared/components/CtaButton.astro) already gets background/
+ * text color right for free via --color-accent/--color-accent-fg above.
+ * The only client-specific addition is the sticker outline + flat offset
+ * shadow, layered on TOP of the shared component's own hover treatment
+ * (translateY + accent-tinted glow) rather than replacing it - the base
+ * (non-hover) box-shadow set here and the shared component's :hover-only
+ * box-shadow rule never apply at the same time, so there is no shorthand
+ * conflict (see the animation-conflict warning in root CLAUDE.md, which
+ * is specifically about two `animation` declarations on one element, not
+ * this kind of state-based `box-shadow` swap).
+ */
+[data-client="jonatas-hotts"] .cta-button--primary {
+  border: var(--border-sticker);
+  box-shadow: var(--shadow-sticker);
+}
+
+/* CtaButton.astro's own CSS has no `gap` between slotted children - fine
+   for its other client (text-only CTAs), but this client's CTAs always
+   pair a WhatsApp icon with the label, and without this they render flush
+   against each other (confirmed via computed style: gap: normal). Scoped
+   here rather than added to the shared component, which has no icon+label
+   convention of its own to assume. */
+[data-client="jonatas-hotts"] .cta-button {
+  gap: 0.5em;
+}
+
+/*
+ * Nav's own CTA (shared/components/Nav.astro's .nav-cta) is deliberately
+ * self-contained CSS, not a rendered <CtaButton>, per that file's own
+ * comment - so it doesn't inherit .cta-button--primary's sticker override
+ * above automatically. design-direction.md flagged this as an open item
+ * for the developer phase to resolve once rendered: with every other CTA
+ * on the page carrying the thick-outline/hard-shadow sticker treatment,
+ * a plain flat nav CTA read inconsistent, so it gets the same device here
+ * at a proportionally smaller offset (the nav bar is only ~44px tall,
+ * the full 5px/8px shadow used elsewhere would overpower it). Base state
+ * only, like the primary CTA override above - the nav CTA's own :active
+ * scale rule (Nav.astro) is untouched, so there's no shorthand conflict. */
+[data-client="jonatas-hotts"] .nav-cta {
+  border: 2px solid var(--color-fg);
+  box-shadow: 3px 3px 0 0 var(--color-fg);
+}
+@media (hover: hover) and (pointer: fine) {
+  [data-client="jonatas-hotts"] .nav-cta:hover {
+    box-shadow: 4px 4px 0 0 var(--color-fg);
+  }
+}
+
+/* Card sticker container - the shared shape rule applied to any card-like
+   element (differentiator cards, format-choice cards). Border/shadow only;
+   no radius override needed here since --radius-md/--radius-lg already
+   cascade from the tokens above. */
+[data-client="jonatas-hotts"] .card-sticker {
+  border: var(--border-sticker);
+  box-shadow: var(--shadow-sticker);
+  border-radius: var(--radius-lg);
+  background: var(--color-bg);
+  transition: box-shadow 200ms var(--ease-out), border-color 200ms var(--ease-out);
+}
+@media (hover: hover) and (pointer: fine) {
+  [data-client="jonatas-hotts"] .card-sticker:hover {
+    box-shadow: var(--shadow-sticker-hover);
+    border-color: var(--color-energy);
+  }
+}
+
+/* Gradient-text treatment for short emphasis words/phrases only (a stat,
+   one word in a headline) - restrained on purpose, see design-direction.md.
+   Two-stop amber gradient per root CLAUDE.md's motion-section guidance. */
+[data-client="jonatas-hotts"] .text-gradient-energy {
+  background: linear-gradient(90deg, var(--color-energy), var(--color-energy-deep));
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+/*
+ * Continuous idle float+wiggle for repeated card elements (the in-person/
+ * online format cards, any small icon-tile row). ONE reusable utility
+ * (not N hardcoded per-card classes) - set --float-duration/--float-delay
+ * per card in markup so a row of cards drifts out of phase instead of
+ * moving in robotic unison, per root CLAUDE.md's motion defaults.
+ *
+ * IMPORTANT (per root CLAUDE.md's documented animation-conflict bug,
+ * repeated three times on talita-lopes before being caught): this class
+ * sets `animation`, so it must never land on the same element as `.enter`
+ * (also sets `animation`) or as anything with a transform-based :hover
+ * rule - the later/higher-specificity rule would silently drop the
+ * other's animation entirely. Put `.enter` on the card's OUTER wrapper
+ * (mount fade) and `.idle-float` on an INNER child (continuous bob) -
+ * never both on one element. Hover feedback for the same card goes
+ * through `.card-sticker`'s box-shadow/border-color hover above, not
+ * `[data-hover-lift]`, for the same reason.
+ */
+[data-client="jonatas-hotts"] .idle-float {
+  animation: card-bob var(--float-duration, 5s) var(--ease-in-out) infinite;
+  animation-delay: var(--float-delay, 0s);
+}
+@keyframes card-bob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(-1.1deg); }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-client="jonatas-hotts"] .idle-float {
+    animation: none;
+  }
+}
+
+/* Ambient-glow "breathing" - opacity only, deliberately NOT scale/transform.
+   `.contact-glow` already carries a static `transform: translateX(-50%)` for
+   centering; a scale-based keyframe would silently replace that transform
+   while animating (the same animation-conflict bug documented above), so
+   this stays opacity-only to be safe on any glow regardless of what static
+   transform it already has. */
+[data-client="jonatas-hotts"] .idle-glow {
+  animation: glow-breathe var(--glow-duration, 6s) var(--ease-in-out) infinite;
+}
+@keyframes glow-breathe {
+  0%, 100% { opacity: 0.55; }
+  50% { opacity: 1; }
+}
+@media (prefers-reduced-motion: reduce) {
+  [data-client="jonatas-hotts"] .idle-glow {
+    animation: none;
+  }
+}

@@ -1,110 +1,81 @@
 ---
 name: create-client
-description: Run the full lifecycle for a new client landing page - from intake through research, strategy, copy, design, implementation, QA, CRO, and deploy-ready. Use when the user asks to create a landing page for a new client/company, or invokes /create-client.
+description: Run the lean, conversational lifecycle for a new client landing page - client interview, design interview, then parallel per-section React implementation. Use when the user asks to create a landing page for a new client/company, or invokes /create-client.
 ---
 
 Category: workflow (meta-skill) · This is the orchestrator's playbook — the
-main Claude Code session follows it directly and drives the specialist
-subagents in `.claude/agents/` via the Task tool. No separate "Orchestrator"
-subagent exists: subagents run in fresh, isolated context per call and can't
-hold state across 15+ phases, so the main session (this one) is the
-orchestrator, and `project-state.md` is the persistent memory across turns.
+main Claude Code session follows it directly. No separate "Orchestrator"
+subagent exists: subagents run in fresh, isolated context and can't hold a
+live conversation with the user, so the main session (this one) conducts
+both interviews directly.
 
 ## Before starting
-Read `CLAUDE.md` at the repo root if you haven't already this session — it
-has the folder map, routing mechanism, and full skill/agent roster. Check
-`docs/skills-registry.md` and `docs/mcp-registry.md` if a phase below needs a
-capability not listed here.
+Read `CLAUDE.md` at the repo root if you haven't already this session —
+specifically its "React Independent-App System" section (the path below).
+For legacy Astro maintenance work on `talita-lopes`/`jonatas-hotts` only,
+this skill's flow does not apply — see CLAUDE.md's "Legacy: Astro Monorepo"
+section instead.
 
-## Phase 1 — Intake
-Get the client name and a one-line objective from the user if not already
-given. Don't ask more than that up front — research fills most gaps.
+**Golden rule, for every phase below: always ask, never assume.** Adapt
+questions to the specific business — a SaaS ≠ a restaurant ≠ a personal
+trainer. If something can't be verified (a stat, a testimonial, a photo's
+subject), it gets marked `UNKNOWN`/`PROOF NEEDED`, never invented.
 
-## Phase 2 — Scaffold (deterministic, do this before any agent work)
-Run: `npm run create-client -- "<Client Name>"`
-This creates `clients/<slug>/` with the full folder tree and filled
-templates, and marks Phase 1 done in that client's `project-state.md`.
-If the script reports the slug already exists, stop and ask the user whether
-this is an update to an existing client instead of a new one.
+## Phase 1 — Scaffold
+Run: `npm run create-react-client -- "<Client Name>"`
+Creates `react-clients/<slug>/` — an independent Vite + React + TS project
+with Tailwind v4 and Framer Motion already installed and wired, plus blank
+`client-brief.md`/`design-brief.md` copied in. If the script reports the
+slug already exists, stop and ask the user whether this is an update to an
+existing client rather than a new one.
 
-## Phase 3 — Discovery
-Fill `clients/<slug>/discovery/questionnaire.md` directly with the user —
-but first skim what phase 4 (research) will likely answer, and only ask what
-research can't reliably resolve. Adapt questions to the business type (a
-SaaS ≠ a restaurant ≠ a clinic ≠ a personal brand).
+## Phase 2 — Client Intel Interview (you, live with the user)
+Ask about the business/services, differentiators, target audience, social
+media handles, real contact info (WhatsApp/phone/email/address), existing
+brand assets (logo/photos — note where to find them), tone/voice, and real
+proof (testimonials/reviews/certifications). Never fabricate an answer the
+user hasn't given or confirmed. Fill `react-clients/<slug>/client-brief.md`
+directly as you go.
 
-## Phase 4 — Research
-Task → `researcher` agent, skill: `research`. Output:
-`research/company-intelligence.md`.
+## Phase 3 — Design Planning Interview (you, live with the user)
+Ask about aesthetic direction, liked/disliked references, existing brand
+colors/fonts, and desired motion intensity. Decide the final section list
+together with the user — Hero/Nav/Footer/Contact are typical defaults, but
+anything else (Services, Pricing, Testimonials, FAQ, Gallery, About) only
+belongs on the page if the business genuinely needs it; justify each one,
+don't default to a generic template.
 
-## Phase 5 — Brand DNA
-Task → `brand-intelligence` agent, skill: `brand-dna`. Output:
-`brand/brand-dna.md`.
+Invoke the `motion-playbook` skill and use it to assign each section a
+**distinct** animation mechanism — no two sections should read as the same
+decoration with different content. Write `react-clients/<slug>/design-brief.md`:
+concrete design tokens (ready to paste into `src/index.css`'s `@theme`
+block), the section → mechanism motion table, and the justified section
+list.
 
-## Phase 6 — Competitor / market research
-Task → `researcher` agent again, same skill, target
-`research/competitor-analysis.md`.
+## Phase 4 — Parallel section builders
+For every section in `design-brief.md`, invoke the `section-builder` agent —
+**all invocations in one message** (multiple Agent tool calls together, not
+one at a time). Each invocation's prompt must include: the paths to
+`client-brief.md` and `design-brief.md`, this section's name/role, its
+assigned animation mechanism, and the list of mechanisms already taken by
+sibling sections. Each agent writes exactly one
+`react-clients/<slug>/src/sections/<SectionName>.tsx` and touches nothing
+else.
 
-## Phase 7 — Strategy
-Task → `strategist` agent, skill: `content-strategy`. Output:
-`strategy/strategy.md`. This includes the page-length rationale — don't skip
-it.
+## Phase 5 — Final assembly (you, not a subagent phase)
+Wire every section component into `react-clients/<slug>/src/App.tsx` in
+`design-brief.md`'s section order. Run `npm run build` inside
+`react-clients/<slug>/` (this also type-checks — the Vite react-ts template's
+build script is `tsc -b && vite build`). Write a throwaway Playwright script
+(not committed) to check the built preview at mobile/tablet/desktop widths —
+`claude-in-chrome` has not connected once in this environment, don't rely on
+it. Per CLAUDE.md's QA approach, check
+`document.body.scrollWidth - window.innerWidth === 0` at each breakpoint as
+a cheap tripwire for layout blowout. Report `dist/` as ready — it's a
+deployable static artifact; send the client a link once hosted.
 
-## Phase 8 — Minimum-necessary-page audit + IA
-Task → `ux-architect` agent, skill: `ux-architecture`. Output:
-`strategy/page-architecture.md`. Every section must survive the audit table
-or get cut.
-
-## Phase 9 — Visual research
-Task → `visual-researcher` agent, skill: `visual-research`. Output:
-`design/visual-research.md`, `assets/moodboard/`.
-
-## Phase 10 — Copy
-Task → `copywriter` agent, skill: `conversion-copywriting`. Output:
-`copy/*.md`. Any missing proof is marked `PROOF NEEDED`, never fabricated.
-
-## Phase 11 — Visual direction
-Task → `ui-design` agent, skill: `visual-direction` (which itself invokes
-`design-taste-frontend` for the taste pass). Output:
-`design/design-direction.md`, `clients/<slug>/src/tokens.css`.
-
-## Phase 12 — Implementation + responsive + SEO + performance + analytics
-Task → `developer` agent, skills: `astro-client-integration`,
-`seo-technical`, `performance-budget`, `analytics-setup` (only if required),
-and `mobile-native` for the responsive pass. Output: `clients/<slug>/src/*`.
-Run `npm run check` and `npm run build` before calling this phase done.
-
-## Phase 13 — QA
-Task → `qa` agent, skill: `qa-checklist`. Output: `qa/post-mortem.md`
-(Breakpoint + Technical sections filled).
-
-## Phase 14 — CRO review
-Task → `cro` agent, skill: `cro-review`. Output: `qa/post-mortem.md`
-(Conversion Review section filled).
-
-## Phase 15 — Iteration
-Fix issues raised in phases 13-14 by re-invoking the relevant agent. Cap at 3
-iterations unless the user asks for more — each iteration must target
-specific findings, not a vague "polish pass."
-
-## Phase 16 — Final validation
-`npm run check && npm run build`. Confirm `dist/<slug>/index.html` exists.
-Re-view the page once more end to end.
-
-## Phase 17 — Deploy-ready
-Report the page as ready: static output in `dist/`, deployable to any static
-host or path-based behind a reverse proxy at `/<slug>` (see root `CLAUDE.md`
-"Deployment"). No CI/deploy config is written unless the user names a
-specific target.
-
-## Phase 18 — Post-mortem
-Append to `qa/post-mortem.md`: what worked, what failed, missing
-capabilities/tools hit during this project, reusable patterns found. This is
-what makes the next client faster — don't skip it.
-
-## Throughout
-After every phase, update the phase table and Decisions Log in
-`clients/<slug>/project-state.md` — status, owner, date. If a phase reveals a
-problem in an earlier decision (e.g. implementation exposes a strategy gap),
-go back and fix that earlier phase's doc rather than patching around it in
-code.
+## If something doesn't fit this flow
+If a client genuinely needs something outside this lean pipeline (deep
+competitor research, a formal CRO review, SEO/analytics setup), that's a new
+explicit decision to make with the user, not something to quietly revive
+from the legacy agent roster — note it as a gap rather than improvising.

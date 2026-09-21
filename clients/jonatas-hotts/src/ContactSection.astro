@@ -1,0 +1,138 @@
+---
+import { Image } from 'astro:assets';
+import CtaButton from '../../../shared/components/CtaButton.astro';
+import Icon from '../../../shared/components/Icon.astro';
+import jonatasAvatar from '../assets/images/jonatas-perfil.jpg';
+
+export interface Props {
+  whatsappUrl: string;
+}
+const { whatsappUrl } = Astro.props;
+---
+<section class="contact-section" id="contato">
+  <div class="contact-glow idle-glow" aria-hidden="true"></div>
+  <div class="contact-inner">
+    <h2 class="enter enter-1">Vamos treinar?</h2>
+    <p class="enter enter-2 contact-body">
+      Manda uma mensagem agora e agenda sua avaliação com o Jonatas.
+      Presencial em Londrina ou online: você escolhe o formato, ele monta o
+      treino.
+    </p>
+
+    <div class="enter enter-3 contact-cta">
+      <CtaButton href={whatsappUrl} variant="primary" external pulse>
+        <Icon name="whatsapp" size={18} />
+        Agendar avaliação
+      </CtaButton>
+    </div>
+
+    <div class="enter enter-4 contact-details">
+      <a class="contact-detail-link" href={whatsappUrl} target="_blank" rel="noopener noreferrer">
+        <Icon name="whatsapp" size={16} />
+        (43) 99981-3940
+      </a>
+      <p class="contact-area">Atendimento presencial em Londrina, PR, ou online, de onde você estiver.</p>
+    </div>
+
+    <!--
+      Faith-line aside: per brand-dna.md's explicit judgment (present, not
+      prominent) and page-architecture.md's sanctioned placement (this
+      section only, not repeated elsewhere). A small closing signature line,
+      not a headline - deliberately styled smaller/quieter than every other
+      line on the page. Paired with his real profile photo (his own public
+      Instagram) as a small round avatar - a literal face next to the sign-off,
+      not a stock placeholder.
+    -->
+    <div class="enter enter-5 contact-signature-row">
+      <Image src={jonatasAvatar} alt="Jonatas Hotts" width={40} height={40} class="contact-avatar" />
+      <p class="contact-signature">Jonatas Hotts · Jesus é o caminho ✝️</p>
+    </div>
+  </div>
+</section>
+<style>
+  .contact-section {
+    position: relative;
+    overflow: hidden;
+    background: var(--color-charcoal);
+    color: var(--color-bg);
+    padding-block: var(--space-6);
+    text-align: center;
+  }
+  .contact-glow {
+    position: absolute;
+    top: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 30rem;
+    height: 30rem;
+    background: var(--glow-energy);
+    filter: blur(70px);
+    pointer-events: none;
+  }
+  .contact-inner {
+    position: relative;
+    z-index: 1;
+    max-width: 38rem;
+    margin-inline: auto;
+    padding-inline: var(--space-4);
+  }
+  .contact-section h2 {
+    color: var(--color-bg);
+  }
+  .contact-body {
+    margin-top: var(--space-3);
+    color: color-mix(in srgb, var(--color-bg) 85%, transparent);
+  }
+  .contact-cta {
+    margin-top: var(--space-5);
+    display: flex;
+    justify-content: center;
+  }
+  .contact-details {
+    margin-top: var(--space-5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+  }
+  .contact-detail-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    font-weight: 700;
+    color: var(--color-bg);
+    text-decoration: none;
+    border-bottom: 2px solid var(--color-energy);
+    padding-bottom: 2px;
+    transition: border-bottom-width 160ms var(--ease-out);
+  }
+  .contact-detail-link:hover {
+    border-bottom-width: 3px;
+  }
+  .contact-detail-link :global(svg) {
+    color: var(--color-energy);
+  }
+  .contact-area {
+    font-size: 0.9rem;
+    color: color-mix(in srgb, var(--color-bg) 70%, transparent);
+    max-width: 32ch;
+  }
+  .contact-signature-row {
+    margin-top: var(--space-6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6em;
+  }
+  .contact-avatar {
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+    object-fit: cover;
+    border: 2px solid color-mix(in srgb, var(--color-bg) 40%, transparent);
+  }
+  .contact-signature {
+    font-size: 0.8rem;
+    color: color-mix(in srgb, var(--color-bg) 55%, transparent);
+  }
+</style>

@@ -1,6 +1,6 @@
 ---
 name: developer
-description: Implements a client's landing page as Astro components wired into the Landing Page OS shared routing and token system. Use for the implementation and responsive phases of /create-client.
+description: Implements a client's landing page as Astro components wired into the Landing Page OS shared routing and token system. Use for the implementation and responsive phases of /create-client. (legacy Astro clients only — talita-lopes, jonatas-hotts; do not use for new clients, see CLAUDE.md)
 tools: Read, Write, Edit, Bash, Glob, Grep, Skill
 model: inherit
 ---

@@ -1,6 +1,6 @@
 ---
 name: qa
-description: Runs the full technical, visual, and accessibility QA pass on a finished Landing Page OS client page. Use for the QA phase of /create-client.
+description: Runs the full technical, visual, and accessibility QA pass on a finished Landing Page OS client page. Use for the QA phase of /create-client. (legacy Astro clients only — talita-lopes, jonatas-hotts; do not use for new clients, see CLAUDE.md)
 tools: Read, Bash, Skill, mcp__claude-in-chrome__navigate, mcp__claude-in-chrome__computer, mcp__claude-in-chrome__read_console_messages, mcp__claude-in-chrome__resize_window
 model: inherit
 ---

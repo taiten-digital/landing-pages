@@ -9,7 +9,7 @@ given phase.
 | Web search | `WebSearch` | Market/competitor/reputation research; sourcing free-license stock photography (Unsplash, Pexels) when a section genuinely needs an image and no client photo fits — see "Sourcing stock photography" below |
 | Web fetch | `WebFetch` | Reading a specific known URL (site page, article); previewing a candidate stock photo before downloading it — see below; browsing [inspora.design](https://www.inspora.design/) and [styles.refero.design](https://styles.refero.design/) for current visual reference and extracted real-product design systems during `visual-research`/`visual-direction` (see those skills for the full method) |
 | Browser automation | `mcp__claude-in-chrome__*` (navigate, computer, read_page, screenshot, console, network) | JS-heavy sites, social profiles, competitor screenshots, visual QA at breakpoints. **In practice this has not connected once in this environment** — always try it first, but don't block on it. |
-| Browser automation (fallback) | Playwright (`npm install -D playwright && npx playwright install chromium`, then a one-off script via `node`) | Confirmed working in this environment when `claude-in-chrome` isn't connected. Use for real screenshots and for reproducing client-side bugs (write a small script that navigates, scrolls/interacts, and screenshots or dumps console/`pageerror` events — see `clients/talita-lopes/project-state.md`'s "Second Post-Delivery Correction" for a worked example that caught a real `IntersectionObserver` bug this way). Don't commit the script; it's a diagnostic tool, not project infrastructure. |
+| Browser automation (fallback) | Playwright (`npm install -D playwright && npx playwright install chromium`, then a one-off script via `node`) | Confirmed working in this environment when `claude-in-chrome` isn't connected. Use for real screenshots and for reproducing client-side bugs (write a small script that navigates, scrolls/interacts, and screenshots or dumps console/`pageerror` events — see `clients/talita-lopes/project-state.md`'s "Second Post-Delivery Correction" for a worked example that caught a real `IntersectionObserver` bug this way). Point it at whichever build you're checking — root `dist/` for legacy Astro clients, `react-clients/<slug>/dist/` (via `npm run preview`) for new React clients. Don't commit the script; it's a diagnostic tool, not project infrastructure. |
 | Design / Figma | Figma MCP (`figma-use`, `figma-design-to-code`, `figma-generate-design`) | Client-provided Figma files, pushing/pulling design assets |
 | File storage | Google Drive MCP | Client-provided source documents (briefs, decks, photos) shared via Drive |
 
@@ -46,8 +46,10 @@ failure mode worth knowing before relying on it:
    text description alone.
 4. Only after visually confirming the photo fits: download it at a large
    width via `curl` (Unsplash/Pexels both support `?w=<px>` resize params)
-   into `clients/<slug>/assets/images/`, and note the license inline as a
-   code comment next to its import (see `CLAUDE.md`'s "Content integrity").
+   into `clients/<slug>/assets/images/` (legacy Astro clients) or
+   `react-clients/<slug>/src/assets/images/` (new React clients), and note
+   the license inline as a code comment next to its import (see `CLAUDE.md`'s
+   "Content integrity").
 5. Delete an asset you sourced but didn't end up using — don't leave
    rejected candidates in the repo (a real client photo that's just
    temporarily unused is different: keep that, it's not yours to delete).
@@ -57,5 +59,7 @@ failure mode worth knowing before relying on it:
 - Don't invoke browser automation for something `WebFetch`/`WebSearch`
   already answers.
 - Screenshots/visual captures from `claude-in-chrome` go in
-  `clients/<slug>/assets/moodboard/` when they're reference material, or are
-  described inline in a research doc when they're just evidence for a claim.
+  `clients/<slug>/assets/moodboard/` for legacy Astro clients. New React
+  clients have no moodboard step (the lean 3-role pipeline has no dedicated
+  visual-research phase) — reference screenshots, if needed, are described
+  inline during the Design Planning Interview instead.

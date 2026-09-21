@@ -1,5 +1,5 @@
 ---
-export interface Props {
+export interface Props extends Omit<astroHTML.JSX.AnchorHTMLAttributes, 'href'> {
   href: string;
   variant?: 'primary' | 'secondary';
   external?: boolean;
@@ -8,9 +8,10 @@ export interface Props {
   // so it reads as "this is the one to click" rather than noisy repetition.
   pulse?: boolean;
 }
-const { href, variant = 'primary', external = false, pulse = false } = Astro.props;
+const { href, variant = 'primary', external = false, pulse = false, ...rest } = Astro.props;
 ---
 <a
+  {...rest}
   href={href}
   target={external ? '_blank' : undefined}
   rel={external ? 'noopener noreferrer' : undefined}

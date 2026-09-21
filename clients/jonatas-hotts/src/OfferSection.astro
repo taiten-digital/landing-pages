@@ -1,0 +1,172 @@
+---
+import Icon from '../../../shared/components/Icon.astro';
+import CtaButton from '../../../shared/components/CtaButton.astro';
+
+export interface Props {
+  whatsappPresencial: string;
+  whatsappOnline: string;
+}
+const { whatsappPresencial, whatsappOnline } = Astro.props;
+
+const cards = [
+  {
+    icon: 'dumbbell' as const,
+    heading: 'Presencial, em Londrina',
+    body: 'O Jonatas vai até você: na sua casa, na academia do seu condomínio ou numa academia comum. Você treina com alguém do seu lado, corrigindo a postura e ajustando o treino na hora.',
+  },
+  {
+    icon: 'monitor' as const,
+    heading: 'Online, de onde você estiver',
+    body: 'Não mora perto ou prefere treinar no seu próprio tempo? A consultoria online monta um plano pensado pra você, com acompanhamento à distância, tudo combinado direto com o Jonatas pelo WhatsApp.',
+  },
+];
+---
+<!--
+  Rebuilt from a static 2-card grid (client feedback: the page's sections
+  read too similar to each other - this and TrainingSection were both just
+  "heading + paragraph + generic card(s)"). Now a segmented toggle that
+  picks the format AND changes the CTA's actual wa.me link to match - the
+  interaction has a real consequence, not just a visual swap, per root
+  CLAUDE.md's "let the real mechanic carry the motion" guidance.
+-->
+<section class="offer-section" id="oferta">
+  <div class="offer-inner">
+    <h2 class="enter enter-1">Pra quem é esse treino</h2>
+    <p class="enter enter-2 offer-intro">
+      Esse treino é pra quem quer emagrecer, ganhar condicionamento físico,
+      voltar a se exercitar depois de um tempo parado ou simplesmente sair do
+      sedentarismo. Não é treino de atleta, nem preparação pra competição. É
+      treino pra vida real.
+    </p>
+
+    <div class="enter enter-3 format-toggle" data-format-toggle role="tablist" aria-label="Escolha o formato de treino">
+      <span class="format-toggle-thumb" aria-hidden="true"></span>
+      {cards.map((card, i) => (
+        <button type="button" class="format-toggle-btn" role="tab" aria-selected={i === 0 ? 'true' : 'false'} data-index={i}>
+          <span class="format-toggle-icon idle-float" style={`--float-duration:${4.8 + i * 0.8}s; --float-delay:${i * 0.3}s;`}>
+            <Icon name={card.icon} size={18} />
+          </span>
+          {card.heading}
+        </button>
+      ))}
+    </div>
+
+    <div class="format-panel">
+      {cards.map((card, i) => (
+        <div class="format-panel-item" data-panel={i} aria-hidden={i === 0 ? 'false' : 'true'}>
+          <p>{card.body}</p>
+        </div>
+      ))}
+    </div>
+
+    <div class="enter enter-4 format-cta">
+      <CtaButton
+        href={whatsappPresencial}
+        variant="primary"
+        external
+        data-format-cta
+        data-href0={whatsappPresencial}
+        data-href1={whatsappOnline}
+      >
+        <Icon name="whatsapp" size={18} />
+        Quero começar
+      </CtaButton>
+    </div>
+  </div>
+</section>
+<script>
+  document.querySelectorAll<HTMLElement>('[data-format-toggle]').forEach((toggle) => {
+    const section = toggle.closest('.offer-section');
+    const btns = Array.from(toggle.querySelectorAll<HTMLButtonElement>('.format-toggle-btn'));
+    const thumb = toggle.querySelector<HTMLElement>('.format-toggle-thumb');
+    const panels = Array.from(section?.querySelectorAll<HTMLElement>('.format-panel-item') ?? []);
+    const cta = section?.querySelector<HTMLAnchorElement>('[data-format-cta]');
+    if (!btns.length) return;
+
+    const setActive = (i: number) => {
+      btns.forEach((b, idx) => b.setAttribute('aria-selected', idx === i ? 'true' : 'false'));
+      panels.forEach((p, idx) => p.setAttribute('aria-hidden', idx === i ? 'false' : 'true'));
+      if (thumb) thumb.style.transform = `translateX(${i * 100}%)`;
+      if (cta) {
+        const href = i === 0 ? cta.dataset.href0 : cta.dataset.href1;
+        if (href) cta.href = href;
+      }
+    };
+    btns.forEach((btn, i) => btn.addEventListener('click', () => setActive(i)));
+    setActive(0);
+  });
+</script>
+<style>
+  .offer-section {
+    background: var(--color-bg);
+    padding-block: var(--space-6);
+  }
+  .offer-inner {
+    max-width: var(--max-width);
+    margin-inline: auto;
+    padding-inline: var(--space-4);
+  }
+  .offer-intro {
+    margin-top: var(--space-3);
+    max-width: 62ch;
+    color: var(--color-muted);
+  }
+
+  .format-toggle {
+    position: relative;
+    margin-top: var(--space-5);
+    max-width: 26rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 4px;
+  }
+  .format-toggle-thumb {
+    position: absolute;
+    top: 4px;
+    bottom: 4px;
+    left: 4px;
+    width: calc(50% - 4px);
+    background: var(--color-energy);
+    border-radius: var(--radius-md);
+    transition: transform 260ms var(--ease-out);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .format-toggle-thumb {
+      transition: none;
+    }
+  }
+  .format-toggle-btn {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+    padding: var(--space-2) var(--space-3);
+    background: transparent;
+    border: none;
+    font: inherit;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: var(--color-fg);
+    cursor: pointer;
+  }
+  .format-toggle-icon {
+    display: inline-flex;
+  }
+
+  .format-panel {
+    margin-top: var(--space-4);
+  }
+  .format-panel-item[aria-hidden='true'] {
+    display: none;
+  }
+  .format-panel-item p {
+    max-width: 56ch;
+    color: var(--color-muted);
+  }
+
+  .format-cta {
+    margin-top: var(--space-5);
+  }
+</style>

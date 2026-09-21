@@ -6,5 +6,8 @@
   "scripts": {
     "create-react-client": "node scripts/create-react-client.mjs",
     "build:react-clients": "node scripts/build-react-clients.mjs"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.4"
   }
 }

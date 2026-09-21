@@ -61,7 +61,14 @@ else.
 
 ## Phase 5 — Final assembly (you, not a subagent phase)
 Wire every section component into `react-clients/<slug>/src/App.tsx` in
-`design-brief.md`'s section order. Run `npm run build` inside
+`design-brief.md`'s section order. Generate the real favicon (the scaffold
+strips the generic default Vite one on purpose — see CLAUDE.md's "Favicon"):
+`node scripts/generate-favicon.mjs <slug> --logo <path> --bg "<their --color-bg>" [--crop l,t,w,h]`
+if a real logo exists (crop to isolate just the icon/logomark, not a full
+wordmark lockup — check the source pixel dimensions first, same "measure,
+don't guess" discipline as any other asset crop in this repo), or
+`node scripts/generate-favicon.mjs <slug> --letter "<first letter>" --accent "<their --color-accent>" --accent-fg "<their --color-accent-fg>"`
+if there's no logo yet. Run `npm run build` inside
 `react-clients/<slug>/` (this also type-checks — the Vite react-ts template's
 build script is `tsc -b && vite build`). Write a throwaway Playwright script
 (not committed) to check the built preview at mobile/tablet/desktop widths —

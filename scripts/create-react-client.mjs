@@ -83,6 +83,21 @@ fs.writeFileSync(
   `// Section imports get added here during Final Assembly (Phase 5), once the\n// parallel section-builder agents have written each src/sections/*.tsx file.\nexport default function App() {\n  return <></>;\n}\n`
 );
 
+// Strip the generic default Vite favicon/icon-sprite and the <link> that
+// points to it - a wrong/generic favicon is worse than a temporarily missing
+// one. Final Assembly (Phase 5) replaces this with a real one via
+// scripts/generate-favicon.mjs, generated from the client's own logo or a
+// monogram in their own accent color, never left as the default.
+for (const stale of ['favicon.svg', 'icons.svg']) {
+  fs.rmSync(path.join(clientDir, 'public', stale), { force: true });
+}
+fs.writeFileSync(
+  path.join(clientDir, 'index.html'),
+  fs
+    .readFileSync(path.join(clientDir, 'index.html'), 'utf8')
+    .replace(/\s*<link rel="icon"[^>]*>\n?/, '\n')
+);
+
 fs.mkdirSync(path.join(clientDir, 'src', 'sections'), { recursive: true });
 fs.mkdirSync(path.join(clientDir, 'src', 'assets', 'images'), { recursive: true });
 fs.writeFileSync(path.join(clientDir, 'src', 'sections', '.gitkeep'), '');

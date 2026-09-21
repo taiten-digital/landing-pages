@@ -217,6 +217,24 @@ assume.** This applies to the two live interviews and to every
 `section-builder` invocation — an unconfirmed fact becomes `UNKNOWN`/
 `PROOF NEEDED`, never a guess.
 
+### Favicon
+Every client gets a real favicon during Final Assembly (Phase 5) — the
+scaffold script deliberately strips the generic default Vite favicon/icon
+sprite (`public/favicon.svg`, `public/icons.svg`) and the `<link rel="icon">`
+pointing at it, so a client left without one is an obvious, visible gap
+instead of a silently wrong/generic icon. Generate the real one with
+`scripts/generate-favicon.mjs`:
+- **Real logo exists**: pad/crop it onto a square PNG in the site's own
+  `--color-bg` token. If the logo is a wide wordmark+logomark lockup (most
+  are), crop to isolate just the icon/logomark — a full lockup shrunk to
+  favicon size reads as illegible noise. Check the source image's real pixel
+  dimensions first and preview the crop before committing to it, the same
+  "measure, don't guess" discipline as any other asset crop in this repo.
+- **No logo yet**: a plain monogram (the client's first initial) in their
+  own `--color-accent`/`--color-accent-fg` tokens — a neutral placeholder,
+  same as the "initials instead of guessing" rule under Content integrity,
+  never a generic unrelated icon.
+
 ### Icons, copy & spacing style
 Never hand-draw an SVG icon, and never settle for a vaguely-related generic
 one either — check `lucide-react` and `react-icons` (which bundles Font

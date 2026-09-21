@@ -3,11 +3,10 @@ name: motion-playbook
 description: Framer Motion recipes translating this repo's hard-won motion lessons (idle float, ambient glow, gradient-text emphasis, real-mechanic-carries-motion, no scroll-triggered content-hiding, measured-width carousels and marquees) for React client sections. Use when building or assigning motion for a Landing Page OS React section.
 ---
 
-Category: animation, React-specific. These recipes exist because the old
-CSS-only motion system (see root `CLAUDE.md`'s Motion section, kept there for
-the frozen Astro legacy clients) caused real, repeated client-rejection
-rounds — the underlying design rules didn't change, only the implementation
-mechanism. Every new React section must follow these.
+Category: animation, React-specific. These recipes encode design rules
+learned from real, repeated client-rejection rounds on earlier builds — the
+underlying rules didn't change, only the implementation mechanism (Framer
+Motion, not CSS). Every new React section must follow these.
 
 ## Non-negotiable: content is visible immediately
 Never pair `initial={{ opacity: 0 }}` with `whileInView` on primary content —

@@ -10,11 +10,8 @@ live conversation with the user, so the main session (this one) conducts
 both interviews directly.
 
 ## Before starting
-Read `CLAUDE.md` at the repo root if you haven't already this session —
-specifically its "React Independent-App System" section (the path below).
-For legacy Astro maintenance work on `talita-lopes`/`jonatas-hotts` only,
-this skill's flow does not apply — see CLAUDE.md's "Legacy: Astro Monorepo"
-section instead.
+Read `CLAUDE.md` at the repo root if you haven't already this session — it's
+the complete map of this system's stack, pipeline, and hard-won rules.
 
 **Golden rule, for every phase below: always ask, never assume.** Adapt
 questions to the specific business — a SaaS ≠ a restaurant ≠ a personal
@@ -77,5 +74,5 @@ deployable static artifact; send the client a link once hosted.
 ## If something doesn't fit this flow
 If a client genuinely needs something outside this lean pipeline (deep
 competitor research, a formal CRO review, SEO/analytics setup), that's a new
-explicit decision to make with the user, not something to quietly revive
-from the legacy agent roster — note it as a gap rather than improvising.
+explicit decision to make with the user — note it as a gap rather than
+improvising a subagent or skill for it silently.

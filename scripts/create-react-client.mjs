@@ -8,7 +8,20 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { slugify, isValidSlug } from '../shared/utilities/slugify.mjs';
+
+function slugify(name) {
+  return name
+    .normalize('NFD')
+    .replace(/[̀-ͯ]/g, '') // strip accents
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
+}
+
+function isValidSlug(slug) {
+  return /^[a-z0-9]+(-[a-z0-9]+)*$/.test(slug);
+}
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
 const clientName = process.argv[2];

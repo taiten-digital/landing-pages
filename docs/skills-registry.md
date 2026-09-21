@@ -13,19 +13,6 @@ this category — don't duplicate it.
 | (meta) | `create-client` | The lean `/create-client` pipeline: client interview → design interview → parallel React section builders |
 | accessibility | → global: `impeccable` | UI/accessibility critique and polish |
 
-Legacy (Astro clients only — `talita-lopes`, `jonatas-hotts`; do not use for
-new clients, see root `CLAUDE.md`):
-
-| Category | Skill | When to use |
-|---|---|---|
-| copywriting | `conversion-copywriting` | Section copy from strategy + real customer language (legacy Astro clients only) |
-| ui | `visual-direction` | Client design tokens; delegates taste judgment to `design-taste-frontend` (legacy Astro clients only) |
-| frontend | `astro-client-integration` | Wire a client's Astro components into shared routing/tokens (legacy Astro clients only) |
-| seo | `seo-technical` | Meta/OG/canonical/heading/alt-text checklist (legacy Astro clients only) |
-| performance | `performance-budget` | Image/font/JS budget using Astro's built-ins (legacy Astro clients only) |
-| analytics | `analytics-setup` | Minimal, vendor-agnostic event tracking, only if required (legacy Astro clients only) |
-| testing | `qa-checklist` | Full technical/visual QA pass (legacy Astro clients only) |
-
 Also relevant, used across multiple phases, not tied to one category:
 - `design-taste-frontend` — anti-slop frontend design judgment (final say on visual direction and implementation)
 - `mobile-native` — mobile-specific correctness (viewport bugs, tap targets, safe areas)

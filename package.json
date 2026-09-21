@@ -4,25 +4,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "check": "astro check",
-    "create-client": "node scripts/create-client.mjs",
-    "create-react-client": "node scripts/create-react-client.mjs"
-  },
-  "dependencies": {
-    "@tailwindcss/vite": "^4.3.3",
-    "astro": "^7.3.2",
-    "tailwindcss": "^4.3.3"
-  },
-  "devDependencies": {
-    "@astrojs/check": "^0.9.10",
-    "@fontsource-variable/bricolage-grotesque": "^5.3.0",
-    "@fontsource-variable/manrope": "^5.3.0",
-    "@fontsource/archivo-black": "^5.2.0",
-    "@fontsource/hanken-grotesk": "^5.3.0",
-    "playwright": "^1.63.0",
-    "typescript": "^5.6.0"
+    "create-react-client": "node scripts/create-react-client.mjs",
+    "build:react-clients": "node scripts/build-react-clients.mjs"
   }
 }

@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;700;800&family=Hanken+Grotesk:wght@400;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-forest: #142016;
+  --color-accent: #2f9e52;
+  --color-accent-fg: #142016;
+  --color-bg: #ffffff;
+  --color-sage: #e4f2e8;
+  --color-sage-alt: #eaf1ea;
+  --color-cream: #fbf9f4;
+  --color-muted: #4c5c4f;
+  --color-muted-dark: #d7ded8;
+  --color-border: #e1e6e2;
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-sans: 'Hanken Grotesk', system-ui, sans-serif;
+  --radius-sm: 2px;
+  --radius-md: 6px;
+  --radius-pill: 999px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-forest);
+}

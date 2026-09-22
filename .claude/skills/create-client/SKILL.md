@@ -34,6 +34,14 @@ proof (testimonials/reviews/certifications). Never fabricate an answer the
 user hasn't given or confirmed. Fill `react-clients/<slug>/client-brief.md`
 directly as you go.
 
+Before moving on, run CLAUDE.md's "Asset intake" on every file the client
+sent: verify the real format with `file` (an extension can lie; `.png` files
+have been AVIF), convert with `sharp` into `src/assets/images/`, and record
+real dimensions and whether there is an alpha channel in the brief's asset
+list. If the client sent an old website or Instagram, `WebFetch` the site
+first (Instagram is login-walled and yields almost nothing) so the interview
+only asks what is still unknown.
+
 ## Phase 3 — Design Planning Interview (you, live with the user)
 Ask about aesthetic direction, liked/disliked references, existing brand
 colors/fonts, and desired motion intensity. Decide the final section list
@@ -51,7 +59,11 @@ against the planned section list: if a section would clearly benefit from
 a real photo (Hero, About, a services card) and `client-brief.md` doesn't
 have one, ask the client for it now rather than discovering the gap after
 the page ships as icon-only. See CLAUDE.md's "Full-bleed hero sections"
-and "Content integrity" for the full reasoning.
+and "Content integrity" for the full reasoning. If no landscape photo
+exists, offer the ordered options listed there (ask for one; atmospheric
+no-people stock plus the real portrait in About; two-column only with the
+deviation flagged). If the client has no testimonials, plan a proof section
+from their own stated credentials instead of a Testimonials section.
 
 Pick a real Google Font pairing for `--font-display`/`--font-sans` (never
 leave it at plain `system-ui`/`'Inter'` with no import — see CLAUDE.md's
@@ -76,6 +88,20 @@ assigned animation mechanism, and the list of mechanisms already taken by
 sibling sections. Each agent writes exactly one
 `react-clients/<slug>/src/sections/<SectionName>.tsx` and touches nothing
 else.
+
+Agents can't see each other's output, so put the **cross-section contracts**
+in every prompt that touches them: the exact anchor `id` each section root
+must use (`sobre`, `metodo`, ...) and the `<a href="#...">` values Nav/Footer
+use; the `--nav-height` publisher (Nav) and consumer (Hero); that the display
+font is single-weight (no `font-bold`); and which real asset file each
+section uses and whether it is transparent. Agents in this setup have no
+Bash, so they can't build or screenshot; treat every returned file as
+unreviewed until Phase 5.
+
+**If agents die mid-run** (rate limit or API error), don't re-dispatch
+blindly: `ls`/read `src/sections/` first. On `rafael-kudo`, 4 of 5 dead
+agents had already written complete files and only one section was missing.
+Review what exists and re-dispatch only what is absent.
 
 ## Phase 5 — Final assembly (you, not a subagent phase)
 Wire every section component into `react-clients/<slug>/src/App.tsx` in
@@ -103,7 +129,9 @@ sweep that only opens the menu after scrolling.
 Before reporting the page done, run the cross-section consistency checks
 from CLAUDE.md's "QA approach" (grep `font-display` usage across every
 section's main heading, grep the heading/body color token for outliers,
-grep `<button` and confirm every hit has `cursor-pointer`) — a clean build
+grep `<button` and confirm every hit has `cursor-pointer`, grep `font-display`
+elements for `font-bold`, and check every Nav/Footer `#anchor` resolves to a
+real section `id`, and that `--nav-height` is set) — a clean build
 and a zero-overflow sweep do not catch inter-section drift between
 parallel `section-builder` agents, since each agent only sees the shared
 briefs, never sibling agents' actual output. Report `dist/` as ready — it's

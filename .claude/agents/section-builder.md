@@ -165,4 +165,31 @@ photo** (Ken Burns zoom + gradient scrim + text overlay — check an existing
 sibling client's `Hero.tsx` for the exact pattern) unless `design-brief.md`
 explicitly says otherwise. Don't silently default to a different
 composition just because the available photo is portrait-oriented; that
-decision belongs to the Design Planning Interview, not to you.
+decision belongs to the Design Planning Interview, not to you. Keep the
+scrim light over an already-dark photo (`from-bg via-transparent to-bg/30`
+plus `from-bg/80 via-bg/35 to-transparent`); a heavy scrim on a dark stock
+photo turns the "photo" into a black box (`rafael-kudo`).
+
+**Nav and Hero share the nav height through `--nav-height`.** If you build
+the Nav, publish it: `useLayoutEffect` + `ResizeObserver` on the bar row
+(`<nav>`, not the whole `<header>`, since the mobile dropdown would shrink
+the Hero while open), writing `getBoundingClientRect().height` to
+`document.documentElement.style.setProperty('--nav-height', ...)`. If you
+build the Hero, read `var(--nav-height, 4.5rem)`. Only claim in a comment
+that the other side does this if your invocation prompt says it does;
+otherwise the fallback silently masks the missing half (`rafael-kudo`).
+
+**Display fonts that ship one weight (Anton, Archivo Black): never add
+`font-bold`/`font-semibold` to a `font-display` element** (fake bold), and
+give uppercase accented headings `leading-[1.1]` or more so accents don't
+hit the line above.
+
+**Cutout/transparent portraits: never put a light background behind them**
+(`bg-white`, `bg-primary-fg`); it makes a transparent asset look like a
+white box on a dark page. Use a tinted accent halo or a palette surface; a
+plain dark surface hides dark clothing.
+
+**Marquee/carousel cards must fit the longest display-font word with 40px+
+of headroom** at every breakpoint, not just the average card. Size the card
+width from the widest string (`MESTRE/DOUTOR`-style), and verify by measuring
+the text width against the card's inner width.

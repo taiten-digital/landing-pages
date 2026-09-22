@@ -26,6 +26,13 @@ present something as true that isn't verified.** It shows up in two forms:
   already-established phrasing instead ("Avaliação verificada no Google"
   with no specific count), and say plainly to the client which part of the
   request couldn't be done and why.
+- **No testimonials or reviews exist at all** (`rafael-kudo`: none on his
+  old site, none sent) — don't ship an empty or invented testimonials
+  section. Drop it, and if the client publicly states real credentials
+  (years of experience, students trained, books, degrees), build a proof
+  section from only those, footnoted as the client's own claims
+  ("Informações divulgadas pelo próprio ..."), with no invented media
+  outlet names. Ask for Google reviews or screenshots for a later round.
 - **Images** — the same rule, less obvious because it's visual instead of
   written:
   - Never present a stock or generic photo as depicting the client or any
@@ -42,6 +49,15 @@ present something as true that isn't verified.** It shows up in two forms:
     comment next to its import (which service, that it's free for
     commercial use, whether attribution is required) — this is the only
     record of where an asset came from once it's in the repo.
+  - **A cutout portrait needs a themed background, never a light box.**
+    Check whether a client PNG really has alpha (`sharp(f).metadata()
+    .hasAlpha`) before styling it. On `rafael-kudo` the portrait was
+    transparent, but the section builder had put `bg-primary-fg` (near
+    white) behind it, so it read as a white rectangle pasted onto a dark
+    page and the client flagged it. Use a background from the page's own
+    palette; when the subject wears dark clothing (a black tank top), a
+    plain dark surface swallows the silhouette, so use a radial halo of the
+    accent behind the torso instead.
   - **If a section would clearly read better with a real photo and none
     exists yet in `client-brief.md`'s asset list, ask the client for one
     instead of silently shipping an icon-only version.** On
@@ -67,6 +83,28 @@ present something as true that isn't verified.** It shows up in two forms:
     "WhatsApp" instead of the actual number) — that's a regression in
     usefulness dressed up as a design improvement, not an actual
     simplification.
+
+## Asset intake (before Phase 4)
+- **A client's file extension can lie.** On `rafael-kudo` both files sent
+  as `.png` were AVIF (magic bytes `ftyp avif`), and the Read tool refused
+  them ("not a valid PNG"). Run `file <path>` on everything received, then
+  convert with `sharp` (`sharp(src).png().toFile(dest)`, already available
+  through `scripts/generate-favicon.mjs`) into `src/assets/images/` under a
+  descriptive name. Read real width/height/alpha at the same time; they feed
+  the Hero-orientation rule below. In a `node -e` script under Git Bash use
+  `C:/...` forward-slash paths, since backslashes get eaten.
+- **A light logo on transparent is invisible in an image preview.** Before
+  measuring a favicon `--crop`, composite it onto the site's `--color-bg`
+  and enlarge it (`sharp(f).flatten({background}).resize(w*3, h*3,
+  {kernel: 'nearest'})`).
+- **Sourcing Hero stock (Pexels):** `WebSearch`, then `WebFetch` the search
+  page for photo-page URLs, then `WebFetch` a photo page for the direct
+  `images.pexels.com/photos/<id>/...jpeg` URL, photographer, and pixel
+  dimensions. Check orientation *before* downloading (the first pick on
+  `rafael-kudo`, a moody neon gym, was 2:3 portrait and had to be dropped),
+  `curl` it, and preview it at reduced size. Prefer an empty environment
+  with no identifiable people (a barbell in a dim gym); that also keeps it
+  clear of the Content integrity rule about implying who is pictured.
 
 ## Full-bleed hero sections
 A hero meant to "fill the page" means `min-height: calc(100svh - <nav
@@ -112,6 +150,31 @@ full-bleed Hero, say so explicitly during the Design Planning Interview and
 ask the client to source a landscape photo or confirm the alternate
 composition — don't let an asset constraint silently become an unreviewed
 design decision.
+
+**When no landscape photo exists, offer these in order:** (1) ask the
+client for one; (2) atmospheric, no-people stock as the full-bleed
+background plus the client's real portrait featured in Sobre (accepted on
+`rafael-kudo`, keeps the house Hero look without implying the stock is the
+client); (3) a two-column Hero, only with the deviation flagged explicitly.
+
+**A fixed Nav and a separate Hero file must agree on how the nav height
+travels.** Nav publishes it as `--nav-height` on `document.documentElement`
+from a `ResizeObserver` on the *bar row* (not the whole header, because the
+mobile dropdown lives inside the header and would shrink the Hero while the
+menu is open); Hero reads `var(--nav-height, 4.5rem)`. On `rafael-kudo` the
+Hero builder wrote a comment saying Nav publishes this while the Nav builder
+never did (parallel agents can't see each other), so the Hero silently ran
+on its 72px fallback against a real 64/80px nav. Reference implementation:
+`jonatas-hotts/src/sections/Nav.tsx`. State the contract in both dispatch
+prompts and check `--nav-height` is set during QA.
+
+**Dark stock plus a heavy scrim makes the photo invisible.** The first
+`rafael-kudo` Hero stacked `from-bg via-bg/80 to-bg/40` and a left-to-right
+scrim over an already-dark gym photo; it rendered as a black box with a
+green glow. Start light (`from-bg via-transparent to-bg/30` and `from-bg/80
+via-bg/35 to-transparent`), then look at the screenshot and confirm the
+subject is actually visible. If the paragraph crosses a bright part of the
+photo, use `text-text/80` instead of `text-text-muted`.
 
 ## General CSS gotchas
 - **A CSS Grid item's default `min-width` is `auto`** (sized to fit its
@@ -198,13 +261,31 @@ design decision.
   (or equivalent), not `scrolled` alone, so the whole header reads as one
   consistent panel the instant the menu opens, regardless of scroll
   position.
+- **A single-weight display font (Anton, Archivo Black) must not get
+  `font-bold`**: browsers synthesize a smeared fake bold. `rafael-kudo`
+  shipped it on the Planos heading despite the Anton import, so grep
+  `font-display` lines for `font-bold`/`font-semibold`.
+- **Tight leading collides accented uppercase headlines.** Anton at
+  `leading-none` or `tracking-tight` puts the accents of `PRÓXIMO NÍVEL`
+  against the line above; give uppercase display headings `leading-[1.1]`
+  or more.
+- **Size marquee/carousel cards for the longest display-font word, not the
+  average.** On `rafael-kudo`, `MESTRE/DOUTOR` and `PSICOTERAPEUTA` at
+  `text-5xl` filled a 320px card edge to edge (client: "textos colados na
+  lateral direita"). Measure each big text with a `Range`
+  (`range.selectNodeContents(el)`, then `getBoundingClientRect().width`)
+  against the card's inner width at every breakpoint and keep 40px or more
+  of headroom.
 
 ## QA approach
 No permanent test framework. `claude-in-chrome` has not successfully
 connected once in this environment across real use — when it doesn't,
-install Playwright (`npm install -D playwright && npx playwright install
-chromium`) and write a throwaway script rather than guessing visual
-correctness from source code. This isn't optional when scroll/motion is
+write a throwaway Playwright script rather than guessing visual
+correctness from source code. Playwright and Chromium are usually already
+installed inside a sibling client (`ls react-clients/*/node_modules/
+playwright`; at last check `fabiana-teixeira` and `jonatas-hotts`, not the
+repo root), so `require()` it by absolute path from a scratch script before
+running `npm install -D playwright && npx playwright install chromium`. This isn't optional when scroll/motion is
 involved: a real bug (scroll-reveal silently hiding ~90% of a page on an
 earlier build) was invisible from source reading and only found by
 actually screenshotting the page. A visual pass alone still isn't enough
@@ -213,6 +294,11 @@ window.innerWidth === 0` at every tested breakpoint as a cheap, general
 tripwire for grid/flex blowout bugs before they're reported back by the
 client. Add a permanent automated visual-regression or Lighthouse CI
 *pipeline* only when a specific client need justifies it.
+
+**Port 5173 may already be another client's dev server.** Start
+`npm run dev` with `--port <n> --strictPort` and confirm with `curl -s
+localhost:<n> | grep -i '<title>'` that it is *this* client; on
+`rafael-kudo` a bare 200 on the default port was Fabiana's page.
 
 **A 375/768/1440 breakpoint sweep is not enough.** On `jonatas-hotts`, a
 Nav with 5 links (including a two-word label) plus a full-text CTA button
@@ -244,6 +330,9 @@ src/sections` and confirm every section's main heading has it (not just
 some); grep the color token used for headings/body text and flag any
 section using a different one without a stated reason; grep `<button` and
 confirm every hit has `cursor-pointer` (see General CSS gotchas above).
+Also confirm every Nav/Footer `href="#..."` resolves to a real section `id`
+(`document.getElementById` in the sweep): those builders are told the ids
+in their prompts, never the sections' actual output.
 
 **`index.html`'s `<title>`, `<meta name="description">`, and `lang`
 attribute are not filled by the scaffold script and are easy to forget

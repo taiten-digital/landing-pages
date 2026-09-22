@@ -162,3 +162,23 @@ useLayoutEffect(() => {
   if (navRef.current) setNavHeight(navRef.current.getBoundingClientRect().height);
 }, []);
 ```
+That recipe only works when one component owns both the nav and the hero. In
+this repo Nav and Hero are separate files built by parallel agents, so Nav
+publishes the measurement as a CSS variable and Hero consumes it:
+```tsx
+// Nav.tsx: observe the bar row (<nav>), not the <header>, so the mobile
+// dropdown opening doesn't shrink the Hero.
+useLayoutEffect(() => {
+  const el = barRef.current;
+  if (!el) return;
+  const set = () =>
+    document.documentElement.style.setProperty('--nav-height', `${el.getBoundingClientRect().height}px`);
+  set();
+  const ro = new ResizeObserver(set);
+  ro.observe(el);
+  return () => ro.disconnect();
+}, []);
+// Hero.tsx: className="min-h-[100vh] min-h-[calc(100vh-var(--nav-height,4.5rem))] min-h-[100svh] min-h-[calc(100svh-var(--nav-height,4.5rem))]"
+```
+Both halves must exist; if Nav never sets it, Hero silently uses the 4.5rem
+fallback and looks fine at only one nav height.

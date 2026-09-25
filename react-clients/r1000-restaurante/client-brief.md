@@ -28,6 +28,33 @@ reads (403/429/login wall), so the real menu could not be fetched.
 - UNKNOWN — service format (buffet/self-service/por quilo vs. prato feito
   à la carte), fixed weekly dishes (e.g. feijoada day), real menu list.
 
+### From client material (user-sent screenshots, 2026-09-25)
+Instagram bio (their own words): "Todos dia é dia de churrasco 🔥 e
+Feijoada 🔥 / Marmitex churrasco e prato feito / Horário 10:30 as 15:00 /
+Terça à domingo / Av jose del ciel filho 750, Londrina 86080780".
+
+Printed menu (image sent by user; DATE UNKNOWN, may be outdated: it lists
+"Segunda à Quinta" though bio says closed Monday, and its prices look low
+vs. current Instagram promos). Tagline on it: "Todos dias churrasco".
+Marmitex sizes: Mini 450g / Média 750g / Grande 900g.
+| Dia | Mini | Média | Grande |
+|---|---|---|---|
+| Segunda à quinta (churrasco) | 12,00 | 14,00 | 17,00 |
+| Sexta: lasanha | 12,00 | 15,00 | 18,00 |
+| Sábado: feijoada | 13,00 | 15,00 | 18,00 |
+| Domingo: churrasco | 13,00 | 16,00 | 20,00 |
+Combo churrasco: Combo família 79,99 · Combo frango recheado 59,90 ·
+Combo frango normal 49,90.
+Assados aos domingos: Costela assada na brasa kg 38,00 · Frango
+recheado 35,00 · Frango normal 29,00 · Linguiça toscana kg 28,00 ·
+Coxa e sobrecoxa assada kg 19,90.
+Current Instagram promo posts: "Promoção mais vendida da Zona Norte: 2
+Média Marmitex Churrasco + refrigerante 2L R$ 49,99"; "Sábado promoção do
+dia: 2 média costela + 2L 49,99 / 2 média feijoada + 2L 54,99".
+Visible in their food photos: costela, frango assado, linguiça, carne
+assada fatiada, arroz, feijão, farofa, maionese, batata frita, macarrão.
+PROOF NEEDED: current prices before showing any.
+
 ## Differentiators
 UNKNOWN — not stated by the client. Public positioning leans on churrasco
 na brasa + comida caseira ("Sabor & Brasa" iFood name). Don't claim
@@ -48,12 +75,19 @@ Jardim Imagawa, plus delivery customers.
   CEP 86080-780
 - Phone: (43) 3066-2648
 - WhatsApp: (43) 99138-3162
-- Hours: terça a domingo, 10h30 às 15h30; segunda fechado. (Restaurant's
+- Hours: terça a domingo, 10h30 às 15h00 (Instagram bio, their latest own
+  source; older posts said 15h30); segunda fechado. (Restaurant's
   own posts. restaurantguru says 10h–15h; benditoguia shows a generic
   Mon–Sat template, disregarded.) To confirm with client.
 
 ## Existing Brand Assets
-- Logo: exists (user confirmed). UNKNOWN — file not yet received.
+- Logo: exists — round badge: white disc, crossed grill fork + spatula,
+  flame on top, two bulls, "R1000" in dark grey, orange-red ribbon
+  "RESTAURANTE". Seen only in Instagram screenshot; file not yet received.
+- Brand colors in use (Instagram/menu): orange-red (~#D2522A) + charcoal/
+  black, cream/gold accent headings on the printed menu.
+- Pinned Instagram post shows two women (likely team/owners). Do NOT
+  identify or caption them as owners unless the client confirms who they are.
 - Real photos: exist (user confirmed). UNKNOWN — files not yet received.
 
 ## Tone & Voice

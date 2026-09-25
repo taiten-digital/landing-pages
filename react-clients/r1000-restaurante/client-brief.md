@@ -55,6 +55,18 @@ Visible in their food photos: costela, frango assado, linguiça, carne
 assada fatiada, arroz, feijão, farofa, maionese, batata frita, macarrão.
 PROOF NEEDED: current prices before showing any.
 
+### CONFIRMED by user (2026-09-25) — supersedes the above
+- Current bio (use this wording): "Todos dia é dia de churrasco 🔥 e
+  Feijoada 🔥🔥🔥🫘 / Marmitex churrasco e prato feito / Horário 10:30 as
+  15:00 / Terça á domingo". Hours: terça a domingo, 10h30 às 15h00.
+- Main dishes to feature: costela, churrasco, feijoada, frango assado.
+- NO prices and NO specific promotions on the page. Only say that there
+  are promotions (e.g. "Tem promoção toda semana, chama no WhatsApp"),
+  never which ones or values.
+- The printed weekday menu (lasanha sexta etc.) is treated as outdated;
+  don't use it.
+- NO photos of people anywhere on the page.
+
 ## Differentiators
 UNKNOWN — not stated by the client. Public positioning leans on churrasco
 na brasa + comida caseira ("Sabor & Brasa" iFood name). Don't claim
@@ -81,13 +93,16 @@ Jardim Imagawa, plus delivery customers.
   Mon–Sat template, disregarded.) To confirm with client.
 
 ## Existing Brand Assets
-- Logo: exists — round badge: white disc, crossed grill fork + spatula,
+- Logo FILE received: `src/assets/images/logo-r1000.png` — real PNG,
+  150x150, NO alpha, white background (low-res: only use small, e.g. nav
+  badge ≤ 64px; ask for a larger/vector version). Sampled colors: orange
+  #E83A04, charcoal #333333.
+- Logo: round badge: white disc, crossed grill fork + spatula,
   flame on top, two bulls, "R1000" in dark grey, orange-red ribbon
   "RESTAURANTE". Seen only in Instagram screenshot; file not yet received.
 - Brand colors in use (Instagram/menu): orange-red (~#D2522A) + charcoal/
   black, cream/gold accent headings on the printed menu.
-- Pinned Instagram post shows two women (likely team/owners). Do NOT
-  identify or caption them as owners unless the client confirms who they are.
+- User rule: no photos of people on the page at all.
 - Real photos: exist (user confirmed). UNKNOWN — files not yet received.
 
 ## Tone & Voice
@@ -99,6 +114,6 @@ User said to leave Google reviews aside. No testimonials, ratings or
 counts on the page. PROOF NEEDED for any claim beyond the facts above.
 
 ## Open Questions
-- Logo + photo files.
-- Real list of main dishes (names, short descriptions, prices yes/no).
-- Confirm hours and whether they're lunch only.
+- Dish photo files (user fetching).
+- Whether marmitex sizes (Mini 450g / Média 750g / Grande 900g) are current.
+- Larger logo file, if one exists.

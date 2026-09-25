@@ -102,9 +102,7 @@ export default function Nav() {
       <nav
         ref={barRef}
         aria-label="Navegação principal"
-        className={`relative mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 transition-[padding] duration-300 sm:px-6 ${
-          scrolled ? 'py-2.5' : 'py-3.5 sm:py-4'
-        }`}
+        className={`relative mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6 sm:py-4`}
       >
         <a
           href="#inicio"
@@ -113,9 +111,7 @@ export default function Nav() {
           aria-label="R1000 Restaurante, voltar ao topo"
         >
           <span
-            className={`flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-white shadow-md ring-2 ring-white/10 transition-[width,height] duration-300 ${
-              scrolled ? 'h-11 w-11' : 'h-12 w-12 sm:h-[52px] sm:w-[52px]'
-            }`}
+            className={`flex shrink-0 items-center justify-center overflow-hidden rounded-full bg-white shadow-md ring-2 ring-white/10 h-12 w-12 sm:h-[52px] sm:w-[52px]`}
           >
             <img
               src={logo}

@@ -1,5 +1,21 @@
-// Section imports get added here during Final Assembly (Phase 5), once the
-// parallel section-builder agents have written each src/sections/*.tsx file.
+import Nav from './sections/Nav';
+import Hero from './sections/Hero';
+import Cardapio from './sections/Cardapio';
+import Pedir from './sections/Pedir';
+import OndeEstamos from './sections/OndeEstamos';
+import Footer from './sections/Footer';
+
 export default function App() {
-  return <></>;
+  return (
+    <>
+      <Nav />
+      <main>
+        <Hero />
+        <Cardapio />
+        <Pedir />
+        <OndeEstamos />
+      </main>
+      <Footer />
+    </>
+  );
 }

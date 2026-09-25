@@ -103,3 +103,4 @@ No Testimonials (user: leave Google reviews aside), no About/team (no photos of 
 - Real feijoada photo (stock placeholder in the meantime).
 - Larger logo file.
 - Whether marmitex sizes (Mini/Média/Grande) are current: left OFF the page until confirmed.
+- Storefront/fachada photo (no people) to pair with the map in Onde estamos.

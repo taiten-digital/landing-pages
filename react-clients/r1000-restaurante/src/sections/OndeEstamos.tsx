@@ -10,7 +10,7 @@ const PHONE_URL = 'tel:+554330662648';
 const DIRECTIONS_URL =
   'https://www.google.com/maps/dir/?api=1&destination=Av.%20Jos%C3%A9%20Del%20Ciel%20Filho%2C%20750%2C%20Londrina%20PR';
 const MAP_EMBED_URL =
-  'https://www.google.com/maps?q=Av.+Jos%C3%A9+Del+Ciel+Filho,+750,+Londrina,+PR,+86080-780&output=embed';
+  'https://maps.google.com/maps?q=Av.+Jos%C3%A9+Del+Ciel+Filho,+750,+Jardim+Imagawa,+Londrina,+PR,+86080-780&z=16&output=embed';
 const ADDRESS = 'Av. José Del Ciel Filho, 750, Jardim Imagawa, Londrina, PR, CEP 86080-780';
 
 // Hours (client-brief: terça a domingo, 10h30 às 15h; segunda fechado).
@@ -206,14 +206,14 @@ export default function OndeEstamos() {
             </ul>
 
             {/* Buttons */}
-            <div className="mt-7 flex flex-col gap-3 sm:flex-row">
+            <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
               <motion.a
                 href={DIRECTIONS_URL}
                 target="_blank"
                 rel="noopener noreferrer"
                 whileHover={reduceMotion ? undefined : { scale: 1.03 }}
                 whileTap={reduceMotion ? undefined : { scale: 0.97 }}
-                className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 font-medium text-accent-fg transition-colors hover:bg-accent-hover"
+                className="inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-full bg-accent px-6 py-3 font-medium text-accent-fg transition-colors hover:bg-accent-hover"
               >
                 <Navigation className="h-4 w-4" aria-hidden="true" />
                 Como chegar
@@ -224,7 +224,7 @@ export default function OndeEstamos() {
                 rel="noopener noreferrer"
                 whileHover={reduceMotion ? undefined : { scale: 1.03 }}
                 whileTap={reduceMotion ? undefined : { scale: 0.97 }}
-                className="inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border border-white/15 px-6 py-3 font-medium text-fg transition-colors hover:border-white/30 hover:bg-bg-raised"
+                className="inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-full border border-white/15 px-6 py-3 font-medium text-fg transition-colors hover:border-white/30 hover:bg-bg-raised"
               >
                 <FaWhatsapp className="h-4 w-4" aria-hidden="true" />
                 Chamar no WhatsApp

@@ -10,7 +10,7 @@ import { FaWhatsapp } from 'react-icons/fa6';
 import { ArrowUpRight } from 'lucide-react';
 
 // Real client photos (sent by the client, 2026-09-25).
-import pratoChurrasco from '../assets/images/prato-churrasco.webp'; // 339x392, small: stage is capped at 340px wide
+import pratoChurrasco from '../assets/images/prato-churrasco.webp'; // 339x392, small: stage is capped at 340px (mobile) / 420px (md+), about 1.25x upscale at most
 import pratoCostela from '../assets/images/prato-costela.webp'; // 880x1140
 import pratoFrango from '../assets/images/prato-frango-assado.webp'; // 485x593, chicken on the right
 // Pexels photo 34234283 by Beatriz Haiana — Pexels License: free for commercial use, no attribution required. TODO: trocar pela foto real da feijoada do R1000 (placeholder a pedido do cliente).
@@ -144,7 +144,7 @@ export default function Cardapio() {
         </div>
 
         {/* Showcase */}
-        <div className="mt-12 grid grid-cols-1 items-center gap-10 md:mt-14 md:grid-cols-[minmax(0,440px)_minmax(0,1fr)] md:gap-14 lg:gap-20">
+        <div className="mt-12 grid grid-cols-1 items-center gap-10 md:mt-14 md:grid-cols-[minmax(0,500px)_minmax(0,1fr)] md:gap-14 lg:gap-20">
           {/* Stage column */}
           <div className="relative min-w-0 px-4 py-6 sm:px-8">
             {/* Ambient orange glow behind the stage (static; Footer owns the pulse). */}
@@ -173,8 +173,8 @@ export default function Cardapio() {
             </div>
 
             {/* Stage: explicit width + aspect so absolute children never collapse it.
-                Capped at 340px so the 339px-wide churrasco photo is never upscaled noticeably. */}
-            <div className="relative mx-auto aspect-[6/7] w-full max-w-[340px]">
+                Capped at 340px on mobile and 420px on md+ so the 339px-wide churrasco photo is upscaled at most ~1.25x. */}
+            <div className="relative mx-auto aspect-[6/7] w-full max-w-[340px] md:max-w-[420px]">
               {/* "Up next" card peeking out behind, tilted like a stacked plate */}
               <div
                 aria-hidden="true"

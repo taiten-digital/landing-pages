@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #FBF6F0;
+  --color-surface: #F3E9DF;
+  --color-text: #211A1E;
+  --color-text-muted: #6B5E63;
+  --color-deep: #2A1F2D;
+  --color-deep-2: #3A2B3E;
+  --color-cream: #FBF6F0;
+  --color-accent: #C4441E;
+  --color-accent-hover: #A93815;
+  --color-accent-fg: #FFFFFF;
+  --color-blush: #F2C7B5;
+
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-sans: 'Manrope', system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Anchored sections land below the fixed Nav (Nav publishes --nav-height). */
+section[id] {
+  scroll-margin-top: var(--nav-height, 4.5rem);
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}

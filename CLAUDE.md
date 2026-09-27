@@ -176,6 +176,25 @@ via-bg/35 to-transparent`), then look at the screenshot and confirm the
 subject is actually visible. If the paragraph crosses a bright part of the
 photo, use `text-text/80` instead of `text-text-muted`.
 
+**Scrim color and strength over footage: neutral black, localized, no
+filters.** On `talita-lopes-40-mais` a plum (`--color-deep`) scrim over
+green outdoor video turned into muddy grey and the pale-blush emphasis word
+vanished ("as cores não dão contraste"). The over-correction (black/85 full
+frame plus `saturate`/`brightness` filters on the video) was rejected as
+"muito apagado". What worked: untouched video, `from-black/75 via-black/25
+via-40% to-transparent to-70%` from the bottom, a light `from-black/45`
+left scrim on `lg`, and the emphasis word as cream text on an `bg-accent`
+marker swipe instead of a pale colored word. Check 2-3 different video
+timestamps, not one frame.
+
+**No eyebrow tag/chip above the Hero headline.** No pill, badge or small
+label ("Corrida, força, saúde e longevidade para mulheres 40+") above the
+H1. `talita-lopes-40-mais` client removed it explicitly and asked that
+future Heroes not have one. If the positioning line matters, fold it into
+the headline or the supporting paragraph. Keep Hero text left-aligned and
+stacked (headline, paragraph, CTAs, credentials); a split layout with CTAs
+pushed to the right was also rejected on that round.
+
 ## General CSS gotchas
 - **A CSS Grid item's default `min-width` is `auto`** (sized to fit its
   content), not 0. A grid item containing a horizontally-scrolling child

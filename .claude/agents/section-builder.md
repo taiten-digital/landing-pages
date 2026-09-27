@@ -169,6 +169,12 @@ decision belongs to the Design Planning Interview, not to you. Keep the
 scrim light over an already-dark photo (`from-bg via-transparent to-bg/30`
 plus `from-bg/80 via-bg/35 to-transparent`); a heavy scrim on a dark stock
 photo turns the "photo" into a black box (`rafael-kudo`).
+**Never put an eyebrow tag/chip/pill/badge above the Hero headline** (a
+client removed one on `talita-lopes-40-mais` and asked it never come back);
+keep Hero text left-aligned and stacked: headline, paragraph, CTAs,
+credentials. Over colorful footage use a neutral black scrim (not the
+brand's dark tint, which muddies green video) and no `saturate`/
+`brightness` filters on the video; see CLAUDE.md "Full-bleed hero sections".
 
 **Nav and Hero share the nav height through `--nav-height`.** If you build
 the Nav, publish it: `useLayoutEffect` + `ResizeObserver` on the bar row

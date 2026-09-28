@@ -83,6 +83,18 @@ present something as true that isn't verified.** It shows up in two forms:
     "WhatsApp" instead of the actual number) — that's a regression in
     usefulness dressed up as a design improvement, not an actual
     simplification.
+  - **Check whether a "client photo" was made or edited by AI before using
+    it.** Look at the filename (`Gemini_Generated_Image_...`) and zoom into
+    the text in the image: AI invents lettering on signs, totems and license
+    plates. On `dc-consorcios` one image looked like the storefront but was
+    a recomposition (tree removed, gate added, scrambled totem text, a made-up
+    plate) and was refused as "the facade": it shows a building that
+    doesn't exist. An **AI upscale** that keeps the real composition was
+    accepted. Blur any plate it invented and note "AI upscale of the real
+    photo" in the import comment and in `design-brief.md`.
+  - **Blur third-party license plates** (a car parked in front of the
+    storefront) on the asset itself with `sharp` (extract, pixelate, blur,
+    composite). Preview the crop before and after.
 
 ## Asset intake (before Phase 4)
 - **A client's file extension can lie.** On `rafael-kudo` both files sent
@@ -201,6 +213,56 @@ future Heroes not have one. If the positioning line matters, fold it into
 the headline or the supporting paragraph. Keep Hero text left-aligned and
 stacked (headline, paragraph, CTAs, credentials); a split layout with CTAs
 pushed to the right was also rejected on that round.
+
+**On mobile the whole Hero, main CTA included, fits in the first screen.**
+The first `dc-consorcios` Hero was 1049px tall on an 812px screen: a photo
+band on top, a 6-line H1, and the CTA and credentials below the fold. The
+client said "não gostei no mobile". What worked:
+- the photo covers the top ~72% of the Hero;
+- the text is anchored to the bottom (`justify-end`) over a
+  `from-bg via-bg/70` fade;
+- a smaller mobile H1 (`text-[2rem]`, about 4 lines) and tighter spacing
+  (`mt-4`/`mt-6`).
+
+Measure it; don't eyeball it. In the sweep, check that the CTA's
+`getBoundingClientRect().bottom` is `<= innerHeight` at 375×812 and at a
+short screen (390×700).
+
+**The floating WhatsApp button hides while the Hero is on screen.** The Hero
+already has its own WhatsApp CTA, and on mobile the fixed button sat on top
+of it. Use an `IntersectionObserver` on `#inicio` (threshold 0.3), with
+`opacity-0 translate-y-4 pointer-events-none` plus `inert` while hidden. The
+reference is `dc-consorcios/src/sections/Footer.tsx`.
+
+**On desktop the left scrim has to reach past the end of the text column.**
+With the column running to ~50% of the width, a scrim that was already
+transparent at 50% left the paragraph over the bright facade. The fix was
+`from-bg/95 via-bg/75 via-35% to-transparent to-62%`. Check that the key
+element in the photo (the sign) starts after that point.
+
+**Deliver the Hero photo early: `public/` + preload + `srcset`.** An image
+imported from `src/assets` is only discovered after the JS bundle runs. On a
+throttled mobile (see QA approach) it started downloading at 2.0s and
+finished at 4.4s. What fixed it on `dc-consorcios`:
+- two variants in `public/images/` (1200w and 2000w);
+- `<link rel="preload" as="image" imagesrcset=... imagesizes="100vw"
+  fetchpriority="high">` in `index.html`, with the same `srcSet` on the
+  `<img>`. With `base: './'`, Vite rewrites these paths to relative ones.
+
+Result: download from 0.2s to 1.9s, 153 KB on mobile instead of 365 KB.
+Watch out: with `object-cover` on a portrait screen, the image renders
+*wider* than the viewport. That is why the mobile variant is 1200w, not
+the ~800w that `sizes` × DPR would suggest. With a 3:2 photo or wider, a
+phone shows only ~30% of the width. So make a **portrait crop** of the
+framing the Hero already uses (on `caixa-aqui`: 900×1600, 134 KB), serve it
+through `<picture><source media="(max-aspect-ratio: 3/5)">`, and preload it
+with a matching `media`. That keeps full sharpness on the phone without
+sending 2400px.
+
+**An entrance animation on the photo waits for it to load.** A curtain or
+reveal started on mount plays over an empty box when the network is slow,
+and then the photo pops in. Gate it on `onLoad` → `img.decode()` (recipe in
+`motion-playbook`).
 
 ## General CSS gotchas
 - **A CSS Grid item's default `min-width` is `auto`** (sized to fit its
@@ -330,6 +392,23 @@ client. Add a permanent automated visual-regression or Lighthouse CI
 `npm run dev` with `--port <n> --strictPort` and confirm with `curl -s
 localhost:<n> | grep -i '<title>'` that it is *this* client; on
 `rafael-kudo` a bare 200 on the default port was Fabiana's page.
+
+**For "fluidity" or performance, measure on a throttled mobile before
+changing anything.** Run it against `npm run preview` (the build), not the
+dev server. In Playwright:
+- `devices['Pixel 5']` plus CDP `Emulation.setCPUThrottlingRate {rate: 4}`
+  and `Network.emulateNetworkConditions` (150ms, 1.6 Mbps);
+- read `performance.getEntriesByType('resource')` for the Hero image (start
+  and end, and that it downloads only once) and the LCP;
+- screenshot mid-entrance, to see whether the animation is playing over
+  something that hasn't loaded;
+- record `requestAnimationFrame` deltas while scrolling with
+  `mouse.wheel`, and report p50/p95.
+
+On `dc-consorcios` scrolling was already at 60fps (p95 16.8ms), so the real
+problem was loading, not frames. Without numbers, don't add a smooth-scroll
+library (Lenis and the like: a new dependency, and it replaces native touch
+scrolling) and don't strip `backdrop-blur` "for performance".
 
 **A 375/768/1440 breakpoint sweep is not enough.** On `jonatas-hotts`, a
 Nav with 5 links (including a two-word label) plus a full-text CTA button

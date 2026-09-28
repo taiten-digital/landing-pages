@@ -1,6 +1,6 @@
 ---
 name: motion-playbook
-description: Framer Motion recipes translating this repo's hard-won motion lessons (idle float, ambient glow, gradient-text emphasis, real-mechanic-carries-motion, no scroll-triggered content-hiding, measured-width carousels and marquees) for React client sections. Use when building or assigning motion for a Landing Page OS React section.
+description: Framer Motion recipes translating this repo's hard-won motion lessons (idle float, ambient glow, gradient-text emphasis, real-mechanic-carries-motion, no scroll-triggered content-hiding, measured-width carousels and marquees, hero photo entrance gated on image load, spring-smoothed scroll-linked hero) for React client sections. Use when building or assigning motion for a Landing Page OS React section.
 ---
 
 Category: animation, React-specific. These recipes encode design rules
@@ -149,6 +149,48 @@ useLayoutEffect(() => {
 Animate by the measured pixel width, not a `%` of the whole (now
 variable-length) multi-copy track, so the loop point stays exact regardless
 of how many copies were needed.
+
+## Hero photo: entrance waits for the image
+Any entrance on the photo (a curtain with `clipPath`, a fade, a zoom) only
+starts once the image has loaded and decoded. Started on mount, it plays
+over an empty box on a slow network (`dc-consorcios`: the curtain ran from
+2.1 to 3.2s, the photo arrived at 4.4s). The text keeps entering on mount
+without waiting:
+```tsx
+const [photoReady, setPhotoReady] = useState(false);
+const onPhotoLoad = (e: React.SyntheticEvent<HTMLImageElement>) =>
+  e.currentTarget.decode().catch(() => {}).finally(() => setPhotoReady(true));
+
+<motion.div
+  initial={reduceMotion ? false : { clipPath: 'inset(100% 0% 0% 0%)' }}
+  animate={{ clipPath: photoReady || reduceMotion ? 'inset(0% 0% 0% 0%)' : 'inset(100% 0% 0% 0%)' }}
+  transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
+>
+  <img onLoad={onPhotoLoad} onError={() => setPhotoReady(true)} fetchPriority="high" /* srcSet... */ />
+</motion.div>
+```
+
+## Scroll-linked hero: the photo becomes a card (alternative to Ken Burns)
+As the Hero leaves the screen, the photo layer shrinks, rounds its
+corners, drifts down more slowly than the page (parallax) and dims. It
+hides nothing: the text scrolls normally. Pass `scrollYProgress` through a
+**stiff `useSpring`** so mouse-wheel steps become one continuous motion,
+without visible lag on touch:
+```tsx
+const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+const progress = useSpring(scrollYProgress, { stiffness: 220, damping: 40, restDelta: 0.001 });
+const scale = useTransform(progress, [0, 1], [1, 0.8]);
+const y = useTransform(progress, [0, 1], ['0%', '22%']);
+const radius = useTransform(progress, [0, 0.3], [0, 28]);
+const dim = useTransform(progress, [0, 1], [0, 0.55]); // opacity of a bg-bg overlay
+
+<motion.div className="absolute inset-x-0 top-0 -z-10 overflow-hidden will-change-transform"
+  style={reduceMotion ? undefined : { scale, y, borderRadius: radius }} />
+```
+The section needs `overflow-hidden` and a page background behind it so the
+card's edges show. On mobile the effect is subtler (the nav covers the
+top), so use a noticeable range (0.8, not 0.9). Reference:
+`dc-consorcios/src/sections/Hero.tsx`.
 
 ## Full-bleed hero sizing (still applies, different measurement mechanism)
 The `min-height: calc(100svh - <nav height>)` rule from root `CLAUDE.md`'s

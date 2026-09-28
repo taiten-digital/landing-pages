@@ -97,7 +97,7 @@ Como funciona `#como-funciona`, Avaliações `#avaliacoes`, Contato `#contato`.
 CTA: "Simular agora" → `#simulador`.
 
 **Hero** (`#inicio`)
-- Foto: `hero-casa-entardecer.jpg` (2400×1600 paisagem; céu azul escuro à esquerda, casa iluminada à direita). `object-cover object-[70%_center]`. Scrim preto neutro localizado: `bg-gradient-to-t from-black/70 via-black/20 via-40% to-transparent` + no `lg` um lateral `bg-gradient-to-r from-black/55 via-black/20 to-transparent`. Confirmar que a casa continua visível. Sem filtros na foto.
+- Foto: `public/images/hero-casa-entardecer-{1200,2400,mobile}.jpg` (srcset + `<picture>` com recorte retrato 900×1600 para celular + preload no index.html; fade-in quando carrega; original 2400×1600 paisagem; céu azul escuro à esquerda, casa iluminada à direita). `object-cover object-[70%_center]`. Scrim preto neutro localizado: `bg-gradient-to-t from-black/70 via-black/20 via-40% to-transparent` + no `lg` um lateral `bg-gradient-to-r from-black/55 via-black/20 to-transparent`. Confirmar que a casa continua visível. Sem filtros na foto.
 - Texto à esquerda, empilhado: H1, sub, CTAs, linha de credencial.
 - H1: "Facilitando suas *conquistas*." ("conquistas" em itálico dourado `text-accent`).
 - Sub: "Correspondente CAIXA Aqui em Londrina. Simule seu financiamento em segundos e conte com a gente em todo o processo, da simulação à assinatura."

@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Calculator, ChevronDown, MapPin } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa6';
@@ -5,7 +6,11 @@ import { EMPRESA, waLink } from '../content';
 // Pexels #31737859 by Sharath G. (2400x1600, landscape). Pexels license: free for
 // commercial use, no attribution required. Atmospheric stock only: never caption it
 // as a client property or a home financed by them.
-import heroPhoto from '../assets/images/hero-casa-entardecer.jpg';
+// Lives in public/ so index.html can preload it; keep these URLs in sync with the
+// <link rel="preload"> tags there. -mobile is a 900x1600 portrait crop of the same
+// framing (object-[70%_center]) so phones get a sharp image without the full 2400px file.
+const PHOTO = `${import.meta.env.BASE_URL}images/hero-casa-entardecer-`;
+const PHONE = '(max-aspect-ratio: 3/5)';
 // Wikimedia Commons "Caixa Econômica Federal logo 1997.svg". CAIXA trademark, used
 // because the client is an authorized CAIXA Aqui correspondent (confirmed by the user).
 // Blue+orange artwork: only ever inside a WHITE chip.
@@ -20,6 +25,13 @@ const H1_END = LINE_START + LINES * LINE_STAGGER + 0.35;
 
 export default function Hero() {
   const reduceMotion = useReducedMotion();
+  // Fade the photo in once it's decoded instead of letting it pop in over the dark bg.
+  const [photoReady, setPhotoReady] = useState(false);
+  const onPhotoLoad = (e: React.SyntheticEvent<HTMLImageElement>) =>
+    e.currentTarget
+      .decode()
+      .catch(() => {})
+      .finally(() => setPhotoReady(true));
 
   // Each H1 line rises out of its own mask on mount (never on scroll).
   const line = (i: number) =>
@@ -51,20 +63,31 @@ export default function Hero() {
       id="inicio"
       className="relative isolate flex min-h-screen flex-col justify-end overflow-hidden bg-deep pt-[var(--nav-height,4.5rem)] supports-[height:100svh]:min-h-svh lg:justify-center"
     >
-      {/* Photo: slow Ken Burns, zooming toward the lit house on the right */}
-      <motion.img
-        src={heroPhoto}
-        alt=""
-        aria-hidden="true"
-        className="absolute inset-0 -z-20 h-full w-full origin-[70%_55%] object-cover object-[70%_center] will-change-transform"
-        initial={{ scale: 1 }}
-        animate={reduceMotion ? undefined : { scale: 1.08 }}
-        transition={
-          reduceMotion
-            ? undefined
-            : { duration: 18, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' }
-        }
-      />
+      {/* Photo: slow Ken Burns, zooming toward the lit house on the right; fades in on load. */}
+      <picture>
+        <source media={PHONE} srcSet={`${PHOTO}mobile.jpg`} />
+        <motion.img
+          src={`${PHOTO}2400.jpg`}
+          srcSet={`${PHOTO}1200.jpg 1200w, ${PHOTO}2400.jpg 2400w`}
+          sizes="100vw"
+          alt=""
+          aria-hidden="true"
+          fetchPriority="high"
+          onLoad={onPhotoLoad}
+          onError={() => setPhotoReady(true)}
+          className="absolute inset-0 -z-20 h-full w-full origin-[70%_55%] object-cover object-[70%_center] will-change-transform"
+          initial={{ scale: 1, opacity: reduceMotion ? 1 : 0 }}
+          animate={reduceMotion ? undefined : { scale: 1.08, opacity: photoReady ? 1 : 0 }}
+          transition={
+            reduceMotion
+              ? undefined
+              : {
+                  scale: { duration: 18, repeat: Infinity, repeatType: 'mirror', ease: 'easeInOut' },
+                  opacity: { duration: 0.9, ease: EASE },
+                }
+          }
+        />
+      </picture>
 
       {/* Scrims: neutral black, localized (bottom + left on lg), no filters, so the
           house on the right stays bright and readable as a photo. */}

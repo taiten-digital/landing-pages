@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { FaWhatsapp } from 'react-icons/fa6';
 import { MapPin } from 'lucide-react';
@@ -24,6 +25,18 @@ const PING = { duration: 1.2, ease: 'easeOut' as const, repeat: Infinity, repeat
 
 export default function Footer() {
   const reduceMotion = useReducedMotion();
+  // The floating button hides while the Hero is on screen: the Hero has its own WhatsApp CTA.
+  const [heroVisible, setHeroVisible] = useState(true);
+
+  useEffect(() => {
+    const hero = document.getElementById('inicio');
+    if (!hero) return;
+    const io = new IntersectionObserver(([e]) => setHeroVisible(e.intersectionRatio >= 0.3), {
+      threshold: 0.3,
+    });
+    io.observe(hero);
+    return () => io.disconnect();
+  }, []);
 
   return (
     <footer className="relative overflow-hidden bg-deep text-on-dark">
@@ -108,13 +121,16 @@ export default function Footer() {
         </div>
       </div>
 
-      {/* Floating WhatsApp button: fixed on every scroll position, lives here per design-brief. */}
+      {/* Floating WhatsApp button: fixed once past the Hero, lives here per design-brief. */}
       <motion.a
         href={waLink(WA_MSG)}
         target="_blank"
         rel="noopener"
+        inert={heroVisible}
         aria-label={`Falar no WhatsApp: ${CONTATO.whatsappDisplay}`}
-        className="fixed bottom-5 right-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-whatsapp text-white shadow-lg shadow-black/30"
+        className={`fixed bottom-5 right-5 z-40 grid h-14 w-14 place-items-center rounded-full bg-whatsapp text-white shadow-lg shadow-black/30 transition-[opacity,translate] duration-300 ${
+          heroVisible ? 'pointer-events-none translate-y-4 opacity-0' : 'opacity-100'
+        }`}
         whileHover={reduceMotion ? undefined : { scale: 1.08 }}
         whileTap={reduceMotion ? undefined : { scale: 0.94 }}
       >

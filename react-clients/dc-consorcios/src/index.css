@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Manrope:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+/* Palette from the client's own brand: black storefront band + steel-blue diamond
+   (sampled ~#7596BA from the logo) + silver lettering. */
+@theme {
+  --color-bg: #0A0F17;         /* page dark */
+  --color-surface: #111926;    /* alternate dark sections */
+  --color-surface-2: #1A2433;  /* cards inside dark sections */
+  --color-deep: #06090F;       /* Footer, Nav scrolled */
+  --color-text: #EEF2F6;
+  --color-text-muted: #9AA8B8;
+  --color-silver: #C9D1DA;     /* logo lettering tone, secondary emphasis */
+  --color-line: #243044;       /* borders on dark */
+
+  --color-light: #F3F5F8;      /* the one light section (Contemplados) */
+  --color-light-card: #FFFFFF;
+  --color-ink: #0E1622;
+  --color-ink-muted: #4B5868;
+
+  --color-accent: #5B9BE0;     /* diamond blue, brightened: CTAs, focus, 1 focal detail per section */
+  --color-accent-hover: #7AB0EA;
+  --color-accent-fg: #06111F;  /* dark text on accent. Never white on accent. */
+  --color-accent-ink: #1F5FA8; /* accent for text on the LIGHT section (AA on white) */
+  --color-star: #FBBC04;
+  --color-whatsapp: #25D366;
+
+  --font-display: 'Sora', system-ui, sans-serif;
+  --font-sans: 'Manrope', system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: var(--nav-height, 4.5rem);
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+@layer base {
+  .font-display {
+    font-variant-numeric: lining-nums;
+  }
+}

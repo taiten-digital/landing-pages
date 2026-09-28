@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,500;0,600;0,700;0,800;1,700;1,800&family=Nunito+Sans:wght@400;600;700&display=swap');
+@import "tailwindcss";
+
+/* Palette from the client's Instagram and logo: brand blue #185C90 sampled from the logo
+   background, gold from the house icon, white. */
+@theme {
+  --color-bg: #F3F7FB;        /* light sections */
+  --color-surface: #FFFFFF;   /* cards on light sections */
+  --color-text: #0B2440;      /* navy ink */
+  --color-text-muted: #4A5F76;
+  --color-brand: #185C90;     /* exact logo background, blue sections */
+  --color-deep: #0B2A47;      /* darkest navy: Nav scrolled, Como funciona, Footer */
+  --color-deep-2: #12395E;    /* surfaces inside dark sections */
+  --color-on-dark: #FFFFFF;
+  --color-on-dark-muted: #C3D4E6;
+  --color-accent: #F5A623;    /* gold: CTAs, focus, 1 focal detail per section */
+  --color-accent-hover: #FFB940;
+  --color-accent-fg: #0B2440; /* navy on gold ~8:1. Never white on gold. */
+  --color-star: #FBBC04;      /* Google review stars */
+  --color-whatsapp: #25D366;
+
+  --font-display: 'Montserrat', system-ui, sans-serif;
+  --font-sans: 'Nunito Sans', system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* Anchored sections land below the fixed Nav (Nav publishes --nav-height). */
+section[id] {
+  scroll-margin-top: var(--nav-height, 4.5rem);
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}

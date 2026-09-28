@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import { motion, useReducedMotion } from 'framer-motion';
 import { Mail, MapPin } from 'lucide-react';
 import { FaInstagram, FaWhatsapp } from 'react-icons/fa6';
@@ -21,9 +22,27 @@ const PING_CYCLE = 4;
 
 function FloatingWhatsApp() {
   const reduceMotion = useReducedMotion();
+  // Hidden while the Hero is on screen: the Hero has its own WhatsApp CTA, and on mobile
+  // the button used to sit on top of it.
+  const [heroVisible, setHeroVisible] = useState(true);
+
+  useEffect(() => {
+    const hero = document.getElementById('inicio');
+    if (!hero) return;
+    const io = new IntersectionObserver(([e]) => setHeroVisible(e.intersectionRatio >= 0.3), {
+      threshold: 0.3,
+    });
+    io.observe(hero);
+    return () => io.disconnect();
+  }, []);
 
   return (
-    <div className="fixed bottom-5 right-5 z-50">
+    <div
+      inert={heroVisible}
+      className={`fixed bottom-5 right-5 z-50 transition-[opacity,translate] duration-300 ${
+        heroVisible ? 'pointer-events-none translate-y-4 opacity-0' : 'opacity-100'
+      }`}
+    >
       {!reduceMotion && (
         <>
           {/* Two staggered rings so each burst reads as a ripple, then silence. */}

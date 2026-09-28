@@ -64,7 +64,7 @@ Cards `rounded-2xl`/`rounded-3xl`, buttons `rounded-full`.
 | Section | Animation mechanism |
 |---|---|
 | Nav | Scroll-driven chrome (transparent → `bg-deep/90`) + mobile menu via `AnimatePresence` (height/opacity); hamburger below `lg` |
-| Hero | Slow Ken Burns on the facade photo (scale 1 → 1.06, alternating) + H1 lines entering on mount (not scroll) |
+| Hero | Photo opens like a curtain on mount (clip-path, bottom to top) + scroll-linked "photo becomes a card" (scale 1 → 0.8, rounded corners, parallax drift, dim) + H1 lines entering on mount |
 | Contemplados | Auto-rotating **spotlight**: the 2 contemplação stories take turns as a big featured quote (crossfade via `AnimatePresence`, ~7s, thin progress bar under it, pause on hover, dots to pick); the 4 short reviews sit static in a grid below |
 | Modalidades | Idle float on the 3 cards, different phase per card; icon lifts/tilts on hover |
 | Como funciona | **Scroll-linked timeline**: a vertical line fills with `useScroll` + `scaleY` as the section passes; each step's dot lights up when the fill reaches it. All steps visible from the start (nothing hidden) |
@@ -89,10 +89,10 @@ No About (no team photos or confirmed roles), no FAQ (would need plan rules not 
 **Nav**: logo left. Links: Contemplados `#contemplados`, Consórcios `#modalidades`, Como funciona `#como-funciona`, Consórcio x Financiamento `#comparativo` (label it "Por que consórcio" to keep it short), Contato `#contato`. CTA button (accent): "Falar no WhatsApp" → `waLink('Olá! Vim pelo site e quero saber mais sobre consórcio.')`, target _blank. Hamburger below `lg`.
 
 **Hero** (`#inicio`, `bg-bg`)
-- Photo `fachada-dc.jpg` (858×685, opaque; sign band with the DC logo at left-center, x≈0-50%, y≈40-55%; ipê tree at right). **It is only 858px wide: do NOT stretch it across a 1440px screen.** Composition (a documented deviation from the full-width house hero, because of that resolution and because the sign sits where left-aligned text would go):
-  - `lg+`: the photo fills the **right ~58%** of the hero, full height, bleeding to the right viewport edge (`absolute inset-y-0 right-0 w-[58%]`), `object-cover object-[30%_45%]`, with a left fade into the page (`bg-gradient-to-r from-bg via-bg/60 via-15% to-transparent to-40%`) and a light bottom fade (`from-bg/70 to-transparent`). Text in the left column (max-w ~ 34rem). Make sure the DC sign on the facade stays clearly visible.
-  - below `lg`: the photo is a top band (`h-[42svh] min-h-64`, `object-[25%_45%]`) with a bottom fade into `bg-bg`, then the text below it, overlapping upward slightly (`-mt-16`).
-  - Ken Burns on the photo layer only; no color filters.
+- Photo `public/images/fachada-dc-{1200,2000}.jpg` (srcset + preload in index.html; curtain waits for load; 2000×1500, AI upscale supplied by the user of their real 680×510 front photo at dusk, sign lit; DC logo at x≈51-70%, y≈30-37%; parked car plate blurred). Full-bleed house hero: round 2 (client disliked the mobile band layout).
+  - `lg+`: photo covers the whole hero, `object-[50%_30%]`, left scrim `from-bg/95 via-bg/75 via-35% to-transparent to-62%` (text column stays readable, DC sign stays clear), light bottom fade.
+  - below `lg`: photo covers the top 72% (`object-[62%_50%]`, sign centered), text anchored to the bottom over a `from-bg via-bg/70` fade; whole hero incl. CTA and credentials fits in 100svh at 375×812. Floating WhatsApp (Footer) hides while the Hero is on screen.
+  - No color filters on the photo.
   - `alt="Fachada da DC Consórcios na Av. Alziro Zarur, em Londrina"`.
 - Text left-aligned, stacked: H1, paragraph, CTAs, credentials row.
 - H1 (`font-display`, ~text-4xl → lg:text-6xl): "Casa, carro ou moto: sua próxima *conquista* começa com planejamento." (emphasis `conquista` in `text-accent`).
@@ -147,5 +147,5 @@ No About (no team photos or confirmed roles), no FAQ (would need plan rules not 
 - Floating WhatsApp button `fixed bottom-5 right-5 z-50`, `aria-label="Falar no WhatsApp: (43) 3017-3315"`, `FaWhatsapp` white on `bg-whatsapp`, `cursor-pointer`.
 
 ## Open Questions
-- Hero composition (photo on the right 58% instead of full width) is a deviation, flagged to the user; a higher-res facade photo would allow the full-width house hero.
+- Facade photo is an AI upscale: building faithful, but the totem lettering is garbled by the upscaler (small, low in frame). A real high-res photo would still be better.
 - Review authorization; roles/photos of Ana Paula and Diego; hours; vector logo.

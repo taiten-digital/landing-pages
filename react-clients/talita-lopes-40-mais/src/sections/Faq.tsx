@@ -6,7 +6,7 @@ import { OFERTA } from '../content';
 const ITEMS: { q: string; a: ReactNode }[] = [
   {
     q: 'Nunca corri. O curso serve para mim?',
-    a: 'Serve. O Novo Ciclo foi pensado tanto para quem está começando do zero quanto para quem já corre e quer evoluir, sempre com progressão no seu ritmo.',
+    a: 'Serve. O Método C40 foi pensado tanto para quem está começando do zero quanto para quem já corre e quer evoluir, sempre com progressão no seu ritmo.',
   },
   {
     q: 'Preciso de academia?',
@@ -33,8 +33,8 @@ const ITEMS: { q: string; a: ReactNode }[] = [
     q: 'Como recebo o acesso?',
     a: (
       <>
-        {/* TODO: PROOF NEEDED, a plataforma própria do Novo Ciclo ainda não existe */}
-        Assim que o pagamento for confirmado, você recebe por e-mail o acesso à plataforma do Novo Ciclo.
+        {/* TODO: PROOF NEEDED, a plataforma própria do Método C40 ainda não existe */}
+        Assim que o pagamento for confirmado, você recebe por e-mail o acesso à plataforma do Método C40.
       </>
     ),
   },

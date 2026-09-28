@@ -1,7 +1,7 @@
 // Single place to edit offer values without touching sections (RF03).
 // Name, price and model are proposals pending client approval.
 export const OFERTA = {
-  produto: 'Novo Ciclo',
+  produto: 'Método C40',
   preco: 'R$ 297',
   parcelamento: 'à vista ou em até 12x no cartão',
   modelo: 'Compra única, sem mensalidade', // TODO: compra única ainda não formalizada

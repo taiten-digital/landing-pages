@@ -42,7 +42,7 @@ const PILARES: Pilar[] = [
   {
     titulo: 'Longevidade',
     // Sprout over Hourglass (reads as "time running out") and Infinity (too abstract):
-    // growth that keeps going, coherent with "Novo Ciclo".
+    // growth that keeps going, coherent with the "novo ciclo" theme.
     Icon: Sprout,
     texto:
       'Movimento como hábito para a vida toda: autonomia, equilíbrio e qualidade de vida em todas as fases.',

@@ -18,8 +18,10 @@ práticas. Venda por **compra única** (preferência registrada no onboarding,
 ainda não formalizada). Entrega por uma **plataforma própria que ainda não
 existe**, então o link de checkout é placeholder.
 
-Nome do produto: **"Novo Ciclo"**. PROPOSTA nossa, tirada do texto dela
-("Um novo espaço. Um novo ciclo."), a validar com a cliente.
+Nome do produto: **"Método C40"**, slogan "Corrida inteligente para
+mulheres 40+". Confirmado pelo logo enviado pelo usuário em 2026-09-28
+(substitui a proposta anterior "Novo Ciclo"). A frase "novo ciclo" segue
+como tema de copy (é dela: "Um novo espaço. Um novo ciclo.").
 
 Conteúdo do curso (PROPOSTA, o usuário delegou; validar com a cliente, e
 nunca inventar número de aulas, horas ou módulos):
@@ -67,8 +69,12 @@ Nenhum contato na página por enquanto. O CTA é a compra e o formulário de
 lista de espera. Não reaproveitar o WhatsApp do site de personal aqui.
 
 ## Existing Brand Assets
-Sem logo para o projeto novo (usar wordmark tipográfico). Assets em
-`src/assets/`:
+Assets em `src/assets/`:
+- `images/logo-c40-original.jpg`: logo "Método C40" enviado pelo usuário
+  (1254×1254 JPEG, fundo verde `#05402C`, sem alpha). Derivados com o verde
+  recortado para transparente: `logo-c40.png` (completo com slogan,
+  900×577) e `logo-c40-nav.png` (sem slogan, 600×329). Favicon: recorte do
+  "C40" sobre `#05402C`.
 - `video/hero.mp4`: vídeo real de uma corredora numa prova (chuva,
   arvoredo, grade e público desfocados ao fundo). H.264 1280×720 (16:9
   paisagem), 10 s, 7,4 MB, **tem faixa de áudio**: sempre `muted`. Enviado
@@ -101,7 +107,7 @@ escassez ou contagem regressiva falsas**. Nunca usar travessão (em dash).
 - Prova = credenciais que ela mesma declara (acima) mais o retrato real dela.
 
 ## Open Questions (pendências a levar para a cliente)
-- Nome "Novo Ciclo", pilares, lista do que está incluso e preço: propostas.
+- Pilares, lista do que está incluso e preço: propostas (o nome Método C40 está confirmado).
 - `PROOF NEEDED: CHECKOUT_URL` (a plataforma própria não existe).
 - `UNKNOWN: tempo de acesso ao curso` (não citar na página).
 - `UNKNOWN: se os treinos de força podem ser feitos em casa` (FAQ escrito como proposta).

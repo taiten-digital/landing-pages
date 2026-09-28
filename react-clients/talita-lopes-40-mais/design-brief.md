@@ -1,23 +1,28 @@
 # Design Brief: Talita Lopes 40 Mais (`talita-lopes-40-mais`)
 
 ## Aesthetic Direction & References
-O usuário pediu: "não [manter o verde], inove e fique coerente". Direção:
-**"nascer do sol / novo ciclo"**. Editorial, quente e adulto, sem cara de
-academia neon. Base creme quente, seções escuras em ameixa-noite e um
-terracota de nascer do sol como único accent. O verde do vídeo (arvoredo e
-camiseta da marca) conversa com o terracota como complementar, e a página não
-compete com ele.
+**Paleta remapeada para o logo "Método C40"** (2026-09-28, pedido do
+usuário; a primeira versão ameixa/terracota foi substituída). Cores
+amostradas do arquivo do logo: verde `#05402C` (fundo do logo, exato),
+cobre `#E3A47F` (média), creme `#F8F3EA`. Editorial, elegante e adulto:
+base creme, seções escuras no verde do logo, cobre como único accent.
 
-Tipografia: **Instrument Serif** (display, serifada editorial, **peso
-único**: NUNCA `font-bold`/`font-semibold` em `font-display`; usar
-`italic` para ênfase, ex.: "ficar *forte*") + **Manrope** (corpo/UI, 400 a 800).
-Headings display com `leading-[1.1]` ou mais (acentos de "ÚNICA", "NÍVEL").
+Tipografia: **Cormorant Garamond** (display, 400-600 + itálico, escolhida
+pelo usuário para casar com o "C40" do logo; peso base 500 e
+`lining-nums` via `@layer base` no index.css, porque a Cormorant usa
+numerais old-style por padrão e o "4" de "40" descia da linha) +
+**Manrope** (corpo/UI). Rótulos em caixa-alta espaçada ecoam o "MÉTODO"
+do logo. Headings display com `leading-[1.1]` ou mais.
+
+Logo: `logo-c40-nav.png` (sem slogan) na Nav e `logo-c40.png` (completo)
+no Footer, ambos com o verde recortado para transparente. Só sobre fundo
+escuro (vídeo ou `bg-deep`): as letras creme somem no creme.
 
 Forma: cantos generosos (`rounded-3xl` em cards, `rounded-full` em botões e
 chips). Grão/ruído não; glows suaves em blush são bem-vindos (blur 40-70px,
 gradiente transparente bem antes da borda).
 
-Accent (`--color-accent`, terracota) SÓ em: botões CTA, estado ativo/foco,
+Accent (`--color-accent`, cobre profundo) SÓ em: botões CTA, estado ativo/foco,
 e no máximo 1 detalhe focal por seção. Eyebrows e ícones secundários em
 `text-text-muted` (seções claras) ou `text-cream/60` (seções escuras).
 Blush (`--color-blush`) para glows, halos e itálicos de ênfase em seções escuras.
@@ -25,18 +30,18 @@ Blush (`--color-blush`) para glows, halos e itálicos de ênfase em seções esc
 ## Design Tokens
 ```css
 @theme {
-  --color-bg: #FBF6F0;        /* creme quente, fundo padrão */
-  --color-surface: #F3E9DF;   /* creme mais fundo, cards e seção Lista */
-  --color-text: #211A1E;      /* tinta, texto principal em seções claras */
-  --color-text-muted: #6B5E63;
-  --color-deep: #2A1F2D;      /* ameixa-noite, seções escuras */
-  --color-deep-2: #3A2B3E;    /* superfícies dentro de seções escuras */
-  --color-cream: #FBF6F0;     /* texto em seções escuras (usar text-cream, text-cream/70) */
-  --color-accent: #C4441E;    /* terracota: CTAs/foco. Branco sobre ele: ~5.2:1 */
-  --color-accent-hover: #A93815;
+  --color-bg: #F8F3EA;        /* creme do logo, fundo padrão */
+  --color-surface: #EFE6D8;   /* cards e seção Lista */
+  --color-text: #10261C;      /* tinta verde-escura */
+  --color-text-muted: #55665C;
+  --color-deep: #05402C;      /* verde exato do fundo do logo, seções escuras */
+  --color-deep-2: #0B5039;    /* superfícies dentro de seções escuras */
+  --color-cream: #F8F3EA;     /* texto em seções escuras */
+  --color-accent: #A95A37;    /* cobre profundo: CTAs/foco. Branco ~4.9:1 (o cobre do logo #E3A47F não passa AA com branco) */
+  --color-accent-hover: #8F4A2C;
   --color-accent-fg: #FFFFFF;
-  --color-blush: #F2C7B5;     /* glows, itálicos em fundo escuro */
-  --font-display: 'Instrument Serif', Georgia, serif;
+  --color-blush: #E9B08C;     /* cobre claro: glows, itálicos em fundo verde (~6.7:1) */
+  --font-display: 'Cormorant Garamond', Georgia, serif;
   --font-sans: 'Manrope', system-ui, sans-serif;
 }
 ```
@@ -86,8 +91,10 @@ Investimento `#oferta`, Dúvidas `#faq`. CTA: "Quero meu acesso" → `#oferta`.
 
 **Hero**
 - SEM eyebrow/tag acima do H1 (removida a pedido do cliente; regra da casa daqui em diante).
-- H1 em dois níveis: abertura pequena em itálico "Depois dos 40, não é sobre voltar no tempo." + frase de impacto grande, sem itálico, em duas linhas: "É sobre ficar *forte*" / "para viver bem o futuro." ("forte" em itálico sobre marca-texto `bg-accent`).
-- Tudo alinhado à esquerda e empilhado: H1, sub, CTAs, credenciais.
+- H1 = slogan do logo em duas linhas: "Corrida inteligente" / "para mulheres *40+*" ("40+" sobre marca-texto `bg-accent`; "mulheres 40+" nunca quebra). Escolha do usuário em 2026-09-28.
+- Abaixo, a frase da Talita como citação em itálico (borda esquerda cobre): "Depois dos 40, não é sobre voltar no tempo. É sobre ficar forte para viver bem o futuro."
+- Depois: "O curso online da treinadora Talita Lopes.", CTAs, credenciais só em sans ("16 anos de treinamento · Especialista em Gerontologia").
+- Tudo alinhado à esquerda e empilhado.
 - Scrim preto neutro localizado (baixo + esquerda no lg), vídeo sem filtro.
 - Sub: "Novo Ciclo é o curso online da treinadora Talita Lopes para você começar ou voltar a correr, ganhar força e cuidar do corpo com segurança, no seu ritmo."
 - CTA primário "Quero meu acesso" → `#oferta`; secundário (ghost) "Entrar na lista de espera" → `#lista`.

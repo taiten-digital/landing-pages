@@ -15,14 +15,14 @@ import heroVideo from '../assets/video/hero.mp4';
 // First frame of the same video, 1280x720.
 import heroPoster from '../assets/images/hero-poster.webp';
 
-// Lead-in (small italic setup) + punchline (large, split in two lines on purpose).
-const LEAD = 'Depois dos 40, não é sobre voltar no tempo.'.split(' ');
-const PUNCH_A = 'É sobre ficar forte'.split(' ');
-const PUNCH_B = 'para viver bem o futuro.'.split(' ');
-const STAGGER = 0.06;
+// H1 is the logo's tagline (says what it is at a glance); Talita's own phrase
+// follows as an italic quote. Two lines on purpose.
+const TITLE_A = 'Corrida inteligente'.split(' ');
+const TITLE_B = 'para mulheres 40+'.split(' ');
+const STAGGER = 0.08;
 const H1_START = 0.25;
 // When the last word lands; everything below the H1 enters after it.
-const H1_END = H1_START + (LEAD.length + PUNCH_A.length + PUNCH_B.length) * STAGGER;
+const H1_END = H1_START + (TITLE_A.length + TITLE_B.length) * STAGGER;
 
 const h1Variants: Variants = {
   hidden: {},
@@ -131,23 +131,22 @@ export default function Hero() {
           animate="show"
           className="font-display text-cream [text-shadow:0_1px_2px_rgb(0_0_0/0.35),0_2px_24px_rgb(0_0_0/0.5)]"
         >
-          {/* Lead-in: the setup, small and italic */}
-          <span className="block max-w-3xl text-2xl italic leading-[1.2] text-cream/90 sm:text-3xl lg:text-4xl">
-            {LEAD.map((w, i) => word(w, `l${i}`))}
-          </span>
-          {/* Punchline: the promise, the biggest thing on the page */}
-          <span className="mt-3 block text-[clamp(3rem,min(8vw,11vh),6.5rem)] leading-[1.1] tracking-[-0.01em] sm:mt-4">
+          <span className="block text-[clamp(2.6rem,min(8.5vw,12vh),7rem)] leading-[1.05]">
+            <span className="block">{TITLE_A.map((w, i) => word(w, `a${i}`))}</span>
             <span className="block">
-              {PUNCH_A.map((w, i) =>
-                w === 'forte' ? (
-                  <span key={`a${i}`}>
-                    {/* Terracotta marker swipe behind "forte": blush text had too little
-                        contrast on the grey-green footage; accent + cream reads on any frame. */}
-                    <motion.span variants={wordVariants} className="relative isolate inline-block px-[0.1em] italic text-cream [text-shadow:none]">
-                      forte
+              {word(TITLE_B[0], 'b0')}
+              {/* "mulheres 40+" never splits: "40+" alone on a line read as an orphan on mobile */}
+              <span className="whitespace-nowrap">
+              {TITLE_B.slice(1).map((w, i) =>
+                w === '40+' ? (
+                  <span key={`c${i}`}>
+                    {/* Copper marker swipe behind "40+": accent + cream reads on any frame
+                        of the footage (a pale colored word vanished on the grey-green video). */}
+                    <motion.span variants={wordVariants} className="relative isolate inline-block px-[0.12em] text-cream [text-shadow:none]">
+                      40+
                       <motion.span
                         aria-hidden="true"
-                        className="absolute inset-x-0 bottom-[0.1em] top-[0.2em] -z-10 origin-left -skew-x-6 rounded-[0.12em] bg-accent"
+                        className="absolute inset-x-0 bottom-[0.1em] top-[0.26em] -z-10 origin-left -skew-x-6 rounded-[0.1em] bg-accent"
                         initial={reduceMotion ? false : { scaleX: 0 }}
                         animate={{ scaleX: 1 }}
                         transition={{ duration: 0.7, delay: H1_END + 0.1, ease: [0.22, 1, 0.36, 1] }}
@@ -155,20 +154,22 @@ export default function Hero() {
                     </motion.span>{' '}
                   </span>
                 ) : (
-                  word(w, `a${i}`)
+                  word(w, `c${i}`)
                 ),
               )}
+              </span>
             </span>
-            <span className="block">{PUNCH_B.map((w, i) => word(w, `b${i}`))}</span>
           </span>
         </motion.h1>
 
-        {/* Supporting copy, CTAs and credentials: stacked on the left, same distribution as v1 */}
+        {/* Talita's phrase as a quote, then what the product is, CTAs and credentials */}
         <motion.div {...rise(H1_END - 0.2)} className="mt-6 max-w-4xl sm:mt-8">
           <div className="[text-shadow:0_1px_3px_rgb(0_0_0/0.6),0_2px_16px_rgb(0_0_0/0.55)]">
-            <p className="max-w-lg font-sans text-base font-medium leading-relaxed text-cream sm:text-lg">
-              Novo Ciclo é o curso online da treinadora Talita Lopes para você começar ou voltar a
-              correr, ganhar força e cuidar do corpo com segurança, no seu ritmo.
+            <blockquote className="max-w-xl border-l-2 border-blush/80 pl-4 font-display text-xl italic leading-[1.3] text-cream sm:pl-5 sm:text-2xl lg:text-[1.75rem]">
+              “Depois dos 40, não é sobre voltar no tempo. É sobre ficar forte para viver bem o futuro.”
+            </blockquote>
+            <p className="mt-4 font-sans text-base font-medium text-cream/90 sm:text-lg">
+              O curso online da treinadora Talita Lopes.
             </p>
           </div>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center [@media(max-height:760px)]:mt-5">
@@ -195,14 +196,10 @@ export default function Hero() {
             </motion.a>
           </div>
           <div className="mt-7 [@media(max-height:760px)]:mt-4 [text-shadow:0_1px_3px_rgb(0_0_0/0.6),0_2px_16px_rgb(0_0_0/0.55)]">
-            <p className="flex flex-wrap items-baseline gap-x-5 gap-y-1 font-sans text-sm text-cream/90">
-              <span>
-                <span className="font-display text-2xl text-cream">16 anos</span> de treinamento
-              </span>
-              <span aria-hidden="true" className="hidden h-4 w-px self-center bg-cream/40 sm:block" />
-              <span>
-                Especialista em <span className="font-display text-2xl italic text-cream">Gerontologia</span>
-              </span>
+            <p className="flex flex-col gap-1 font-sans text-sm font-medium text-cream/90 sm:flex-row sm:items-center sm:gap-3">
+              <span>16 anos de treinamento</span>
+              <span aria-hidden="true" className="hidden h-1 w-1 rounded-full bg-blush sm:block" />
+              <span>Especialista em Gerontologia</span>
             </p>
           </div>
         </motion.div>

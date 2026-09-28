@@ -1,4 +1,6 @@
 import { LINKS } from '../content'
+// Client's full Método C40 logo (with tagline), green background keyed to transparent.
+import logo from '../assets/images/logo-c40.png'
 
 const NAV = [
   { label: 'Para quem é', href: '#para-quem' },
@@ -15,9 +17,9 @@ export default function Footer() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex flex-col gap-8 md:flex-row md:items-start md:justify-between">
           <div>
-            <a href="#" className="inline-flex flex-col leading-[1.1]">
-              <span className="font-display text-3xl">Novo Ciclo</span>
-              <span className="mt-1 text-xs text-cream/60">com Talita Lopes</span>
+            <a href="#" className="inline-flex flex-col" aria-label="Método C40, voltar ao topo">
+              <img src={logo} alt="Método C40, corrida inteligente para mulheres 40+" width={900} height={577} className="h-auto w-56" />
+              <span className="mt-3 text-xs text-cream/60">com Talita Lopes</span>
             </a>
             <p className="mt-4 text-sm text-cream/70">
               Profissional de Educação Física · CREF 019973-G/PR

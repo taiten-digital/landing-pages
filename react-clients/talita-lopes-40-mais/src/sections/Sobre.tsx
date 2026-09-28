@@ -121,7 +121,7 @@ export default function Sobre() {
             />
 
             {/* Retrato real enviado pela cliente */}
-            <div className="relative aspect-[3/4] w-full overflow-hidden rounded-3xl shadow-[0_30px_60px_-30px_rgba(42,31,45,0.45)]">
+            <div className="relative aspect-[3/4] w-full overflow-hidden rounded-3xl shadow-[0_30px_60px_-30px_rgba(5,64,44,0.45)]">
               <img
                 src={retrato}
                 alt="Talita Lopes, treinadora, de braços cruzados"
@@ -135,7 +135,7 @@ export default function Sobre() {
             {/* Floating "16 anos" badge overlapping the bottom-right corner */}
             <motion.div
               ref={badgeRef}
-              className="absolute -bottom-6 right-3 rounded-3xl bg-deep px-6 py-4 text-cream shadow-[0_20px_40px_-20px_rgba(42,31,45,0.7)] sm:-right-8"
+              className="absolute -bottom-6 right-3 rounded-3xl bg-deep px-6 py-4 text-cream shadow-[0_20px_40px_-20px_rgba(5,64,44,0.7)] sm:-right-8"
               animate={reduce ? undefined : { y: [0, -10, 0], rotate: [-2, 1, -2] }}
               transition={{ duration: 5.5, repeat: Infinity, ease: 'easeInOut' }}
             >

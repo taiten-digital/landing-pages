@@ -81,7 +81,7 @@ export default function ParaQuem() {
 
           <p className="mt-8 max-w-md text-base leading-relaxed text-text-muted sm:text-lg">
             Se você se reconheceu em pelo menos uma dessas frases,{' '}
-            <span className="font-semibold text-text">o Novo Ciclo foi pensado para você.</span>
+            <span className="font-semibold text-text">o Método C40 foi pensado para você.</span>
           </p>
         </div>
 

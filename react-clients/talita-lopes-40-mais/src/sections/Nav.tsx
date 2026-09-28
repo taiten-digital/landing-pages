@@ -1,6 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
+// Client's Método C40 logo, green background keyed to transparent (no tagline, for the bar).
+import logo from '../assets/images/logo-c40-nav.png';
 
 const NAV_LINKS = [
   { label: 'Para quem é', href: '#para-quem' },
@@ -52,11 +54,8 @@ export default function Nav() {
         aria-label="Navegação principal"
         className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6"
       >
-        <a href="#" onClick={close} className="flex flex-col leading-none text-cream" aria-label="Novo Ciclo, voltar ao topo">
-          <span className="font-display text-2xl leading-[1.1] sm:text-3xl">Novo Ciclo</span>
-          <span className="mt-0.5 font-sans text-[11px] font-medium tracking-wide text-cream/70 sm:text-xs">
-            com Talita Lopes
-          </span>
+        <a href="#" onClick={close} className="flex shrink-0 items-center" aria-label="Método C40, voltar ao topo">
+          <img src={logo} alt="Método C40" width={600} height={329} className="h-12 w-auto sm:h-14" />
         </a>
 
         <ul className="hidden items-center gap-7 lg:flex">

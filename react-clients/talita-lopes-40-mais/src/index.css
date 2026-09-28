@@ -1,21 +1,33 @@
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500;1,600&family=Manrope:wght@400;500;600;700;800&display=swap');
 @import "tailwindcss";
 
+/* Palette sampled from the Método C40 logo (logo-projeto-talita.jpg):
+   background green #05402C, copper #E3A47F (mean), cream #F8F3EA. */
 @theme {
-  --color-bg: #FBF6F0;
-  --color-surface: #F3E9DF;
-  --color-text: #211A1E;
-  --color-text-muted: #6B5E63;
-  --color-deep: #2A1F2D;
-  --color-deep-2: #3A2B3E;
-  --color-cream: #FBF6F0;
-  --color-accent: #C4441E;
-  --color-accent-hover: #A93815;
+  --color-bg: #F8F3EA;        /* logo cream */
+  --color-surface: #EFE6D8;
+  --color-text: #10261C;      /* green-black ink */
+  --color-text-muted: #55665C;
+  --color-deep: #05402C;      /* exact logo background, so the logo sits seamlessly */
+  --color-deep-2: #0B5039;
+  --color-cream: #F8F3EA;
+  --color-accent: #A95A37;    /* deep copper: white on it ~4.9:1 (logo copper #E3A47F fails AA with white) */
+  --color-accent-hover: #8F4A2C;
   --color-accent-fg: #FFFFFF;
-  --color-blush: #F2C7B5;
+  --color-blush: #E9B08C;     /* light copper: italics/glows on green, ~6.7:1 on --color-deep */
 
-  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-display: 'Cormorant Garamond', Georgia, serif;
   --font-sans: 'Manrope', system-ui, sans-serif;
+}
+
+/* Cormorant at 400 reads thin at display sizes; base layer so explicit font-* utilities still win.
+   Lining figures: Cormorant defaults to old-style numerals (the 4 of "40" drops below the
+   baseline), which clashes with the logo's "C40". */
+@layer base {
+  .font-display {
+    font-weight: 500;
+    font-variant-numeric: lining-nums;
+  }
 }
 
 html {

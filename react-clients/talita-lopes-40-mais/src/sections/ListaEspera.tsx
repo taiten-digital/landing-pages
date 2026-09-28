@@ -46,7 +46,7 @@ export default function ListaEspera() {
             Quer ser <em className="italic">avisada primeiro</em>?
           </h2>
           <p className="mt-5 max-w-md text-lg leading-relaxed text-text-muted">
-            Deixe seu contato e receba as novidades do Novo Ciclo e o aviso de lançamento direto no seu e-mail.
+            Deixe seu contato e receba as novidades do Método C40 e o aviso de lançamento direto no seu e-mail.
           </p>
         </div>
 
@@ -94,7 +94,7 @@ export default function ListaEspera() {
                     className="mt-0.5 size-5 shrink-0 cursor-pointer accent-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-bg"
                   />
                   <label htmlFor="lista-consentimento" className="cursor-pointer text-sm leading-relaxed text-text-muted">
-                    Aceito receber comunicações do Novo Ciclo e li a{' '}
+                    Aceito receber comunicações do Método C40 e li a{' '}
                     <a
                       href={LINKS.privacidade}
                       target="_blank"

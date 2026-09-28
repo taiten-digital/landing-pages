@@ -97,6 +97,13 @@ present something as true that isn't verified.** It shows up in two forms:
   measuring a favicon `--crop`, composite it onto the site's `--color-bg`
   and enlarge it (`sharp(f).flatten({background}).resize(w*3, h*3,
   {kernel: 'nearest'})`).
+- **A logo delivered on a solid background (JPG) can be keyed, not
+  redrawn.** Sample the background color with `sharp().raw()`, set alpha
+  from each pixel's color distance to it (ramp ~22→70), un-mix the
+  background out of edge pixels (`(c - (1-a)*bg) / a`), then `.trim()`.
+  Set `--color-deep` to the exact sampled background so the original also
+  sits seamlessly on dark sections. A light-on-dark logo keyed this way is
+  still only usable on dark backgrounds (`talita-lopes-40-mais`).
 - **Sourcing Hero stock (Pexels):** `WebSearch`, then `WebFetch` the search
   page for photo-page URLs, then `WebFetch` a photo page for the direct
   `images.pexels.com/photos/<id>/...jpeg` URL, photographer, and pixel
@@ -284,6 +291,11 @@ pushed to the right was also rejected on that round.
   `font-bold`**: browsers synthesize a smeared fake bold. `rafael-kudo`
   shipped it on the Planos heading despite the Anton import, so grep
   `font-display` lines for `font-bold`/`font-semibold`.
+- **Some serif display fonts default to old-style numerals** (Cormorant
+  Garamond: the 4 of "40" drops below the baseline, "16 anos" looks
+  lowercase). On `talita-lopes-40-mais` it clashed with the logo's "C40".
+  Add `font-variant-numeric: lining-nums` to `.font-display` in `@layer
+  base` and check any number set in the display font.
 - **Tight leading collides accented uppercase headlines.** Anton at
   `leading-none` or `tracking-tight` puts the accents of `PRÓXIMO NÍVEL`
   against the line above; give uppercase display headings `leading-[1.1]`

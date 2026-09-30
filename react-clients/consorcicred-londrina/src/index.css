@@ -1,0 +1,34 @@
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #FAF8F5;
+  --color-surface: #FFFFFF;
+  --color-surface-2: #F1ECE5;
+  --color-line: #E2DBD1;
+  --color-text: #1A2133;
+  --color-text-muted: #596175;
+
+  --color-deep: #1C2638;          /* navy surface, close to the logo box #2A354B but darker */
+  --color-navy: #2A354B;          /* the logo's own navy */
+  --color-on-deep: #F4F1EC;
+  --color-on-deep-muted: #AEB6C6;
+  --color-line-deep: #3A4660;
+
+  --color-accent: #B73037;        /* the logo's red */
+  --color-accent-hover: #972529;
+  --color-accent-fg: #FFFFFF;
+  --color-accent-on-deep: #FF9A9E; /* red text on navy (the brand red fails contrast there) */
+
+  --color-star: #FBBC04;
+  --color-whatsapp: #25D366;
+
+  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
+  --font-sans: 'DM Sans', system-ui, sans-serif;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { background: var(--color-bg); color: var(--color-text); }
+  .font-display { font-variant-numeric: lining-nums; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+}

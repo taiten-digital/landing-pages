@@ -329,6 +329,16 @@ and then the photo pops in. Gate it on `onLoad` → `img.decode()` (recipe in
   `--font-sans` (matches every other client in this repo) and visually
   confirm body paragraphs actually render in the imported font during QA,
   not just trust that the token exists.
+- **Never animate `height: 'auto'` (or `height: 0` to `'auto'`) in a Nav's mobile
+  dropdown, or anywhere a scroll can start in the same tick.** Framer Motion
+  measures the auto height and then calls `window.scrollTo(0, <current Y>)` to
+  restore scroll, which cancels the smooth scroll the link just started: on mobile,
+  tapping a menu item only closed the menu and the page never moved (found on
+  `estacao-do-chopp-londrina` and then on 11 of the 12 other clients). Animate
+  `opacity` + `y` for dropdowns, or a CSS `grid-template-rows: 0fr -> 1fr`
+  transition for accordions/steppers. Test it: in Playwright with
+  `devices['Pixel 5']`, tap the menu toggle, tap a link, wait ~2s, and assert
+  `scrollY > 0` (the desktop click path does not show the bug).
 - **A native `<button>` (or any `onClick`-bearing `<div>`/`<li>`) does not
   get a pointer cursor by default** — only `<a href>` does, via the
   browser's own UA styles. Every real click target needs an explicit

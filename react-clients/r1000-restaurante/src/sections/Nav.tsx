@@ -186,9 +186,9 @@ export default function Nav() {
           <motion.div
             id="menu-mobile"
             key="menu-mobile"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
+            initial={{ y: -8, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -8, opacity: 0 }}
             transition={t}
             className="relative overflow-hidden border-t border-white/5 lg:hidden"
           >

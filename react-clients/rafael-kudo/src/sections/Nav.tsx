@@ -122,9 +122,9 @@ export default function Nav() {
       <AnimatePresence>
         {menuOpen && (
           <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
+            initial={{ y: -8, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -8, opacity: 0 }}
             transition={{ duration: 0.25, ease: 'easeInOut' }}
             className="md:hidden overflow-hidden bg-bg/90 backdrop-blur-md border-t border-border"
           >

@@ -94,7 +94,7 @@ export default function Artesanal() {
       <div className="mx-auto mt-16 max-w-7xl px-5 sm:px-8">
         <h2 className="max-w-3xl font-display text-4xl font-black leading-[1.08] text-paper sm:text-5xl">
           Feito em Londrina, pensado para{' '}
-          <span className="bg-gradient-to-r from-gold to-accent bg-clip-text italic text-transparent">
+          <span className="bg-gradient-to-r from-gold to-accent bg-clip-text pl-[0.04em] pr-[0.2em] -mr-[0.2em] italic text-transparent">
             dar sabor
           </span>{' '}
           ao seu dia.

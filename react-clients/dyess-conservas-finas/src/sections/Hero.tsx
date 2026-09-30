@@ -237,7 +237,7 @@ export default function Hero() {
             className="font-display text-[2rem] font-black leading-[1.08] tracking-tight text-paper sm:text-6xl lg:text-[4.4rem]"
           >
             Sabor que{' '}
-            <span className="bg-gradient-to-r from-gold via-[#f2a31b] to-accent bg-clip-text italic text-transparent">
+            <span className="bg-gradient-to-r from-gold via-[#f2a31b] to-accent bg-clip-text pl-[0.04em] pr-[0.2em] -mr-[0.2em] italic text-transparent">
               transforma
             </span>{' '}
             momentos.

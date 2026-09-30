@@ -23,12 +23,13 @@ export const CONTATO = {
 export const waLink = (text: string) =>
   `https://wa.me/${CONTATO.whatsappDigits}?text=${encodeURIComponent(text)}`;
 
-// Partners the user stated (2026-09-30): "representantes autorizados".
-// "Acerte": name only, the user could not read the small text under the logo. No logos, text labels only.
+// Partners the user stated (2026-09-30): "representantes autorizados" (client's own claim).
+// Confirmed name: "Acerte Consórcios". Logos: Acerte from its own site (acerteconsorcios.com.br),
+// BV and Banco do Brasil from Wikimedia Commons. Trademarks of their owners, shown only to identify the partners.
 export const PARCEIROS = [
-  { nome: 'BB Consórcios', papel: 'Consórcios' },
-  { nome: 'Acerte', papel: 'UNKNOWN' },
-  { nome: 'BV Financeira', papel: 'Financiamentos' },
+  { id: 'bb', nome: 'BB Consórcios', papel: 'Consórcios' },
+  { id: 'acerte', nome: 'Acerte Consórcios', papel: 'Consórcios' },
+  { id: 'bv', nome: 'BV Financeira', papel: 'Financiamentos' },
 ];
 
 // Client's own bio: "Consorcios novos e contemplados / Financiamentos / Empréstimos"

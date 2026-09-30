@@ -3,16 +3,24 @@ import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
 import { FaCar, FaMotorcycle, FaTruck, FaHouse, FaPlane, FaSailboat } from 'react-icons/fa6';
 import type { IconType } from 'react-icons';
 import { CONTATO, waLink } from '../content';
+// Stock photos: Unsplash (free for commercial use under the Unsplash License, no attribution required,
+// attribution below is a courtesy). Generic/thematic only, never presented as the client's own assets.
+import fotoCarro from '../assets/images/sonho-carro.jpg'; // white hatchback on a palm-lined road, Unsplash (Vignesh Rajendran)
+import fotoImovel from '../assets/images/sonho-imovel.jpg'; // modern house with pool, Unsplash (Avi Werde)
+import fotoMoto from '../assets/images/sonho-moto.jpg'; // motorcycle on a forest road, Unsplash (Cartist Sarvam)
+import fotoViagem from '../assets/images/sonho-viagem.jpg'; // airplane wing over green fields, Unsplash (Nejc Soklic)
+import fotoCaminhao from '../assets/images/sonho-caminhao.jpg'; // road-train truck on a highway, Unsplash
+import fotoBarco from '../assets/images/sonho-barco.jpg'; // sailboat on blue sea, Unsplash (Matteo Ulisse)
 
 // Literal icons (Font Awesome 6 via react-icons) for the bens in BENS (content.ts).
 // Only bens the client actually lists are used. Word is what the rotating H1 line shows.
-const SONHOS: { id: string; word: string; nome: string; Icon: IconType }[] = [
-  { id: 'carro', word: 'Carro', nome: 'Carro', Icon: FaCar },
-  { id: 'imovel', word: 'Imóvel', nome: 'Imóvel', Icon: FaHouse },
-  { id: 'moto', word: 'Moto', nome: 'Moto', Icon: FaMotorcycle },
-  { id: 'viagem', word: 'Viagem', nome: 'Viagem', Icon: FaPlane },
-  { id: 'caminhao', word: 'Caminhão', nome: 'Caminhão', Icon: FaTruck },
-  { id: 'barco', word: 'Barco', nome: 'Barco', Icon: FaSailboat },
+const SONHOS: { id: string; word: string; nome: string; Icon: IconType; foto: string }[] = [
+  { id: 'carro', word: 'Carro', nome: 'Carro', Icon: FaCar , foto: fotoCarro },
+  { id: 'imovel', word: 'Imóvel', nome: 'Imóvel', Icon: FaHouse , foto: fotoImovel },
+  { id: 'moto', word: 'Moto', nome: 'Moto', Icon: FaMotorcycle , foto: fotoMoto },
+  { id: 'viagem', word: 'Viagem', nome: 'Viagem', Icon: FaPlane , foto: fotoViagem },
+  { id: 'caminhao', word: 'Caminhão', nome: 'Caminhão', Icon: FaTruck , foto: fotoCaminhao },
+  { id: 'barco', word: 'Barco', nome: 'Barco', Icon: FaSailboat , foto: fotoBarco },
 ];
 
 const N = SONHOS.length;
@@ -94,7 +102,7 @@ export default function Hero() {
 
           <p className="mt-4 max-w-xl text-base leading-relaxed text-text-muted sm:mt-6 sm:text-lg">
             Consórcios novos e contemplados, financiamentos e empréstimos, em Londrina. Representante autorizado de BB
-            Consórcios, Acerte e BV Financeira.
+            Consórcios, Acerte Consórcios e BV Financeira.
             {/* TODO: "representante autorizado" is the client's own claim, confirm authorization (design-brief Open Questions) */}
           </p>
 
@@ -129,28 +137,31 @@ export default function Hero() {
           <div className="relative h-52 w-60 sm:h-64 sm:w-72 lg:mr-10 lg:h-96 lg:w-96">
             {SONHOS.map((s, i) => {
               const off = (i - active + N) % N;
-              const front = off === 0;
               return (
                 <motion.div
                   key={s.id}
-                  className={`absolute inset-0 flex flex-col justify-between rounded-3xl border p-5 shadow-xl shadow-navy/10 sm:p-6 ${
-                    front ? 'border-line bg-surface' : 'border-line bg-surface-2'
-                  }`}
+                  className="absolute inset-0 overflow-hidden rounded-3xl border border-white/60 bg-deep shadow-xl shadow-navy/20"
                   style={{ zIndex: N - off, transformOrigin: 'bottom left' }}
                   initial={false}
                   animate={cardState(i)}
                   transition={SPRING}
                 >
-                  <div
-                    className={`flex h-16 w-16 items-center justify-center rounded-2xl sm:h-20 sm:w-20 ${
-                      front ? 'bg-deep text-on-deep' : 'bg-navy/80 text-on-deep'
-                    }`}
-                  >
-                    <s.Icon size={48} />
-                  </div>
-                  <div>
-                    <div className="font-display text-2xl font-bold text-text sm:text-3xl">{s.nome}</div>
-                    <div className="mt-1 text-sm text-text-muted">Consórcio ou financiamento</div>
+                  <img
+                    src={s.foto}
+                    alt=""
+                    loading={i === 0 ? 'eager' : 'lazy'}
+                    className="absolute inset-0 h-full w-full object-cover"
+                  />
+                  {/* Scrim: strong at the bottom where the text sits, light on top so the photo still reads */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 via-45% to-black/10" />
+                  <div className="relative flex h-full flex-col justify-between p-5 sm:p-6">
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white/15 text-white ring-1 ring-white/30 backdrop-blur-sm sm:h-16 sm:w-16">
+                      <s.Icon size={32} />
+                    </div>
+                    <div>
+                      <div className="font-display text-2xl font-bold text-white sm:text-3xl">{s.nome}</div>
+                      <div className="mt-1 text-sm text-white/85">Consórcio ou financiamento</div>
+                    </div>
                   </div>
                 </motion.div>
               );

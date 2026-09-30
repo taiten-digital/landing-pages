@@ -8,7 +8,7 @@ instead of guessing, and ask before moving to the Design Planning Interview.
 ## Business & Services
 Consórcio and financing broker in Londrina-PR. Instagram bio (verbatim): "Qual é o seu sonho? Nós temos um plano para você! Consorcios novos e contemplados / Financiamentos / Empréstimos". Bio emojis cover caminhão, carro, trator, moto, casa, barco, viagem, serviços (cirurgias/estética).
 Instagram posts also show: "cartas contempladas para veículos de todos os valores", "entradas a partir de R$ 5.000,00" (old art, price not current, do not display without confirmation).
-Authorized representative (per the user, 2026-09-30): **BB Consórcios**, **BV Financeira**, and a third partner the user could not read ("acerte sla oq") = UNKNOWN, ask. Partner logos seen on posts: BB Consórcios only.
+Authorized representative (per the user, 2026-09-30): **BB Consórcios**, **BV Financeira**, and a third partner: **Acerte Consórcios** (confirmed by the user). Partner logos seen on posts: BB Consórcios only.
 
 ## Differentiators
 UNKNOWN: not stated. Only the partnerships above, plus contemplated letters (cartas contempladas) offered.

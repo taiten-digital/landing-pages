@@ -1,6 +1,17 @@
 import { useEffect, useState } from 'react';
 import { motion, useMotionTemplate, useMotionValue, useReducedMotion } from 'framer-motion';
 import { EMPRESA, PARCEIROS, waLink } from '../content';
+// Partner logos are trademarks of their owners, used only to identify the client's partners.
+// Acerte: file from acerteconsorcios.com.br. BV and Banco do Brasil: Wikimedia Commons (Banco_BV_Logo.svg, Banco_do_Brasil_Logo.svg).
+import logoBB from '../assets/images/logo-bb.svg';
+import logoAcerte from '../assets/images/logo-acerte-consorcios.jpg';
+import logoBV from '../assets/images/logo-bv.svg';
+
+const LOGOS: Record<string, { src: string; alt: string; cls: string }> = {
+  bb: { src: logoBB, alt: 'BB Consórcios, Banco do Brasil', cls: 'h-9 sm:h-10' },
+  acerte: { src: logoAcerte, alt: 'Acerte Consórcios', cls: 'h-16 sm:h-[4.5rem]' },
+  bv: { src: logoBV, alt: 'BV Financeira', cls: 'h-14 sm:h-16' },
+};
 
 export default function Parceiros() {
   const reduceMotion = useReducedMotion();
@@ -54,30 +65,24 @@ export default function Parceiros() {
           </p>
           <h2 className="font-display mt-3 text-3xl leading-[1.15] text-on-deep sm:text-5xl">
             Representante autorizado de{' '}
-            <span className="text-accent-on-deep">instituições</span> do crédito
+            <span className="text-accent-on-deep">três</span> parceiros de crédito
           </h2>
         </div>
 
         <ul className="mt-10 grid items-start gap-4 sm:mt-14 sm:grid-cols-3 sm:gap-6">
           {PARCEIROS.map((p) => {
-            const roleKnown = p.papel !== 'UNKNOWN';
+            const logo = LOGOS[p.id];
             return (
               <motion.li
                 key={p.nome}
                 whileHover={reduceMotion ? undefined : { y: -8, scale: 1.02 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 22 }}
-                className="group relative rounded-2xl border border-line-deep bg-navy/60 px-6 py-10 text-center backdrop-blur-sm transition-colors duration-300 hover:border-accent-on-deep/60 hover:bg-navy"
+                className="group relative rounded-2xl border border-line-deep bg-white px-6 py-8 text-center shadow-lg shadow-black/20 transition-shadow duration-300 hover:shadow-xl hover:shadow-black/30"
               >
-                <span className="font-display block text-2xl text-on-deep sm:text-3xl">
-                  {p.nome}
-                </span>
-                {roleKnown ? (
-                  <span className="mt-3 block text-sm text-on-deep-muted">{p.papel}</span>
-                ) : (
-                  <>
-                    {/* TODO: Acerte role/logo unconfirmed */}
-                  </>
-                )}
+                <div className="flex h-20 items-center justify-center">
+                  <img src={logo.src} alt={logo.alt} className={`${logo.cls} w-auto max-w-full object-contain`} />
+                </div>
+                <span className="mt-4 block text-sm font-medium text-text-muted">{p.nome}</span>
               </motion.li>
             );
           })}

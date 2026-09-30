@@ -126,7 +126,7 @@ export default function Hero() {
 
         {/* Right: stack of dream cards, front card matches the rotating word */}
         <div className="flex justify-center lg:justify-end" aria-hidden>
-          <div className="relative h-52 w-60 sm:h-64 sm:w-72 lg:mr-10 lg:h-80 lg:w-80">
+          <div className="relative h-52 w-60 sm:h-64 sm:w-72 lg:mr-10 lg:h-96 lg:w-96">
             {SONHOS.map((s, i) => {
               const off = (i - active + N) % N;
               const front = off === 0;

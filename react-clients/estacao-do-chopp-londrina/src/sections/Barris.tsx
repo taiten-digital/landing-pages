@@ -53,13 +53,12 @@ function TiltCard({ b, i }: { b: (typeof BARRELS)[number]; i: number }) {
           {b.liters}L
         </span>
         <div className="relative flex h-80 items-end justify-center sm:h-96" style={{ transform: 'translateZ(50px)' }}>
-          <motion.img
+          <img
             src={img('barril')}
             alt={`Barril de chopp de ${b.liters} litros`}
             loading="lazy"
-            className={`${b.height} w-auto object-contain drop-shadow-[0_30px_40px_rgba(0,0,0,0.7)]`}
-            animate={reduce ? {} : { y: [0, -10, 0] }}
-            transition={{ duration: 4.5 + i * 0.9, delay: i * 0.5, repeat: Infinity, ease: 'easeInOut' }}
+            className={`fx-float ${b.height} w-auto object-contain`}
+            style={{ '--dur': `${4.5 + i * 0.9}s`, '--delay': `${i * -0.5}s` } as React.CSSProperties}
           />
         </div>
         <div className="relative mt-4">

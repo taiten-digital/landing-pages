@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { motion, useReducedMotion, useScroll, useSpring, useTransform } from 'framer-motion';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 import { img } from '../lib/site';
 
 const POINTS = [
@@ -12,7 +12,7 @@ export default function Sobre() {
   const reduce = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ['start end', 'end start'] });
-  const p = useSpring(scrollYProgress, { stiffness: 140, damping: 30 });
+  const p = scrollYProgress;
   const yHops = useTransform(p, [0, 1], [90, -110]);
   const yWheat = useTransform(p, [0, 1], [40, -60]);
   const yMalt = useTransform(p, [0, 1], [-20, 50]);
@@ -43,27 +43,27 @@ export default function Sobre() {
         </div>
 
         <div className="relative mx-auto h-[420px] w-full max-w-md sm:h-[500px]">
-          <div aria-hidden className="absolute left-1/2 top-1/2 h-[90%] w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(244,168,29,0.35),transparent_65%)] blur-3xl" />
+          <div aria-hidden className="absolute left-1/2 top-1/2 h-[90%] w-[90%] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(circle,rgba(244,168,29,0.3),transparent_65%)]" />
           <motion.img
             src={img('lupulo')}
             alt="Lúpulo"
             loading="lazy"
             style={reduce ? undefined : { y: yHops, rotate: rot }}
-            className="absolute left-[2%] top-[6%] w-[58%] drop-shadow-[0_24px_40px_rgba(0,0,0,0.6)]"
+            className="absolute left-[2%] top-[6%] w-[58%] will-change-transform"
           />
           <motion.img
             src={img('trigo')}
             alt="Espigas de trigo"
             loading="lazy"
             style={reduce ? undefined : { y: yWheat }}
-            className="absolute bottom-[2%] right-[2%] h-[72%] drop-shadow-[0_24px_40px_rgba(0,0,0,0.6)]"
+            className="absolute bottom-[2%] right-[2%] h-[72%] will-change-transform"
           />
           <motion.img
             src={img('malte')}
             alt="Grãos de malte"
             loading="lazy"
             style={reduce ? undefined : { y: yMalt }}
-            className="absolute bottom-[0%] left-[0%] w-[68%] drop-shadow-[0_18px_30px_rgba(0,0,0,0.6)]"
+            className="absolute bottom-[0%] left-[0%] w-[68%] will-change-transform"
           />
         </div>
       </div>

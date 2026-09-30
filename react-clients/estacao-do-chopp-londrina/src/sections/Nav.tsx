@@ -3,8 +3,7 @@ import type { MouseEvent } from 'react';
 import { AnimatePresence, motion, useScroll, useTransform } from 'framer-motion';
 import { Menu, X } from 'lucide-react';
 import { FaWhatsapp } from 'react-icons/fa6';
-import { GiHops } from 'react-icons/gi';
-import { waLink } from '../lib/site';
+import { img, waLink } from '../lib/site';
 
 const NAV_LINKS = [
   { label: 'Sobre', href: '#sobre' },
@@ -51,7 +50,7 @@ export default function Nav() {
     <header ref={headerRef} className="fixed inset-x-0 top-0 z-50">
       <motion.div
         aria-hidden
-        className="absolute inset-0 border-b border-border bg-bg/90 backdrop-blur-md"
+        className="absolute inset-0 border-b border-border bg-bg/95"
         style={{ opacity: chromeOpacity }}
       />
       <nav
@@ -69,9 +68,7 @@ export default function Nav() {
           className="flex items-center gap-3"
           aria-label="Voltar ao topo, Estação do Chopp Londrina"
         >
-          <span className="grid h-10 w-10 place-items-center rounded-full bg-accent text-accent-fg shadow-[0_0_24px_rgba(244,168,29,0.45)]">
-            <GiHops className="h-6 w-6" aria-hidden />
-          </span>
+          <img src={img('logo')} alt="" aria-hidden className="h-11 w-11 shrink-0 rounded-full object-cover" />
           <span className="flex flex-col leading-none">
             <span className="font-display text-2xl text-text">Estação do Chopp</span>
             <span className="text-[10px] font-semibold uppercase tracking-[0.3em] text-text-muted">Londrina</span>

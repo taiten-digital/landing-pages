@@ -73,9 +73,9 @@ export default function Pedido() {
                       <motion.span
                         key={`${step}-bar`}
                         aria-hidden
-                        className="absolute bottom-0 left-0 h-[3px] bg-accent"
-                        initial={{ width: '0%' }}
-                        animate={{ width: '100%' }}
+                        className="absolute bottom-0 left-0 h-[3px] w-full origin-left bg-accent"
+                        initial={{ scaleX: 0 }}
+                        animate={{ scaleX: 1 }}
                         transition={{ duration: STEP_MS / 1000, ease: 'linear' }}
                       />
                     )}
@@ -98,13 +98,13 @@ export default function Pedido() {
 
         {/* the mug fills as the steps advance */}
         <div className="relative mx-auto h-[380px] w-full max-w-sm sm:h-[460px]">
-          <div aria-hidden className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(244,168,29,0.3),transparent_65%)] blur-3xl" />
-          <img src={img('chopp')} alt="" aria-hidden loading="lazy" className="absolute inset-0 m-auto h-full w-auto object-contain opacity-15 grayscale" />
+          <div aria-hidden className="absolute inset-0 rounded-full bg-[radial-gradient(circle,rgba(244,168,29,0.28),transparent_65%)]" />
+          <img src={img('chopp')} alt="" aria-hidden loading="lazy" className="absolute inset-0 m-auto h-full w-auto object-contain opacity-15" />
           <motion.img
             src={img('chopp')}
             alt="Caneca enchendo conforme o pedido avança"
             loading="lazy"
-            className="absolute inset-0 m-auto h-full w-auto object-contain drop-shadow-[0_24px_40px_rgba(0,0,0,0.6)]"
+            className="absolute inset-0 m-auto h-full w-auto object-contain"
             initial={false}
             animate={{ clipPath: `inset(${100 - fill}% 0% 0% 0%)` }}
             transition={{ duration: reduce ? 0 : 1.1, ease: [0.22, 1, 0.36, 1] }}

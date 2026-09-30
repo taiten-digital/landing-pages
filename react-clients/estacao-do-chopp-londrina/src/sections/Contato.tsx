@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { FaInstagram, FaWhatsapp } from 'react-icons/fa6';
-import { GiHops } from 'react-icons/gi';
 import { INSTAGRAM_HANDLE, INSTAGRAM_URL, WHATSAPP_DISPLAY, img, waLink } from '../lib/site';
 
 function FloatingWhatsApp() {
@@ -30,29 +29,20 @@ function FloatingWhatsApp() {
 }
 
 export default function Contato() {
-  const reduce = useReducedMotion();
   return (
     <>
       <section id="contato" className="relative overflow-hidden bg-bg py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="relative overflow-hidden rounded-[2rem] border border-accent/30 bg-gradient-to-br from-surface-2 via-surface to-bg p-8 sm:p-14">
-            <motion.div
-              aria-hidden
-              className="absolute -right-24 -top-24 h-[28rem] w-[28rem] opacity-50"
-              style={{
-                background: 'repeating-conic-gradient(rgba(255,200,90,0.25) 0deg 6deg, transparent 6deg 24deg)',
-                maskImage: 'radial-gradient(circle, #000, transparent 65%)',
-                WebkitMaskImage: 'radial-gradient(circle, #000, transparent 65%)',
-              }}
-              animate={reduce ? {} : { rotate: 360 }}
-              transition={{ duration: 80, repeat: Infinity, ease: 'linear' }}
-            />
+            <div aria-hidden className="pointer-events-none absolute -right-24 -top-24 w-[30rem] opacity-70">
+              <img src={img('rays')} alt="" loading="lazy" className="fx-spin w-full" style={{ '--dur': '90s' } as React.CSSProperties} />
+            </div>
             <img
               src={img('chopp')}
               alt=""
               aria-hidden
               loading="lazy"
-              className="absolute -bottom-6 right-2 hidden h-[115%] w-auto rotate-6 opacity-95 drop-shadow-[0_30px_40px_rgba(0,0,0,0.6)] md:block"
+              className="absolute -bottom-6 right-2 hidden h-[115%] w-auto rotate-6 md:block"
             />
             <div className="relative max-w-xl">
               <h2 className="font-display text-5xl leading-[1.05] text-text sm:text-7xl">
@@ -84,7 +74,7 @@ export default function Contato() {
       <footer className="border-t border-border bg-bg py-8">
         <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-3 px-4 text-sm text-text-muted sm:flex-row sm:px-6">
           <span className="flex items-center gap-2">
-            <GiHops className="h-5 w-5 text-accent" aria-hidden />
+            <img src={img('logo')} alt="" aria-hidden className="h-9 w-9 rounded-full object-cover" />
             <span className="font-display text-xl text-text">Estação do Chopp Londrina</span>
           </span>
           <span>Distribuidora de chopp desde 2014 · Londrina, PR</span>

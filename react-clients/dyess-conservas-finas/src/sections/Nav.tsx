@@ -90,9 +90,9 @@ export default function Nav() {
         {menuOpen && (
           <motion.nav
             key="drawer"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
+            initial={{ y: -8, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -8, opacity: 0 }}
             transition={{ duration: 0.25 }}
             className="overflow-hidden bg-bg lg:hidden"
             aria-label="Menu mobile"

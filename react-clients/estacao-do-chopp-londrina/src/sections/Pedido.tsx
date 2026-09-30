@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { AnimatePresence, motion, useReducedMotion } from 'framer-motion';
+import { useEffect, useRef, useState } from 'react';
+import { motion, useReducedMotion } from 'framer-motion';
 import { FaWhatsapp } from 'react-icons/fa6';
 import { img, waLink } from '../lib/site';
 
@@ -15,17 +15,27 @@ export default function Pedido() {
   const reduce = useReducedMotion();
   const [step, setStep] = useState(0);
   const [paused, setPaused] = useState(false);
+  const [inView, setInView] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    if (reduce || paused) return;
+    const el = sectionRef.current;
+    if (!el) return;
+    const io = new IntersectionObserver(([e]) => setInView(e.isIntersecting), { threshold: 0.25 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (reduce || paused || !inView) return;
     const id = window.setTimeout(() => setStep((s) => (s + 1) % STEPS.length), STEP_MS);
     return () => window.clearTimeout(id);
-  }, [step, paused, reduce]);
+  }, [step, paused, reduce, inView]);
 
   const fill = ((step + 1) / STEPS.length) * 100;
 
   return (
-    <section id="pedido" className="relative overflow-hidden border-t border-white/5 bg-bg py-16 sm:py-20">
+    <section id="pedido" ref={sectionRef} className="relative overflow-hidden border-t border-white/5 bg-bg py-16 sm:py-20">
       <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1.1fr_0.9fr]">
         <div onMouseEnter={() => setPaused(true)} onMouseLeave={() => setPaused(false)}>
           <p className="text-sm font-semibold uppercase tracking-[0.25em] text-text-muted">Como pedir</p>
@@ -55,21 +65,15 @@ export default function Pedido() {
                     </span>
                     <span className="min-w-0">
                       <span className={`font-display block text-2xl sm:text-3xl ${active ? 'text-text' : 'text-text-muted'}`}>{s.t}</span>
-                      <AnimatePresence initial={false}>
-                        {active && (
-                          <motion.span
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.3 }}
-                            className="block overflow-hidden text-text/80"
-                          >
-                            <span className="block pt-1">{s.d}</span>
-                          </motion.span>
-                        )}
-                      </AnimatePresence>
+                      <span
+                        className={`grid transition-[grid-template-rows,opacity] duration-300 ${active ? 'grid-rows-[1fr] opacity-100' : 'grid-rows-[0fr] opacity-0'}`}
+                      >
+                        <span className="block min-h-0 overflow-hidden text-text/80">
+                          <span className="block pt-1">{s.d}</span>
+                        </span>
+                      </span>
                     </span>
-                    {active && !reduce && !paused && (
+                    {active && !reduce && !paused && inView && (
                       <motion.span
                         key={`${step}-bar`}
                         aria-hidden

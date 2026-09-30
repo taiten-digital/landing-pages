@@ -157,9 +157,9 @@ export default function Nav() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
             transition={{ duration: 0.25, ease: 'easeOut' }}
             className="relative overflow-hidden border-b border-border bg-bg shadow-md lg:hidden"
           >

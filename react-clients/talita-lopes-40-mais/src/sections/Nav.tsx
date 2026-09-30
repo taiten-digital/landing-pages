@@ -99,9 +99,9 @@ export default function Nav() {
         {menuOpen && (
           <motion.div
             id="menu-mobile"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
+            initial={{ y: -8, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            exit={{ y: -8, opacity: 0 }}
             transition={{ duration: reduceMotion ? 0 : 0.28, ease: 'easeOut' }}
             className="overflow-hidden lg:hidden"
           >

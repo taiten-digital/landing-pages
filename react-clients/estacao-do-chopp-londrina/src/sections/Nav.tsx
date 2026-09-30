@@ -116,11 +116,13 @@ export default function Nav() {
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 'auto' }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25, ease: 'easeOut' }}
-            className="relative overflow-hidden border-b border-border bg-bg lg:hidden"
+            // opacity/y only: animating height:auto makes Framer call window.scrollTo(0, y)
+            // when it measures, which cancels the smooth scroll started by a menu link.
+            initial={{ opacity: 0, y: -8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.2, ease: 'easeOut' }}
+            className="relative border-b border-border bg-bg lg:hidden"
           >
             <ul className="flex flex-col gap-1 px-4 py-3 sm:px-6">
               {NAV_LINKS.map((l) => (

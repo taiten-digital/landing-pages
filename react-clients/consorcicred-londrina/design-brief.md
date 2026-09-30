@@ -46,7 +46,7 @@ Padding `py-16 sm:py-20`. Container `max-w-6xl mx-auto px-4 sm:px-6`. Cards `rou
 ## Final Section List
 1. **Nav**: logo + anchors + WhatsApp CTA.
 2. **Hero** (`#inicio`): H1 "Qual é o seu *sonho*?" style built on the client's own tagline; paragraph, CTAs, real representation line.
-3. **Parceiros** (`#parceiros`): "Representantes autorizados" of BB Consórcios, Acerte and BV Financeira (the ONLY real proof the client has). Footnote: "Informações divulgadas pelo próprio ConsorciCred." No testimonials exist, none invented.
+3. **Parceiros** (`#parceiros`): "Representantes autorizados" of BB Consórcios, Acerte Consórcios and BV Financeira (the ONLY real proof the client has). Footnote: "Informações divulgadas pelo próprio ConsorciCred." No testimonials exist, none invented.
 4. **Soluções** (`#solucoes`): the four things they sell (consórcio novo, contemplado, financiamento, empréstimo).
 5. **Sonhos** (`#sonhos`): the client's own list of bens (carro, moto, caminhão, trator, imóvel, barco, viagem, serviços) as an interactive picker, each with a WhatsApp CTA prefilled for that bem.
 6. **Como funciona** (`#como-funciona`): honest explanation of how a consórcio works, no guaranteed date.
@@ -57,13 +57,13 @@ Padding `py-16 sm:py-20`. Container `max-w-6xl mx-auto px-4 sm:px-6`. Cards `rou
 No About, no Testimonials, no stats block, no pricing (nothing verified).
 
 ## Copy notes (builders may adjust microcopy, NEVER invent facts)
-- Hero H1: "Qual é o seu *sonho*?" with a rotating word is NOT the H1 emphasis: H1 = "Qual é o seu sonho? Nós temos um plano para você." where the word after "plano" or the rotating word is the one emphasis. Paragraph: "Consórcios novos e contemplados, financiamentos e empréstimos, em Londrina. Representante autorizado de BB Consórcios, Acerte e BV Financeira." Primary CTA "Falar no WhatsApp" (`waLink('Olá! Vim pelo site da ConsorciCred e quero saber qual plano serve para mim.')`), secondary "Ver soluções" `#solucoes`. Small line: "Rua Piauí, 399, Centro, Londrina".
+- Hero H1: "Qual é o seu *sonho*?" with a rotating word is NOT the H1 emphasis: H1 = "Qual é o seu sonho? Nós temos um plano para você." where the word after "plano" or the rotating word is the one emphasis. Paragraph: "Consórcios novos e contemplados, financiamentos e empréstimos, em Londrina. Representante autorizado de BB Consórcios, Acerte Consórcios e BV Financeira." Primary CTA "Falar no WhatsApp" (`waLink('Olá! Vim pelo site da ConsorciCred e quero saber qual plano serve para mim.')`), secondary "Ver soluções" `#solucoes`. Small line: "Rua Piauí, 399, Centro, Londrina".
 - Como funciona steps (generic, same honest mechanic as a consórcio): 1 Você escolhe o objetivo e o plano; 2 Paga parcelas mensais sem juros, junto com o grupo (taxa de administração conforme o plano); 3 Contemplação por sorteio ou lance, sem data garantida; 4 Usa a carta de crédito para comprar o bem. Mention "cartas contempladas" as the option for who does not want to wait for the draw.
 - Dúvidas (general, hedge plan-specific facts with "varia conforme o plano/administradora, consulte"): "Consórcio tem juros?", "Como sou contemplado?", "Posso dar lance?", "Qual a diferença entre consórcio e financiamento?", "O que é carta contemplada?", "Posso consorciar outros bens além de carro e casa?" (say: fale com a gente para ver o que está disponível), "Como faço para simular?" (WhatsApp). No rates, no prazos, no valores.
 - Never write "entrada a partir de R$ 5.000" or any old Instagram price.
 
 ## Open Questions
-- Acerte: the user only saw a green check logo and small text; role unknown. Confirm the exact name/wording with the client and get the real logos of the 3 partners.
+- Acerte Consórcios: confirmed by the user (name) and logo taken from acerteconsorcios.com.br. Partner logos are real trademarks shown only to identify the partners; client must confirm the authorization.
 - Authorization of "representante autorizado" (shown as the client's own claim).
 - Two phone numbers confirmed by the user; e-mail and hours unknown.
 - Real photos of the office/team (would replace the Hero graphic).

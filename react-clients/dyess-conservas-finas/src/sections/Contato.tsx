@@ -63,7 +63,7 @@ export default function Contato() {
         <div className="mx-auto max-w-3xl px-5 sm:px-8">
           <h2 className="font-display text-4xl font-black leading-[1.08] text-paper sm:text-6xl">
             Bateu a vontade?{' '}
-            <span className="bg-gradient-to-r from-gold to-accent bg-clip-text italic text-transparent">
+            <span className="bg-gradient-to-r from-gold to-accent bg-clip-text pl-[0.04em] pr-[0.2em] -mr-[0.2em] italic text-transparent">
               Chama a gente.
             </span>
           </h2>

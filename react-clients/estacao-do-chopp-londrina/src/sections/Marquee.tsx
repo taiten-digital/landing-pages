@@ -1,5 +1,4 @@
 import { Fragment, useLayoutEffect, useRef, useState } from 'react';
-import { motion, useReducedMotion } from 'framer-motion';
 import { GiHops } from 'react-icons/gi';
 
 const PX_PER_SECOND = 70;
@@ -19,7 +18,6 @@ function Track({ trackRef }: { trackRef?: React.Ref<HTMLDivElement> }) {
 }
 
 export default function Marquee() {
-  const reduce = useReducedMotion();
   const viewportRef = useRef<HTMLDivElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const [trackWidth, setTrackWidth] = useState(0);
@@ -46,15 +44,14 @@ export default function Marquee() {
       aria-hidden
       className="-rotate-1 overflow-hidden bg-gradient-to-r from-accent via-accent-2 to-accent py-3 shadow-[0_0_60px_rgba(244,168,29,0.35)]"
     >
-      <motion.div
-        className="flex w-max"
-        animate={reduce || !trackWidth ? {} : { x: [0, -trackWidth] }}
-        transition={{ duration: trackWidth / PX_PER_SECOND || 1, repeat: Infinity, ease: 'linear' }}
+      <div
+        className="fx-marquee flex w-max"
+        style={{ '--w': trackWidth, '--dur': `${trackWidth / PX_PER_SECOND || 1}s` } as React.CSSProperties}
       >
         {Array.from({ length: copies }, (_, i) => (
           <Track key={i} trackRef={i === 0 ? trackRef : undefined} />
         ))}
-      </motion.div>
+      </div>
     </div>
     </div>
   );

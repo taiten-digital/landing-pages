@@ -7,7 +7,7 @@
 
 ## Assets (recebidos como PNG com xadrez de transparência "impresso", sem alpha real)
 Recortados com flood-fill a partir das bordas e convertidos para WebP com alpha em `public/images/`:
-barril (524x842), chopp/caneca (470x778), lúpulo (570x588), malte (694x202), trigo (334x782). Sem fotos de pessoas/loja, sem arquivo de logo (só screenshots do Instagram).
+barril (524x842), chopp/caneca (470x778), malte (694x202), trigo (334x782). Lúpulo (1263x1223): segunda imagem enviada pelo cliente (fundo preto sólido, sem alpha), recortada com flood-fill do preto. A primeira vinha cortada embaixo e foi descartada. Sem fotos de pessoas/loja, sem arquivo de logo (só screenshots do Instagram).
 
 ## UNKNOWN / pendências
 - Arquivo do logo (favicon é monograma "E" provisório).

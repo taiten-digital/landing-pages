@@ -41,3 +41,39 @@
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
 }
+
+/* ---- Idle motion lives in CSS keyframes (transform/opacity only): they run on
+   the compositor, not on the JS main thread. Durations/delays come from
+   --dur / --delay set per element so nothing moves in sync. ---- */
+.fx-float  { animation: fx-float var(--dur, 6s) ease-in-out var(--delay, 0s) infinite; will-change: transform; }
+.fx-bob    { animation: fx-bob var(--dur, 7s) ease-in-out var(--delay, 0s) infinite; will-change: transform; }
+.fx-sway-l { animation: fx-sway-l var(--dur, 7s) ease-in-out var(--delay, 0s) infinite; will-change: transform; }
+.fx-sway-r { animation: fx-sway-r var(--dur, 8s) ease-in-out var(--delay, 0s) infinite; will-change: transform; }
+.fx-spin   { animation: fx-spin var(--dur, 60s) linear infinite; will-change: transform; }
+.fx-pulse  { animation: fx-pulse var(--dur, 5s) ease-in-out infinite; will-change: transform, opacity; }
+.fx-glint  { animation: fx-glint var(--dur, 6s) ease-in-out var(--delay, 0s) infinite; will-change: opacity; }
+.fx-twinkle{ animation: fx-twinkle var(--dur, 3s) ease-in-out var(--delay, 0s) infinite; will-change: transform, opacity; }
+.fx-bubble { animation: fx-bubble var(--dur, 5s) ease-out var(--delay, 0s) infinite; will-change: transform, opacity; }
+.fx-grain  { animation: fx-grain var(--dur, 9s) linear var(--delay, 0s) infinite; will-change: transform, opacity; }
+.fx-marquee{ animation: fx-marquee var(--dur, 30s) linear infinite; will-change: transform; }
+.fx-star   { animation: fx-star 1.4s ease-in-out var(--delay, 0s) infinite; animation-iteration-count: infinite; }
+
+[class*='fx-'] { animation-fill-mode: backwards; }
+[data-paused='true'] *, [data-paused='true'] { animation-play-state: paused !important; }
+
+@keyframes fx-float  { 0%,100% { transform: translate3d(0,0,0) rotate(-0.6deg); } 50% { transform: translate3d(0,-12px,0) rotate(0.6deg); } }
+@keyframes fx-bob    { 0%,100% { transform: translate3d(0,0,0) rotate(-4deg); } 50% { transform: translate3d(0,-9px,0) rotate(5deg); } }
+@keyframes fx-sway-l { 0%,100% { transform: rotate(-4deg); } 50% { transform: rotate(3deg); } }
+@keyframes fx-sway-r { 0%,100% { transform: rotate(3deg); } 50% { transform: rotate(-4deg); } }
+@keyframes fx-spin   { to { transform: rotate(360deg); } }
+@keyframes fx-pulse  { 0%,100% { opacity: .65; transform: scale(1); } 50% { opacity: 1; transform: scale(1.07); } }
+@keyframes fx-glint  { 0%,55%,100% { opacity: 0; } 70% { opacity: 1; } 85% { opacity: .2; } }
+@keyframes fx-twinkle{ 0%,100% { opacity: 0; transform: scale(.2) rotate(0deg); } 50% { opacity: 1; transform: scale(1) rotate(45deg); } }
+@keyframes fx-bubble { 0% { opacity: 0; transform: translate3d(0,0,0); } 15% { opacity: .9; } 85% { opacity: .8; } 100% { opacity: 0; transform: translate3d(var(--dx, 0px), calc(var(--rise, 260) * -1px), 0); } }
+@keyframes fx-grain  { 0% { opacity: 0; transform: translate3d(0,-20px,0) rotate(0deg); } 10% { opacity: 1; } 90% { opacity: 1; } 100% { opacity: 0; transform: translate3d(0,640px,0) rotate(var(--rot, 300deg)); } }
+@keyframes fx-marquee{ to { transform: translate3d(calc(var(--w, 1000) * -1px), 0, 0); } }
+@keyframes fx-star   { 0%,100% { transform: scale(1); } 50% { transform: scale(1.22); } }
+
+@media (prefers-reduced-motion: reduce) {
+  [class*='fx-'] { animation: none !important; }
+}

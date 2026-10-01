@@ -33,18 +33,15 @@ export default function Contato() {
         </header>
 
         <div className="mt-10 grid items-start gap-6 lg:mt-12 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-8">
-          {/* Contact card with breathing glow */}
+          {/* Contact card with soft static glow (animated blur was too costly) */}
           <div className="relative min-w-0">
-            <motion.div
+            <div
               aria-hidden
-              className="pointer-events-none absolute -inset-10 rounded-[3rem] blur-3xl sm:-inset-14"
+              className="pointer-events-none absolute -inset-10 rounded-[3rem] sm:-inset-14"
               style={{
                 background:
-                  'radial-gradient(closest-side, color-mix(in oklab, var(--color-shield) 40%, transparent) 0%, color-mix(in oklab, var(--color-accent) 14%, transparent) 45%, transparent 75%)',
+                  'radial-gradient(closest-side, color-mix(in oklab, var(--color-shield) 30%, transparent) 0%, color-mix(in oklab, var(--color-accent) 10%, transparent) 45%, transparent 75%)',
               }}
-              initial={false}
-              animate={reduce ? { opacity: 0.7, scale: 1 } : { opacity: [0.45, 0.95, 0.45], scale: [0.94, 1.04, 0.94] }}
-              transition={reduce ? { duration: 0 } : { duration: 7, repeat: Infinity, ease: 'easeInOut' }}
             />
 
             <div className="relative rounded-3xl border border-line bg-surface-2 p-6 shadow-2xl shadow-black/30 sm:p-8">
@@ -54,7 +51,7 @@ export default function Contato() {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label={`Falar no WhatsApp: ${CONTATO.whatsappDisplay}`}
-                className="mt-3 flex w-full cursor-pointer items-center justify-center gap-3 rounded-full bg-whatsapp px-6 py-4 font-display text-lg text-deep transition-[filter] hover:brightness-105 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:text-xl"
+                className="mt-3 flex w-full cursor-pointer items-center justify-center gap-3 rounded-full bg-whatsapp px-6 py-4 font-display text-lg text-white transition-[filter] hover:brightness-105 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:text-xl"
                 whileHover={reduce ? undefined : { scale: 1.02 }}
                 whileTap={reduce ? undefined : { scale: 0.98 }}
               >
@@ -144,7 +141,7 @@ export default function Contato() {
               </div>
 
               <div className="pointer-events-none absolute inset-x-3 bottom-3 sm:inset-x-4 sm:bottom-4">
-                <div className="inline-flex max-w-full items-center rounded-2xl border border-line bg-deep/85 px-4 py-2.5 text-sm text-text backdrop-blur">
+                <div className="inline-flex max-w-full items-center rounded-2xl border border-line bg-deep/85 px-4 py-2.5 text-sm text-text">
                   <span className="truncate">{ENDERECO_COMPLETO}</span>
                 </div>
               </div>

@@ -14,7 +14,7 @@ Logo: `logo-baldon-stacked.png` (Hero/Footer, dark bg only) and `logo-baldon-ico
 "Corretora de Seguros"). Low-res: never enlarge past source size (stacked max ~h-28).
 `alt="Baldon Corretora de Seguros"`.
 
-**Hero has NO photo** (none exists; user chose): navy full-bleed with a big shield made of
+**Hero uses generic stock (Pexels 4933643, house at dusk, no people; not the client's property).** Replaced the shield art on client request. A real client photo is still welcome.
 a `react-icons` shield icon (check `lucide-react` `ShieldCheck`, or react-icons Pi/Tb/Fa6
 shield) with gold outline feel, radial blue glow + gold glow behind it. Do not hand-draw
 SVG icons. Do not show a person. This deviation from the house "photo Hero" is flagged to

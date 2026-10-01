@@ -32,7 +32,7 @@ export default function Seguros() {
     <section id="seguros" className="relative overflow-hidden bg-bg py-16 sm:py-20">
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-24 left-1/2 h-96 w-[40rem] max-w-full -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(47,107,219,0.18),transparent)] blur-3xl"
+        className="pointer-events-none absolute -top-24 left-1/2 h-96 w-[40rem] max-w-full -translate-x-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(47,107,219,0.18),transparent)]"
       />
       <div className="relative mx-auto max-w-6xl px-4 sm:px-6">
         <div className="max-w-3xl">
@@ -44,34 +44,23 @@ export default function Seguros() {
           </p>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 items-start gap-5 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-10 grid grid-cols-1 items-stretch gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {SEGUROS.map((item, i) => {
             const Icon = ICONS[item.id] ?? LockKeyhole;
             const featured = i === 0;
             return (
-              <motion.article
+              <article
                 key={item.id}
-                className={`group relative rounded-2xl border border-line bg-surface-2 transition-colors duration-300 hover:border-accent/50 ${
+                className={`group relative flex flex-col rounded-2xl border border-line bg-surface-2 transition-[border-color,transform] duration-300 hover:-translate-y-1 hover:border-accent/50 ${
                   featured
                     ? 'p-7 sm:col-span-2 sm:p-9 lg:col-span-2'
                     : 'p-6'
                 }`}
-                animate={reduceMotion ? undefined : { y: [0, -(6 + (i % 3) * 2), 0] }}
-                transition={
-                  reduceMotion
-                    ? undefined
-                    : {
-                        duration: 3.6 + i * 0.45,
-                        delay: i * 0.35,
-                        repeat: Infinity,
-                        ease: 'easeInOut',
-                      }
-                }
               >
                 {featured && (
                   <div
                     aria-hidden
-                    className="pointer-events-none absolute -right-10 -top-10 h-56 w-56 rounded-full bg-[radial-gradient(closest-side,rgba(201,165,92,0.16),transparent)] blur-2xl"
+                    className="pointer-events-none absolute -right-10 -top-10 h-56 w-56 rounded-full bg-[radial-gradient(closest-side,rgba(201,165,92,0.16),transparent)]"
                   />
                 )}
                 <motion.div
@@ -90,19 +79,19 @@ export default function Seguros() {
                 >
                   {item.titulo}
                 </h3>
-                <p className={`relative mt-2 text-text-muted ${featured ? 'max-w-xl text-base sm:text-lg' : 'text-[0.95rem]'}`}>
+                <p className={`relative mb-5 mt-2 text-text-muted ${featured ? 'max-w-xl text-base sm:text-lg' : 'text-[0.95rem]'}`}>
                   {item.texto}
                 </p>
                 <a
                   href={waLink(item.mensagem)}
                   target="_blank"
                   rel="noreferrer"
-                  className="relative mt-5 inline-flex items-center gap-2 rounded-full border border-line px-4 py-2 text-sm font-semibold text-text transition-colors hover:border-accent hover:bg-accent hover:text-accent-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
+                  className="relative mt-auto inline-flex w-fit items-center gap-2 rounded-full border border-line px-4 py-2 text-sm font-semibold text-text transition-colors hover:border-accent hover:bg-accent hover:text-accent-fg focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                 >
                   <FaWhatsapp className="h-4 w-4" aria-hidden />
                   Falar no WhatsApp
                 </a>
-              </motion.article>
+              </article>
             );
           })}
         </div>

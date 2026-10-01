@@ -48,7 +48,7 @@ export default function Nav() {
     <header className="fixed inset-x-0 top-0 z-50">
       <motion.div
         aria-hidden
-        className="absolute inset-0 border-b border-line bg-deep/90 backdrop-blur-md"
+        className="absolute inset-0 border-b border-line bg-deep/95"
         initial={false}
         animate={{ opacity: solid ? 1 : 0 }}
         transition={{ duration: reduceMotion ? 0 : 0.3, ease: 'easeOut' }}
@@ -106,7 +106,7 @@ export default function Nav() {
           rel="noreferrer"
           whileHover={{ scale: 1.03 }}
           whileTap={{ scale: 0.97 }}
-          className="hidden items-center gap-2 rounded-full bg-whatsapp px-5 py-2.5 text-sm font-semibold text-deep shadow-sm lg:inline-flex"
+          className="hidden items-center gap-2 rounded-full bg-whatsapp px-5 py-2.5 text-sm font-semibold text-white shadow-sm lg:inline-flex"
         >
           <FaWhatsapp className="h-4 w-4" aria-hidden />
           {CTA_LABEL}
@@ -130,7 +130,7 @@ export default function Nav() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -8 }}
             transition={{ duration: reduceMotion ? 0 : 0.25, ease: 'easeOut' }}
-            className="relative border-b border-line bg-deep/95 backdrop-blur-md lg:hidden"
+            className="relative border-b border-line bg-deep lg:hidden"
           >
             <ul className="mx-auto flex max-w-6xl flex-col gap-1 px-4 py-3 sm:px-6">
               {NAV_LINKS.map((link) => (
@@ -150,7 +150,7 @@ export default function Nav() {
                   target="_blank"
                   rel="noreferrer"
                   onClick={() => setMenuOpen(false)}
-                  className="flex items-center justify-center gap-2 rounded-full bg-whatsapp px-5 py-3 text-sm font-semibold text-deep shadow-sm"
+                  className="flex items-center justify-center gap-2 rounded-full bg-whatsapp px-5 py-3 text-sm font-semibold text-white shadow-sm"
                 >
                   <FaWhatsapp className="h-4 w-4" aria-hidden />
                   {CTA_LABEL}

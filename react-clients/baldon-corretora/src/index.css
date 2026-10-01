@@ -23,7 +23,7 @@
   --color-accent-ink: #7A5A12;  /* gold-family text on the LIGHT section (AA on cream) */
   --color-shield: #2F6BDB;      /* glow blue from the posts' shield, decorative only */
   --color-star: #FBBC04;
-  --color-whatsapp: #25D366;
+  --color-whatsapp: #178A4A;  /* darker than brand #25D366 so white text reads (AA) */
 
   --font-display: 'Playfair Display', Georgia, serif;
   --font-sans: 'Source Sans 3', system-ui, sans-serif;
@@ -46,4 +46,9 @@ body {
   .font-display {
     font-variant-numeric: lining-nums;
   }
+}
+
+@keyframes hero-zoom {
+  from { transform: scale(1); }
+  to { transform: scale(1.08); }
 }

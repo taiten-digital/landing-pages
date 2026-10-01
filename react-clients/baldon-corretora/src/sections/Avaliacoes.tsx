@@ -168,7 +168,7 @@ export default function Avaliacoes() {
             rel="noopener noreferrer"
             whileHover={reduce ? undefined : { scale: 1.03 }}
             whileTap={reduce ? undefined : { scale: 0.97 }}
-            className="inline-flex items-center rounded-full bg-whatsapp px-6 py-3 font-semibold text-deep"
+            className="inline-flex items-center rounded-full bg-whatsapp px-6 py-3 font-semibold text-white"
           >
             Fale com a Baldon no WhatsApp
           </motion.a>

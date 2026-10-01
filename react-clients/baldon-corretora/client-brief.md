@@ -1,4 +1,4 @@
-# Client Brief: Baldon Corretora de Seguros (`baldon-corretora-de-seguros`)
+# Client Brief: Baldon Corretora de Seguros (`baldon-corretora`)
 
 Sources: user message + 10 phone screenshots (Instagram posts, Google reviews, Google
 Business card) + logo. No interview answers beyond that; everything else is UNKNOWN.

@@ -1,4 +1,4 @@
-# Design Brief: Baldon Corretora de Seguros (`baldon-corretora-de-seguros`)
+# Design Brief: Baldon Corretora de Seguros (`baldon-corretora`)
 
 ## Aesthetic Direction & References
 The client's own look: deep navy, gold linework, serif headlines, a glowing blue shield

@@ -1,0 +1,49 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+/* Palette from the client's own brand: deep navy (Instagram posts) + gold (logo,
+   sampled ~#C4A25A) + a bright shield blue used only as glow. */
+@theme {
+  --color-bg: #081028;          /* page dark */
+  --color-surface: #0E1A3A;     /* alternate dark sections */
+  --color-surface-2: #152349;   /* cards inside dark sections */
+  --color-deep: #050A1A;        /* Footer, Nav scrolled */
+  --color-text: #F4F1E8;
+  --color-text-muted: #A9B3CC;
+  --color-line: #22305A;        /* borders on dark */
+
+  --color-light: #F5F1E8;       /* the one light section (Avaliacoes) */
+  --color-light-card: #FFFFFF;
+  --color-ink: #0E1630;
+  --color-ink-muted: #4A5370;
+
+  --color-accent: #C9A55C;      /* logo gold: CTAs, focus, 1 focal detail per section */
+  --color-accent-hover: #DDBB74;
+  --color-accent-fg: #0A1226;   /* dark text on gold. Never white on gold. */
+  --color-accent-ink: #7A5A12;  /* gold-family text on the LIGHT section (AA on cream) */
+  --color-shield: #2F6BDB;      /* glow blue from the posts' shield, decorative only */
+  --color-star: #FBBC04;
+  --color-whatsapp: #25D366;
+
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-sans: 'Source Sans 3', system-ui, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+section[id] {
+  scroll-margin-top: var(--nav-height, 4.5rem);
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+@layer base {
+  .font-display {
+    font-variant-numeric: lining-nums;
+  }
+}

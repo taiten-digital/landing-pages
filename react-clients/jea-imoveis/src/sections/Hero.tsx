@@ -134,8 +134,8 @@ export default function Hero() {
           </span>
         </h1>
 
-        <motion.div {...rise(H1_END - 0.2)} className="mt-5 max-w-xl sm:mt-7">
-          <p className="font-sans text-[0.95rem] leading-relaxed text-sand/90 sm:text-lg [text-shadow:0_1px_3px_rgb(0_0_0/0.6),0_2px_16px_rgb(0_0_0/0.5)]">
+        <motion.div {...rise(H1_END - 0.2)} className="mt-5 max-w-xl sm:mt-7 lg:max-w-[27rem]">
+          <p className="font-sans text-pretty text-[0.95rem] leading-relaxed text-sand/90 sm:text-lg [text-shadow:0_1px_3px_rgb(0_0_0/0.6),0_2px_16px_rgb(0_0_0/0.5)]">
             Compra, venda e investimento em imóveis em Londrina, com José Eduardo Almeida à frente da JEA.
           </p>
 

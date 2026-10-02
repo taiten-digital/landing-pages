@@ -104,7 +104,7 @@ export default function Contato() {
                         aria-hidden="true"
                         className="absolute inset-0 rounded-full border-2 border-whatsapp"
                         initial={{ scale: 1, opacity: 0.55 }}
-                        animate={{ scale: [1, 1.9], opacity: [0.55, 0] }}
+                        animate={{ scale: [1, 1.4], opacity: [0.55, 0] }}
                         transition={{
                           duration: 3.2,
                           delay: i * 1.6,

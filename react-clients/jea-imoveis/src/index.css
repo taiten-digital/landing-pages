@@ -1,0 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Manrope:wght@400;500;600;700&display=swap');
+@import "tailwindcss";
+
+/* Palette: the JEA wordmark is near-black on white; the founder's portrait is
+   a camel velvet blazer on a warm beige studio wall. So: warm ink + bone, with a
+   camel/bronze accent pulled from the blazer. */
+@theme {
+  --color-bg: #F6F1E9;           /* page bone */
+  --color-surface: #EDE5D8;      /* alternate light sections */
+  --color-card: #FFFFFF;         /* cards on light */
+  --color-ink: #1A1612;          /* text on light */
+  --color-ink-muted: #675F55;    /* secondary text on light */
+  --color-line: #DDD2C0;         /* borders on light */
+
+  --color-deep: #14110D;         /* dark sections, Nav, Footer */
+  --color-deep-2: #1E1A15;       /* cards on dark */
+  --color-deep-line: #34302A;    /* borders on dark */
+  --color-sand: #F1E7D6;         /* text on dark */
+  --color-sand-muted: #B9AE9C;   /* secondary text on dark */
+
+  --color-accent: #D2A15F;       /* camel/bronze: CTAs and emphasis on DARK */
+  --color-accent-hover: #E0B476;
+  --color-accent-fg: #14110D;    /* text on accent */
+  --color-accent-ink: #8A5A22;   /* the same bronze, dark enough for text on LIGHT (5.4:1 on bg) */
+
+  --color-star: #FBBC04;         /* Google-review stars */
+  --color-whatsapp: #25D366;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-sans: 'Manrope', system-ui, sans-serif;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  /* Fraunces ships old-style-ish figures in some optical sizes: force lining. */
+  .font-display { font-variant-numeric: lining-nums; font-optical-sizing: auto; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+}

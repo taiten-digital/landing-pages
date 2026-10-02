@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Tenor+Sans&family=Poppins:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+/* Palette: the agency's own Instagram posts (navy backgrounds with a gold roof line,
+   "Quem somos?" in gold). The logo is a thin high-contrast sans, echoed by Tenor Sans.
+   Tenor Sans is SINGLE-WEIGHT: never font-bold/font-semibold on .font-display. */
+@theme {
+  --color-bg: #F7F4EE;           /* page off-white */
+  --color-surface: #EEE8DC;      /* alternate light sections */
+  --color-card: #FFFFFF;
+  --color-ink: #0E1A2E;          /* text on light */
+  --color-ink-muted: #5A6375;
+  --color-line: #DCD4C4;
+
+  --color-deep: #0A1530;         /* navy: Nav, Hero, dark sections, Footer */
+  --color-deep-2: #12213F;       /* cards on dark */
+  --color-deep-line: #26385C;
+  --color-sand: #F3EEE4;         /* text on dark */
+  --color-sand-muted: #A9B2C3;
+
+  --color-accent: #D4A853;       /* gold: CTAs and emphasis on DARK */
+  --color-accent-hover: #E2BC6E;
+  --color-accent-fg: #0A1530;
+  --color-accent-ink: #8A6420;   /* the same gold, dark enough for text on LIGHT */
+
+  --color-star: #FBBC04;
+  --color-whatsapp: #25D366;
+
+  --font-display: 'Tenor Sans', 'Poppins', system-ui, sans-serif;
+  --font-sans: 'Poppins', system-ui, sans-serif;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--color-bg);
+    color: var(--color-ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+  .font-display { font-variant-numeric: lining-nums; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+}

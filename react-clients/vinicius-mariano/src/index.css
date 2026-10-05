@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter+Tight:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+/* Palette sampled from Vinicius's own Instagram carousels (Método CAFÉ series):
+   near-black slides #121413, off-white slides #F7F6F2, green emphasis
+   #419967 on dark / #1E7754 on light. Gold lives only inside the logo files. */
+@theme {
+  --color-bg: #121413;          /* page dark (carousel dark slide) */
+  --color-surface: #181B19;     /* cards on dark */
+  --color-deep: #0C0E0D;        /* Nav scrolled, mobile menu */
+  --color-forest: #0F2419;      /* Contato section only */
+  --color-text: #F7F6F2;
+  --color-text-muted: #A7ABA6;
+  --color-line: #2A2F2B;        /* borders on dark */
+
+  --color-light: #F7F6F2;       /* cream sections (carousel light slide) */
+  --color-light-card: #FFFFFF;
+  --color-ink: #1A1C1A;
+  --color-ink-muted: #565B56;
+  --color-line-light: #E2E0D8;
+
+  --color-accent: #4FAE76;      /* emphasis text/rules on DARK backgrounds */
+  --color-accent-ink: #1E7754;  /* emphasis text/rules on CREAM backgrounds */
+  --color-cta: #2E7D52;         /* button fill, cream text on it */
+  --color-cta-hover: #35905E;
+  --color-cta-fg: #F7F6F2;
+  --color-whatsapp: #25D366;
+
+  --font-display: 'Inter Tight', system-ui, sans-serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+@layer base {
+  html { scroll-behavior: smooth; }
+  body { background: var(--color-bg); color: var(--color-text); }
+  section[id] { scroll-margin-top: var(--nav-height, 4.5rem); }
+}
